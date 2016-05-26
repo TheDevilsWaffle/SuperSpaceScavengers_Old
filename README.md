@@ -1,16 +1,14 @@
 <h1>Super Space Scavengers Game Design Document</h1>
 <h2>Table of Contents</h2>
 <ul>
-  <li><a href="#" name="#">1. Design Document History</a></li>
-  <li><a href="#" name="#">2. Game Overview</a>
+  <li><a href="#DesignDocumentHistory" name="#">1. Design Document History</a></li>
+  <li><a href="GameOverview" name="#">2. Game Overview</a>
     <ul>
-      <li><a href="#" name="#" >2.1 &mdash; Concept</a></li>
-      <li><a href="#" name="#" >2.2 &mdash; Core Features</a></li>
-      <li><a href="#" name="#" >2.3 &mdash; Game Flow Summary</a></li>
-      <li><a href="#" name="#" >2.4 &mdash; Look &amp; Feel</a></li>
-      <li><a href="#" name="#" >2.5 &mdash; Players</a></li>
-      <li><a href="#" name="#" >2.6 &mdash; Round Types</a></li>
-      <li><a href="#" name="#" >2.7 &mdash; Game Modes</a></li>
+      <li><a href="Concept" name="#" >2.1 &mdash; Concept</a></li>
+      <li><a href="CoreFeatures" name="#" >2.2 &mdash; Core Features</a></li>
+      <li><a href="GameFlowSummary" name="#" >2.3 &mdash; Game Flow Summary</a></li>
+      <li><a href="Theme" name="#" >2.4 Theme</a></li>
+      <li><a href="Genre" name="#" >2.5 &mdash; Genre</a></li>
     </ul>
   </li>
   <li><a href="#" name="#">3. Gameplay</a>
@@ -177,4 +175,55 @@
   </li>
 </ul>
 
-<!--DESIGN DOCUMENT HISTORY
+<!--1. DESIGN DOCUMENT HISTORY-->
+<h2 id="DesignDocumentHistory">1. Design Document History</h2>
+<ul>
+	<li>
+		<h3>Version 0.0.1</h3>
+		<p>Initial creation of the Design Document, mostly markdown structure. Some parts from section 1 and 2 added.</p>
+	</li>
+</ul>
+
+<!--2. GAME OVERVIEW-->
+<h2 id="GameOverview">2. Game Overview</h2>
+<ul>
+	<li>
+		<h3 id="Concept">2.1 Concept</h3>
+		<p><em>Super Space Scavengers</em> is a couch multiplayer computer game where players fight to strip an abandoned space ship of its most valuable parts before the ship becomes completely unstable and explodes!</p>
+	</li>
+	<li>
+		<h3 id="CoreFeatures">2.2 Core Features</h3>
+		<p><em>Super Space Scavengers</em> has the following three core features:
+			<ul>
+				<li>
+					<strong>Simple Controls</strong>
+					<p><em>Super Space Scavengers</em> is a game that is easy to pick up and start playing without an overly complex control scheme.</p>
+				</li>
+				<li>
+					<strong>Procedurally Generated Space Ships</strong>
+					<p>Every round features a differentely generated abandoned space ship to explore, complete with a different language and iconography so each ship feels truly alien to the player.</p>
+				</li>
+				<li>
+					<strong>Fast and Frantic Multiplayer</strong>
+					<p>Each game of <em>Super Space Scavengers</em> only takes about 10 &ndash; 15 minutes and is rife with action, explosions, power failures, and many, many player deaths.</p>
+				</li>
+			</ul>
+		</p>
+	</li>
+	<li>
+		<h3 id="GameFlowSummary">2.3 Game Flow Summary</h3>
+		<p><em>Super Space Scavengers</em>  follows a game flow not very different from an arcade game experience:
+		<code>
+			[Title Screen]=>[Main Menu]=>[Player Select/Confirmation]=>[Gameplay]=>[Round Results Menu]=>[End Game]
+		</code>
+		</p>
+	</li>
+	<li>
+		<h3 id="Theme">2.4 Theme</h3>
+		<p><em>Super Space Scavengers</em> is set in space. As such the game has a very futuristic theme, common with most space games. Like the movie <em>Star Wars: A New Hope</em>, the setting of <em>Super Space Scavengers</em> is a very used version of space (think the Jawas on Tatooine or anywhere in Mos Eisley). The world has advanced and futuristic technology, but it's not new and pristine.</p>
+	</li>
+	<li>
+		<h3 id="Genre">2.5 Genre</h3>
+		<p><em>Super Space Scavengers</em> is designed to be a arcade-action couch multiplayer computer game experienced by up to 4 players without splitscreen.</p>
+	</li>
+</ul>
