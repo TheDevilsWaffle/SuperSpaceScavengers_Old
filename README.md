@@ -2,36 +2,35 @@
 <h2>Table of Contents</h2>
 <ul>
   <li><a href="#DesignDocumentHistory" name="#">1. Design Document History</a></li>
-  <li><a href="GameOverview" name="#">2. Game Overview</a>
+  <li><a href="#GameOverview" name="#">2. Game Overview</a>
     <ul>
-      <li><a href="Concept" name="#" >2.1 &mdash; Concept</a></li>
-      <li><a href="CoreFeatures" name="#" >2.2 &mdash; Core Features</a></li>
-      <li><a href="GameFlowSummary" name="#" >2.3 &mdash; Game Flow Summary</a></li>
-      <li><a href="Theme" name="#" >2.4 Theme</a></li>
-      <li><a href="Genre" name="#" >2.5 &mdash; Genre</a></li>
+      <li><a href="#Concept" name="#" >2.1 &mdash; Concept</a></li>
+      <li><a href="#CoreFeatures" name="#" >2.2 &mdash; Core Features</a></li>
+      <li><a href="#GameFlowSummary" name="#" >2.3 &mdash; Game Flow Summary</a></li>
+      <li><a href="#Theme" name="#" >2.4 Theme</a></li>
+      <li><a href="#Genre" name="#" >2.5 &mdash; Genre</a></li>
     </ul>
   </li>
-  <li><a href="#" name="#">3. Gameplay</a>
+  <li><a href="#Gameplay" name="#">3. Gameplay</a>
     <ul>
-      <li><a href="#" name="#" >3.1 &mdash; Progression</a></li>
-      <li><a href="#" name="#" >3.2 &mdash; Round Structure</a></li>
-      <li><a href="#" name="#" >3.3 &mdash; Economy</a></li>
-      <li><a href="#" name="#" >3.4 &mdash; Upgrade System</a></li>
-      <li><a href="#" name="#" >3.5 &mdash; Environment Structure</a>
+      <li><a href="#Progression" name="#" >3.1 &mdash; Progression</a></li>
+      <li><a href="#Economy" name="#" >3.2 &mdash; Economy</a></li>
+      <li><a href="#UpgradeSystem" name="#" >3.3 &mdash; Upgrade System</a></li>
+      <li><a href="#Environment" name="#" >3.4 &mdash; Environment</a>
         <ul>
-          <li><a href="#" name="#" >3.5.1 &mdash; Layout</a></li>
-          <li><a href="#" name="#" >3.5.2 &mdash; Power Grid</a></li>
-          <li><a href="#" name="#" >3.5.3 &mdash; Environment Decay</a></li>
-          <li><a href="#" name="#" >3.5.4 &mdash; Enemy Placement</a></li>
-          <li><a href="#" name="#" >3.5.5 &mdash; Loot Placement</a></li>
-          <li><a href="#" name="#" >3.5.6 &mdash; Shop Placement</a></li>
+          <li><a href="#Layout" name="#" >3.4.1 &mdash; Layout</a></li>
+          <li><a href="#PowerGrid" name="#" >3.4.2 &mdash; Power Grid</a></li>
+          <li><a href="#EnvironmentalDecay" name="#" >3.4.3 &mdash; Environmental Decay</a></li>
+          <li><a href="#EnemyPlacement" name="#" >3.4.4 &mdash; Enemy Placement</a></li>
+          <li><a href="#LootPlacement" name="#" >3.4.5 &mdash; Loot Placement</a></li>
+          <li><a href="#ShopPlacement" name="#" >3.4.6 &mdash; Shop Placement</a></li>
         </ul>
       </li>
-      <li><a href="#" name="#" >3.6 &mdash; Gameplay Influences</a>
+      <li><a href="#" name="#" >3.5 &mdash; Gameplay Influences</a>
         <ul>
-          <li><a href="#" name="#" >3.6.1 &mdash; Game #1</a></li>
-          <li><a href="#" name="#" >3.6.2 &mdash; Game #2</a></li>
-          <li><a href="#" name="#" >3.6.3 &mdash; Game #3</a></li>
+          <li><a href="#" name="#" >3.5.1 &mdash; Game #1</a></li>
+          <li><a href="#" name="#" >3.5.2 &mdash; Game #2</a></li>
+          <li><a href="#" name="#" >3.5.3 &mdash; Game #3</a></li>
         </ul>
       </li>
     </ul>
@@ -225,5 +224,75 @@
 	<li>
 		<h3 id="Genre">2.5 Genre</h3>
 		<p><em>Super Space Scavengers</em> is designed to be a arcade-action couch multiplayer computer game experienced by up to 4 players without splitscreen.</p>
+	</li>
+</ul>
+
+<!--GAMEPLAY-->
+<!--2. GAME OVERVIEW-->
+<h2 id="Gameplay">3. Gameplay</h2>
+<ul>
+	<li>
+		<h3 id="Progression">3.1 Progression</h3>
+		<p><em>Super Space Scavengers</em> is a couch multiplayer computer game where players fight to strip an abandoned space ship of its most valuable parts before the ship becomes completely unstable and explodes!</p>
+	</li>
+	<li>
+		<h3 id="Economy">3.2 Econonmy</h3>
+		<p><em>Super Space Scavengers</em> has the following three core features</p>
+	</li>
+	<li>
+		<h3 id="UpgradeSystem">3.3 Upgrade System</h3>
+		<p><em>Super Space Scavengers</em>  follows a game flow not very different from an arcade game experience:
+		<blockquote>
+			[Title Screen]=>[Main Menu]=>[Player Select/Confirmation]=>[Gameplay]=>[Round Results Menu]=>[End Game]
+		</blockquote>
+		</p>
+	</li>
+	<li>
+		<h3 id="Environment">3.4 Environment</h3>
+		<p><em>Super Space Scavengers</em> ...</p>
+		<ul>
+			<li>
+				<strong  id="Layout">3.4.1 Layout</strong>
+				<p><em>Super Space Scavengers</em> ...</p>
+			</li>
+			<li>
+				<strong id="PowerGrid">3.4.2 Power Grid</strong>
+				<p><em>Super Space Scavengers</em> ...</p>
+			</li>
+			<li>
+				<strong id="EnvironmentalDecay">3.4.3 Environmental Decay</strong>
+				<p><em>Super Space Scavengers</em> ...</p>
+			</li>
+			<li>
+				<strong id="EnemyPlacement">3.4.4 Enemy Placement</strong>
+				<p><em>Super Space Scavengers</em> ...</p>
+			</li>
+			<li>
+				<strong id="LootPlacement">3.4.5 Loot Placement</strong>
+				<p><em>Super Space Scavengers</em> ...</p>
+			</li>
+			<li>
+				<strong id="ShopPlacement">3.4.6 Shop Placement</strong>
+				<p><em>Super Space Scavengers</em> ...</p>
+			</li>
+		</ul>
+	</li>
+	<li>
+		<h3 id="GameplayInfluences">3.5 Gameplay Influences</h3>
+		<p><em>Super Space Scavengers</em> ...</p>
+		<ul>
+			<li>
+				<strong id="PowerGrid">3.5.1 Power Grid</strong>
+				<p><em>Super Space Scavengers</em> ...</p>
+			</li>
+			<li>
+				<strong id="EnvironmentalDecay">3.5.2 Environmental Decay</strong>
+				<p><em>Super Space Scavengers</em> ...</p>
+			</li>
+			<li>
+				<strong id="EnemyPlacement">3.5.3 Enemy Placement</strong>
+				<p><em>Super Space Scavengers</em> ...</p>
+			</li>
+		</ul>
 	</li>
 </ul>
