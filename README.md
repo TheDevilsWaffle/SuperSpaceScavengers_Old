@@ -334,15 +334,15 @@
 		<p><em>Super Space Scavengers</em> is highly influenced by rougelikes, such as <em>Spelunky</em>, and <em>FTL</em>. The idea of creating a PCG system and setting it in space comes from a lot of time playing both of these games and wanting to expand upon the boarding mechanics in <em>FTL</em>. Also a big influence is the game <em>Pitfall Planet</em>. I'd like the gameplay, specifically the player camera and controls to act a lot like this game.</p>
 		<ul>
 			<li>
-				<strong id="GI01">3.5.1 FTL</strong>
+				<strong id="GI01">3.5.1 FTL</strong><br />
         <CENTER>
-        <img src="inspiration/ins_FTL.jpg" width="600" alt="FTL plays a huge part in influences how systems on a ship and ship layout will work." /><br />
+        <img src="inspiration/ins_ftl.jpg" width="600" alt="FTL plays a huge part in influences how systems on a ship and ship layout will work." /><br />
         <caption><em>FTL</em> plays a huge part in influences how systems on a ship and ship layout will work.</caption>
         <br /><br />
         </CENTER>
 			</li>
 			<li>
-				<strong id="GI02">3.5.2 Spelunky</strong>
+				<strong id="GI02">3.5.2 Spelunky</strong><br />
         <CENTER>
         <img src="inspiration/ins_spelunky.jpg" width="600" alt="The PCG in Spelunky is remarkable and the gameplay is phenomenal." /><br />
         <caption>The PCG in <em>Spelunky</em> is remarkable and the gameplay is phenomenal.</caption>
@@ -350,7 +350,7 @@
         </CENTER>
 			</li>
 			<li>
-				<strong id="GI03">3.5.3 Pitfall Planet</strong>
+				<strong id="GI03">3.5.3 Pitfall Planet</strong><br />
         <CENTER>
         <img src="inspiration/ins_pitfallplanet.jpg" width="600" alt="The gameplay of Pitfall planet, in particular the camera, controls, and art style are quite fun!" /><br />
         <caption>The gameplay of Pitfall planet, in particular the camera, controls, and art style are quite fun!</caption>
