@@ -252,7 +252,7 @@
     <h4>Concept</h4>
 		<p>The world of <em>Super Space Scavengers</em> is that of a used universe. While space travel and furturistic technology exists, it is not always bright, clean, and new technology. The world is scrappy and more wild west-like, with space ships being held together with the equivilent of duct tape and a prayer. Good parts are hard to come by and maintaining what you got is the difference between death and survival. Think of this universe as being a lot like the space ships and scavenged together contraptions found in Mos Eisley in the <em>Star Wars</em> universe.</p>
       <CENTER>
-        <img src="inspiration/ins_starwars_jawasandcrawler.jpg" width="600" alt="A scavenged and hastily put together jawa sandcrawler" /><br />
+        <img src="inspiration/ins_starwars_jawasandcrawler.JPG" width="600" alt="A scavenged and hastily put together jawa sandcrawler" /><br />
         <caption>A scavenged and hastily put together jawa sandcrawler.</caption>
         <br /><br />
       </CENTER>
