@@ -1,8 +1,8 @@
 <h1>Super Space Scavengers Game Design Document</h1>
 <h2>Table of Contents</h2>
 <ul>
-  <li><a href="#DesignDocumentHistory" name="#">1. Design Document History</a></li>
-  <li><a href="#GameOverview" name="#">2. Game Overview</a>
+  <li><a href="#DesignDocumentHistory" name="#">1 Design Document History</a></li>
+  <li><a href="#GameOverview" name="#">2 Game Overview</a>
     <ul>
       <li><a href="#Concept" name="#" >2.1 &mdash; Concept</a></li>
       <li><a href="#CoreFeatures" name="#" >2.2 &mdash; Core Features</a></li>
@@ -11,7 +11,7 @@
       <li><a href="#Genre" name="#" >2.5 &mdash; Genre</a></li>
     </ul>
   </li>
-  <li><a href="#Gameplay" name="#">3. Gameplay</a>
+  <li><a href="#Gameplay" name="#">3 Gameplay</a>
     <ul>
       <li><a href="#Progression" name="#" >3.1 &mdash; Progression</a></li>
       <li><a href="#Economy" name="#" >3.2 &mdash; Economy</a></li>
@@ -35,139 +35,137 @@
       </li>
     </ul>
   </li>
-  <li><a href="#" name="#">4. Mechanics</a>
+  <li><a href="#Mechanics" name="#">4 Mechanics</a>
     <ul>
-      <li><a href="#" name="#" >4.1 &mdash; Player Mechanics</a>
+      <li><a href="#PlayerMechanics" name="#" >4.1 &mdash; Player Mechanics</a>
         <ul>
-          <li><a href="#" name="#" >4.1.1 &mdash; Movement</a></li>
-          <li><a href="#" name="#" >4.1.2 &mdash; Other Movement</a></li>
-          <li><a href="#" name="#" >4.1.3 &mdash; Picking &amp; Dropping Objects</a></li>
-          <li><a href="#" name="#" >4.1.4 &mdash; Contextual Interaction</a></li>
-          <li><a href="#" name="#" >4.1.5 &mdash; Actions</a></li>
+          <li><a href="#Movement" name="#" >4.1.1 &mdash; Movement</a></li>
+          <li><a href="#OtherMovement" name="#" >4.1.2 &mdash; Other Movement</a></li>
+          <li><a href="#Actions" name="#" >4.1.3 &mdash; Actions</a></li>
         </ul>
       </li>
-      <li><a href="#" name="#" >4.2 &mdash; NPC Mechanics</a>
+      <li><a href="#NPCMechanics" name="#" >4.2 &mdash; NPC Mechanics</a>
         <ul>
-          <li><a href="#" name="#" >4.2.1 &mdash; NPC List</a></li>
-          <li><a href="#" name="#" >4.2.2 &mdash; NPC States</a></li>
-          <li><a href="#" name="#" >4.2.3 &mdash; NPC Actions</a></li>
-          <li><a href="#" name="#" >4.2.4 &mdash; NPC Interactions</a></li>
+          <li><a href="#NPCList" name="#" >4.2.1 &mdash; NPC List</a></li>
+          <li><a href="#NPCStates" name="#" >4.2.2 &mdash; NPC States</a></li>
+          <li><a href="#NPCActions" name="#" >4.2.3 &mdash; NPC Actions</a></li>
+          <li><a href="#NPCOtherInteractions" name="#" >4.2.4 &mdash; NPC Other Interactions</a></li>
         </ul>
       </li>
-      <li><a href="#" name="#" >4.3 &mdash; Enemy Mechanics</a>
+      <li><a href="#EnemnyMechanics" name="#" >4.3 &mdash; Enemy Mechanics</a>
         <ul>
-          <li><a href="#" name="#" >4.3.1 &mdash; Enemy List</a></li>
-          <li><a href="#" name="#" >4.3.2 &mdash; Enemy States</a></li>
-          <li><a href="#" name="#" >4.3.3 &mdash; Enemy Actions</a></li>
-          <li><a href="#" name="#" >4.3.4 &mdash; Enemy Interactions</a></li>
+          <li><a href="#EnemyList" name="#" >4.3.1 &mdash; Enemy List</a></li>
+          <li><a href="#EnemyStates" name="#" >4.3.2 &mdash; Enemy States</a></li>
+          <li><a href="#EnemyActions" name="#" >4.3.3 &mdash; Enemy Actions</a></li>
+          <li><a href="#EnemyInteractions" name="#" >4.3.4 &mdash; Enemy Interactions</a></li>
         </ul>
       </li>
-      <li><a href="#" name="#" >4.4 &mdash; Item Mechanics</a>
+      <li><a href="#ItemMechanics" name="#" >4.4 &mdash; Item Mechanics</a>
         <ul>
-          <li><a href="#" name="#" >4.4.1 &mdash; Attribute Items</a></li>
-          <li><a href="#" name="#" >4.4.2 &mdash; Combat Items</a></li>
-          <li><a href="#" name="#" >4.4.3 &mdash; Non-Combat Items</a></li>
+          <li><a href="#ItemList" name="#" >4.4.1 &mdash; Item List</a></li>
+          <li><a href="#CombatItems" name="#" >4.4.2 &mdash; Combat Items</a></li>
+          <li><a href="#NonCombatItems" name="#" >4.4.3 &mdash; Non-Combat Items</a></li>
         </ul>
       </li>
-      <li><a href="#" name="#" >4.5 &mdash;  Influences</a>
+      <li><a href="#MechanicInfluences" name="#" >4.5 &mdash; Mechanic Influences</a>
         <ul>
-          <li><a href="#" name="#" >4.5.1 &mdash; Game #1</a></li>
-          <li><a href="#" name="#" >4.5.2 &mdash; Game #2</a></li>
-          <li><a href="#" name="#" >4.5.3 &mdash; Game #3</a></li>
+          <li><a href="#MI01" name="#" >4.5.1 &mdash; Game #1</a></li>
+          <li><a href="#MI02" name="#" >4.5.2 &mdash; Game #2</a></li>
+          <li><a href="#MI03" name="#" >4.5.3 &mdash; Game #3</a></li>
         </ul>
       </li>
     </ul>
   </li>
-  <li><a href="#" name="#">5. User Interface</a>
+  <li><a href="#UI" name="#">5 User Interface</a>
     <ul>
-      <li><a href="#" name="#" >5.1 &mdash; UI Theme</a></li>
-      <li><a href="#" name="#" >5.2 &mdash; Splash Screens</a></li>
-      <li><a href="#" name="#" >5.3 &mdash; Main Menu</a></li>
-      <li><a href="#" name="#" >5.4 &mdash; Pause Menu</a></li>
-      <li><a href="#" name="#" >5.5 &mdash; In-Game UI</a>
+      <li><a href="#UITheme" name="#" >5.1 &mdash; UI Theme</a></li>
+      <li><a href="#SplashScreens" name="#" >5.2 &mdash; Splash Screens</a></li>
+      <li><a href="#MainMenu" name="#" >5.3 &mdash; Main Menu</a></li>
+      <li><a href="#PauseMenu" name="#" >5.4 &mdash; Pause Menu</a></li>
+      <li><a href="#InGameUI" name="#" >5.5 &mdash; In-Game UI</a>
         <ul>
-          <li><a href="#" name="#" >5.5.1 &mdash; HUD</a></li>
-          <li><a href="#" name="#" >5.5.2 &mdash; Action Specfic UI</a></li>
-          <li><a href="#" name="#" >5.5.3 &mdash; Shop UI</a></li>
-          <li><a href="#" name="#" >5.5.4 &mdash; End Round UI</a></li>
-          <li><a href="#" name="#" >5.5.5 &mdash; End Game UI</a></li>
+          <li><a href="#HUD" name="#" >5.5.1 &mdash; HUD</a></li>
+          <li><a href="#ContextualUI" name="#" >5.5.2 &mdash; Contextual UI</a></li>
+          <li><a href="#ShopUI" name="#" >5.5.3 &mdash; Shop UI</a></li>
+          <li><a href="#EndRoundUI" name="#" >5.5.4 &mdash; End Round UI</a></li>
+          <li><a href="#EndGameUI" name="#" >5.5.5 &mdash; End Game UI</a></li>
         </ul>
       </li>
-      <li><a href="#" name="#" >5.6 &mdash; UI Influences</a>
+      <li><a href="#UIInfluences" name="#" >5.6 &mdash; UI Influences</a>
         <ul>
-          <li><a href="#" name="#" >5.6.1 &mdash; Game #1</a></li>
-          <li><a href="#" name="#" >5.6.2 &mdash; Game #2</a></li>
-          <li><a href="#" name="#" >5.6.3 &mdash; Game #3</a></li>
+          <li><a href="#UI01" name="#" >5.6.1 &mdash; Game #1</a></li>
+          <li><a href="#UI02" name="#" >5.6.2 &mdash; Game #2</a></li>
+          <li><a href="#UI03" name="#" >5.6.3 &mdash; Game #3</a></li>
         </ul>
       </li>
     </ul>
   </li>
-  <li><a href="#" name="#">6. Narrative</a>
+  <li><a href="#Narrative" name="#">6 Narrative</a>
     <ul>
-      <li><a href="#" name="#" >6.1 &mdash; Theme Overview</a></li>
-      <li><a href="#" name="#" >6.2 &mdash; Theme Mood</a></li>
-      <li><a href="#" name="#" >6.3 &mdash; Back Story</a></li>
-      <li><a href="#" name="#" >6.4 &mdash; Plot Elements</a>
-      <li><a href="#" name="#" >6.5 &mdash; Cut Scenes/Cinematics</a></li>
-      <li><a href="#" name="#" >6.6 &mdash; Game World</a>
+      <li><a href="#ThemeOverview" name="#" >6.1 &mdash; Theme Overview</a></li>
+      <li><a href="#ThemeMood" name="#" >6.2 &mdash; Theme Mood</a></li>
+      <li><a href="#BackStory" name="#" >6.3 &mdash; Back Story</a></li>
+      <li><a href="#PlotElements" name="#" >6.4 &mdash; Plot Elements</a>
+      <li><a href="#CutScenesCinematics" name="#" >6.5 &mdash; Cut Scenes/Cinematics</a></li>
+      <li><a href="#GameWorld" name="#" >6.6 &mdash; Game World</a>
         <ul>
-          <li><a href="#" name="#" >6.6.1 &mdash; General Overview</a></li>
-          <li><a href="#" name="#" >6.6.2 &mdash; Physical Characteristics</a></li>
-          <li><a href="#" name="#" >6.6.3 &mdash; Example #1</a></li>
-          <li><a href="#" name="#" >6.6.4 &mdash; Example #2</a></li>
-          <li><a href="#" name="#" >6.6.5 &mdash; Example #3</a></li>
+          <li><a href="#WorldOverview" name="#" >6.6.1 &mdash; World Overview</a></li>
+          <li><a href="#NotableCharacteristics" name="#" >6.6.2 &mdash; Notable Characteristics</a></li>
+          <li><a href="#Ex01" name="#" >6.6.3 &mdash; Example #1</a></li>
+          <li><a href="#Ex02" name="#" >6.6.4 &mdash; Example #2</a></li>
+          <li><a href="#Ex03" name="#" >6.6.5 &mdash; Example #3</a></li>
         </ul>
       </li>
-      <li><a href="#" name="#" >6.7 &mdash; Players</a>
+      <li><a href="#Players" name="#" >6.7 &mdash; Players</a>
         <ul>
-          <li><a href="#" name="#" >6.7.1 &mdash; Player #1 Personality</a></li>
-          <li><a href="#" name="#" >6.7.2 &mdash; Player #1 Back Story</a></li>
-          <li><a href="#" name="#" >6.7.3 &mdash; Player #2 Personality</a></li>
-          <li><a href="#" name="#" >6.7.4 &mdash; Player #2 Back Story</a></li>
-          <li><a href="#" name="#" >6.7.5 &mdash; Player #3 Personality</a></li>
-          <li><a href="#" name="#" >6.7.6 &mdash; Player #3 Back Story</a></li>
-          <li><a href="#" name="#" >6.7.7 &mdash; Player #4 Personality</a></li>
-          <li><a href="#" name="#" >6.7.8 &mdash; Player #4 Back Story</a></li>
+          <li><a href="#P1P" name="#" >6.7.1 &mdash; Player #1 Personality</a></li>
+          <li><a href="#P1BS" name="#" >6.7.2 &mdash; Player #1 Back Story</a></li>
+          <li><a href="#P2P" name="#" >6.7.3 &mdash; Player #2 Personality</a></li>
+          <li><a href="#P2BS" name="#" >6.7.4 &mdash; Player #2 Back Story</a></li>
+          <li><a href="#P3P" name="#" >6.7.5 &mdash; Player #3 Personality</a></li>
+          <li><a href="#P3BS" name="#" >6.7.6 &mdash; Player #3 Back Story</a></li>
+          <li><a href="#P4P" name="#" >6.7.7 &mdash; Player #4 Personality</a></li>
+          <li><a href="#P4BS" name="#" >6.7.8 &mdash; Player #4 Back Story</a></li>
         </ul>
       </li>
-      <li><a href="#" name="#" >6.8 &mdash; Narrative Influences</a>
+      <li><a href="#NarrativeInfluences" name="#" >6.8 &mdash; Narrative Influences</a>
         <ul>
-          <li><a href="#" name="#" >6.8.1 &mdash; Game #1</a></li>
-          <li><a href="#" name="#" >6.8.2 &mdash; Game #2</a></li>
-          <li><a href="#" name="#" >6.8.3 &mdash; Game #3</a></li>
+          <li><a href="#NI01" name="#" >6.8.1 &mdash; Game #1</a></li>
+          <li><a href="#NI02" name="#" >6.8.2 &mdash; Game #2</a></li>
+          <li><a href="#NI03" name="#" >6.8.3 &mdash; Game #3</a></li>
         </ul>
       </li>
     </ul>
   </li>
-  <li><a href="#" name="#">7. Audio</a>
+  <li><a href="#Audio" name="#">7 Audio</a>
     <ul>
-      <li><a href="#" name="#" >7.1 &mdash; General Overview</a></li>
-      <li><a href="#" name="#" >7.2 &mdash; Mood</a></li>
-      <li><a href="#" name="#" >7.3 &mdash; Music</a>
+      <li><a href="#AudioOverview" name="#" >7.1 &mdash; Audio Overview</a></li>
+      <li><a href="#Mood" name="#" >7.2 &mdash; Mood</a></li>
+      <li><a href="#Music" name="#" >7.3 &mdash; Music</a>
         <ul>
-          <li><a href="#" name="#" >7.3.1 &mdash; Ambiet</a></li>
-          <li><a href="#" name="#" >7.3.2 &mdash; Action</a></li>
-          <li><a href="#" name="#" >7.3.3 &mdash; Victory</a></li>
-          <li><a href="#" name="#" >7.3.4 &mdash; Defeat</a></li>
+          <li><a href="#Ambient" name="#" >7.3.1 &mdash; Ambient</a></li>
+          <li><a href="#Actions" name="#" >7.3.2 &mdash; Action</a></li>
+          <li><a href="#Victory" name="#" >7.3.3 &mdash; Victory</a></li>
+          <li><a href="#Defeat" name="#" >7.3.4 &mdash; Defeat</a></li>
         </ul>
       </li>
-      <li><a href="#" name="#" >7.4 &mdash; SFX</a>
+      <li><a href="#SFX" name="#" >7.4 &mdash; SFX</a>
         <ul>
-          <li><a href="#" name="#" >7.4.1 &mdash; Menu SFX List</a></li>
-          <li><a href="#" name="#" >7.4.2 &mdash; Player SFX List</a></li>
-          <li><a href="#" name="#" >7.4.3 &mdash; NPC SFX List</a></li>
-          <li><a href="#" name="#" >7.4.4 &mdash; Enemy SFX List</a></li>
-          <li><a href="#" name="#" >7.4.5 &mdash; Environment SFX List</a></li>
-          <li><a href="#" name="#" >7.4.6 &mdash; Item SFX List</a></li>
-          <li><a href="#" name="#" >7.4.7 &mdash; Combat SFX List</a></li>
-          <li><a href="#" name="#" >7.4.8 &mdash; UI SFX List</a></li>
+          <li><a href="#MenuSFXList" name="#" >7.4.1 &mdash; Menu SFX List</a></li>
+          <li><a href="#PlayerSFXList" name="#" >7.4.2 &mdash; Player SFX List</a></li>
+          <li><a href="#NPCSFXList" name="#" >7.4.3 &mdash; NPC SFX List</a></li>
+          <li><a href="#EnemySFXList" name="#" >7.4.4 &mdash; Enemy SFX List</a></li>
+          <li><a href="#EnvironmentSFXList" name="#" >7.4.5 &mdash; Environment SFX List</a></li>
+          <li><a href="#ItemSFXList" name="#" >7.4.6 &mdash; Item SFX List</a></li>
+          <li><a href="#CombatSFXList" name="#" >7.4.7 &mdash; Combat SFX List</a></li>
+          <li><a href="#UISFXList" name="#" >7.4.8 &mdash; UI SFX List</a></li>
         </ul>
       </li>
-      <li><a href="#" name="#" >7.5 &mdash; Audio Influences</a>
+      <li><a href="#AudioInfluences" name="#" >7.5 &mdash; Audio Influences</a>
         <ul>
-          <li><a href="#" name="#" >7.5.1 &mdash; Game #1</a></li>
-          <li><a href="#" name="#" >7.5.2 &mdash; Game #2</a></li>
-          <li><a href="#" name="#" >7.5.3 &mdash; Game #3</a></li>
+          <li><a href="#AI01" name="#" >7.5.1 &mdash; Game #1</a></li>
+          <li><a href="#AI02" name="#" >7.5.2 &mdash; Game #2</a></li>
+          <li><a href="#AI03" name="#" >7.5.3 &mdash; Game #3</a></li>
         </ul>
       </li>
     </ul>
@@ -175,7 +173,7 @@
 </ul>
 
 <!--1. DESIGN DOCUMENT HISTORY-->
-<h2 id="DesignDocumentHistory">1. Design Document History</h2>
+<h2 id="DesignDocumentHistory">1 Design Document History</h2>
 <ul>
 	<li>
 		<h3>Version 0.0.1</h3>
@@ -184,7 +182,7 @@
 </ul>
 
 <!--2. GAME OVERVIEW-->
-<h2 id="GameOverview">2. Game Overview</h2>
+<h2 id="GameOverview">2 Game Overview</h2>
 <ul>
 	<li>
 		<h3 id="Concept">2.1 Concept</h3>
@@ -227,9 +225,8 @@
 	</li>
 </ul>
 
-<!--GAMEPLAY-->
-<!--2. GAME OVERVIEW-->
-<h2 id="Gameplay">3. Gameplay</h2>
+<!--3. GAMEPLAY-->
+<h2 id="Gameplay">3 Gameplay</h2>
 <ul>
 	<li>
 		<h3 id="Progression">3.1 Progression</h3>
@@ -359,4 +356,114 @@
 			</li>
 		</ul>
 	</li>
+</ul>
+
+<!--4. MECHANICS-->
+<h2 id="Mechanics">4 Mechanics</h2>
+<ul>
+  <li>
+    <h3 id="PlayerMechanics">4.1 Player Mechanics</h3>
+    <p><em>Super Space Scavengers</em>...</p>
+    <ul>
+      <li>
+        <strong id="Movement">4.1.1 Movement</strong>
+        <p><em>Super Space Scavengers</em>...</p>
+      </li>
+      <li>
+        <strong id="OtherMovement">4.1.2 Other Movement</strong>
+        <p><em>Super Space Scavengers</em>....</p>
+      </li>
+      <li>
+        <strong id="Actions">4.1.3 Actions</strong>
+        <p><em>Super Space Scavengers</em>...</p>
+      </li>
+    </ul>
+  </li>
+  <li>
+    <h3 id="NPCMechanics">4.2 NPC Mechanics</h3>
+    <p><em>Super Space Scavengers</em>...</p>
+    <ul>
+      <li>
+        <strong id="NPCList">4.2.1 NPC List</strong>
+        <p><em>Super Space Scavengers</em>...</p>
+      </li>
+      <li>
+        <strong id="NPCStates">4.2.2 NPC States</strong>
+        <p><em>Super Space Scavengers</em>....</p>
+      </li>
+      <li>
+        <strong id="NPCActions">4.2.3 NPC Actions</strong>
+        <p><em>Super Space Scavengers</em>...</p>
+      </li>
+      <li>
+        <strong id="NPCOtherInteractions">4.2.3 NPC Other Interactions</strong>
+        <p><em>Super Space Scavengers</em>...</p>
+      </li>
+    </ul>
+  </li>
+  <li>
+    <h3 id="EnemyMechanics">4.3 Enemy Mechanics</h3>
+    <p><em>Super Space Scavengers</em>...</p>
+    <ul>
+      <li>
+        <strong id="EnemyList">4.3.1 Enemy List</strong>
+        <p><em>Super Space Scavengers</em>...</p>
+      </li>
+      <li>
+        <strong id="EnemyStates">4.3.2 Enemy States</strong>
+        <p><em>Super Space Scavengers</em>....</p>
+      </li>
+      <li>
+        <strong id="EnemyActions">4.3.3 Enemy Actions</strong>
+        <p><em>Super Space Scavengers</em>...</p>
+      </li>
+      <li>
+        <strong id="EnemyOtherInteractions">4.3.3 Enemy Other Interactions</strong>
+        <p><em>Super Space Scavengers</em>...</p>
+      </li>
+    </ul>
+  </li>
+  <li>
+    <h3 id="ItemMechanics">4.4 Item Mechanics</h3>
+    <p>The world of <em>Super Space Scavengers</em>...</p>
+    <ul>
+      <li>
+        <strong  id="ItemCategories">4.4.1 Item Categories</strong>
+        <p><em>Super Space Scavengers</em>...</p>
+      </li>
+      <li>
+        <strong id="ItemList">4.4.2 Item List</strong>
+      </li>
+    </ul>
+  </li>
+  <li>
+    <h3 id="MechanicInfluences">4.5 Mechanic Influences</h3>
+    <p><em>Super Space Scavengers</em>...</p>
+    <ul>
+      <li>
+        <strong id="MI01">4.5.1 Game01</strong><br />
+        <CENTER>
+        <img src="" width="600" alt="" /><br />
+        <caption>...</caption>
+        <br /><br />
+        </CENTER>
+      </li>
+      <li>
+        <strong id="MI02">4.5.2 Game02</strong><br />
+        <CENTER>
+        <img src="" width="600" alt="" /><br />
+        <caption>...</caption>
+        <br /><br />
+        </CENTER>
+      </li>
+      <li>
+        <strong id="MI03">4.5.3 Game03</strong><br />
+        <CENTER>
+        <img src="" width="600" alt="" /><br />
+        <caption>...</caption>
+        <br /><br />
+        </CENTER>
+      </li>
+    </ul>
+  </li>
 </ul>
