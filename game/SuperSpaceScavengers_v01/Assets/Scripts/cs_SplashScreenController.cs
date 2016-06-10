@@ -31,6 +31,7 @@ public class cs_SplashScreenController : MonoBehaviour
     private int CurrentImage;
     private int TotalImages;
     private float Timer;
+    private bool SplashScreenIsAnimating;
 
 
     #endregion
@@ -55,6 +56,8 @@ public class cs_SplashScreenController : MonoBehaviour
     {
         //initialize CurrentImage
         CurrentImage = 0;
+        SplashScreenIsAnimating = false;
+
         //how many images in the array?
         TotalImages = Array_SplashImages.Length;
 
@@ -71,16 +74,12 @@ public class cs_SplashScreenController : MonoBehaviour
     void Update()
     {
         //only update if we have splash images to show
-        if (TotalImages > 0)
+        if (TotalImages > 0 && !SplashScreenIsAnimating)
         {
             //is timer > PersistDuration
             if (Timer > PersistDuration)
-            {
                 FadeOutSplashScreen();
 
-                //reset timer
-                Timer = 0f;
-            }
             //update timer
             Timer += Time.deltaTime;
         }
@@ -97,30 +96,34 @@ public class cs_SplashScreenController : MonoBehaviour
     ////////////////////////////////////////////////////////////////////*/
     void FadeOutSplashScreen()
     {
-        LeanTween.alpha(SplashScreenImage, 0f, FadeOutDuration);
-        if (CurrentImage != TotalImages)
+        SplashScreenIsAnimating = true;
+        LeanTween.alphaCanvas(SplashScreenImage.GetComponent<CanvasGroup>(), 0f, FadeOutDuration).setOnComplete(FadeInSplashScreen);
+    }
+
+    /*////////////////////////////////////////////////////////////////////
+    //FUNCTION: FadeInSplashScreen()
+    ////////////////////////////////////////////////////////////////////*/
+    void FadeInSplashScreen()
+    {
+        ++CurrentImage;
+        if (CurrentImage < TotalImages)
         {
-            //reset Timer
-            Timer = 0f;
+            SplashScreenImage.GetComponent<Image>().sprite = Array_SplashImages[CurrentImage];
+            LeanTween.alphaCanvas(SplashScreenImage.GetComponent<CanvasGroup>(), 1f, FadeInDuration).setOnComplete(ResetTimer);
         }
 
+        else
+            print("NEXT LEVEL");
 
     }
 
     /*////////////////////////////////////////////////////////////////////
-    //FUNCTION: FUNC_02()
+    //FUNCTION: ResetTimer()
     ////////////////////////////////////////////////////////////////////*/
-    void FUNC_02()
+    void ResetTimer()
     {
-        //CONTENT HERE
-    }
-
-    /*////////////////////////////////////////////////////////////////////
-    //FUNCTION: FUNC_03()
-    ////////////////////////////////////////////////////////////////////*/
-    void FUNC_03()
-    {
-        //CONTENT HERE
+        Timer = 0f;
+        SplashScreenIsAnimating = false;
     }
 
     /*////////////////////////////////////////////////////////////////////
