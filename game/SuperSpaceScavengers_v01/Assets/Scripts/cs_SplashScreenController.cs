@@ -20,19 +20,18 @@ public class cs_SplashScreenController : MonoBehaviour
     public Sprite[] Array_SplashImages;
 
     [Header("SPLASH ANIMATION")]
-    public float PersistDuration;
-    public float FadeInDuration;
-    public float FadeOutDuration;
+    public float FadeTime;
+    public float ScaleInFactor;
+    public float ScaleInTime;
 
     [Header("SKIP SPLASH SCREEN CONTROLS")]
     KeyCode KBSkipKey = KeyCode.A;
 
     //attributes
+    private Vector3 SplashScreenOriginalScale;
     private int CurrentImage;
     private int TotalImages;
     private float Timer;
-    private bool SplashScreenIsAnimating;
-
 
     #endregion
 
@@ -56,35 +55,16 @@ public class cs_SplashScreenController : MonoBehaviour
     {
         //initialize CurrentImage
         CurrentImage = 0;
-        SplashScreenIsAnimating = false;
+        SplashScreenOriginalScale = SplashScreenImage.transform.localScale;
 
         //how many images in the array?
         TotalImages = Array_SplashImages.Length;
 
         SplashScreenImage.GetComponent<Image>().sprite = Array_SplashImages[0];
-    }
 
-    #endregion
-
-    #region UPDATE
-
-    /*////////////////////////////////////////////////////////////////////
-    //FUNCTION: Update()
-    ////////////////////////////////////////////////////////////////////*/
-    void Update()
-    {
-        //only update if we have splash images to show
-        if (TotalImages > 0 && !SplashScreenIsAnimating)
-        {
-            //is timer > PersistDuration
-            if (Timer > PersistDuration)
-                FadeOutSplashScreen();
-
-            //update timer
-            Timer += Time.deltaTime;
-        }
-        else
-            Debug.LogWarning("There are no splash images to show");
+        //everything is set, start animating splashscreen
+        AnimateFadeIn();
+        AnimateScaleIn();
     }
 
     #endregion
@@ -92,54 +72,30 @@ public class cs_SplashScreenController : MonoBehaviour
     #region X_FUNCTIONS
 
     /*////////////////////////////////////////////////////////////////////
-    //FUNCTION: FadeOutSplashScreen()
+    //FUNCTION: AnimateFadeIn()
     ////////////////////////////////////////////////////////////////////*/
-    void FadeOutSplashScreen()
+    void AnimateFadeIn()
     {
-        SplashScreenIsAnimating = true;
-        LeanTween.alphaCanvas(SplashScreenImage.GetComponent<CanvasGroup>(), 0f, FadeOutDuration).setOnComplete(FadeInSplashScreen);
+        print("AnimateFadeIn");
+        LeanTween.alphaCanvas(SplashScreenImage.GetComponent<CanvasGroup>(), 1f, FadeTime).setOnComplete(AnimateFadeOut);
     }
 
     /*////////////////////////////////////////////////////////////////////
-    //FUNCTION: FadeInSplashScreen()
+    //FUNCTION: AnimateScaleIn(GameObject)
     ////////////////////////////////////////////////////////////////////*/
-    void FadeInSplashScreen()
+    void AnimateScaleIn()
     {
-        ++CurrentImage;
-        if (CurrentImage < TotalImages)
-        {
-            SplashScreenImage.GetComponent<Image>().sprite = Array_SplashImages[CurrentImage];
-            LeanTween.alphaCanvas(SplashScreenImage.GetComponent<CanvasGroup>(), 1f, FadeInDuration).setOnComplete(ResetTimer);
-        }
-
-        else
-            print("NEXT LEVEL");
-
+        print("AnimateScaleIn");
+        LeanTween.scale(SplashScreenImage.GetComponent<RectTransform>(), (SplashScreenImage.transform.localScale * ScaleInFactor), ScaleInTime).setOnComplete(EvaluateSplashScreensRemaining);
     }
 
     /*////////////////////////////////////////////////////////////////////
-    //FUNCTION: ResetTimer()
+    //FUNCTION: AnimateFadeOut()
     ////////////////////////////////////////////////////////////////////*/
-    void ResetTimer()
+    void AnimateFadeOut()
     {
-        Timer = 0f;
-        SplashScreenIsAnimating = false;
-    }
-
-    /*////////////////////////////////////////////////////////////////////
-    //FUNCTION: FUNC_04()
-    ////////////////////////////////////////////////////////////////////*/
-    void FUNC_04()
-    {
-        //CONTENT HERE
-    }
-
-    /*////////////////////////////////////////////////////////////////////
-    //FUNCTION: FUNC_05()
-    ////////////////////////////////////////////////////////////////////*/
-    void FUNC_05()
-    {
-        //CONTENT HERE
+        print("AnimateFadeOut");
+        LeanTween.alphaCanvas(SplashScreenImage.GetComponent<CanvasGroup>(), 0f, FadeTime).setDelay(FadeTime * 2);
     }
 
     #endregion
@@ -147,19 +103,35 @@ public class cs_SplashScreenController : MonoBehaviour
     #region ANIMATION
 
     /*////////////////////////////////////////////////////////////////////
-    //FUNCTION: FUNC_06()
+    //FUNCTION: EvaluateSplashScreensRemaining()
     ////////////////////////////////////////////////////////////////////*/
-    void FUNC_06()
+    void EvaluateSplashScreensRemaining()
     {
-        //CONTENT HERE
+        print("EvaluateSplashScreensRemaining");
+        ++CurrentImage;
+        if (CurrentImage < TotalImages)
+        {
+            ResetSplashScreenScale();
+            print("CurrentImage number is now " + CurrentImage);
+            SplashScreenImage.GetComponent<Image>().sprite = Array_SplashImages[CurrentImage];
+            AnimateFadeIn();
+            AnimateScaleIn();
+        }
+
+        else
+        {
+            print("NEXT LEVEL");
+        }
     }
 
     /*////////////////////////////////////////////////////////////////////
-    //FUNCTION: FUNC_07()
+    //FUNCTION: ResetSplashScreenScale()
     ////////////////////////////////////////////////////////////////////*/
-    void FUNC_07()
+    void ResetSplashScreenScale()
     {
-        //CONTENT HERE
+        print("ResetSplashScreenScale");
+        SplashScreenImage.transform.localScale = SplashScreenOriginalScale;
+        SplashScreenImage.GetComponent<CanvasGroup>().alpha = 0f;
     }
 
     #endregion
