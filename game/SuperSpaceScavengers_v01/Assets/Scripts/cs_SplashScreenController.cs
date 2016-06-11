@@ -10,6 +10,7 @@
 using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class cs_SplashScreenController : MonoBehaviour
 {
@@ -23,9 +24,13 @@ public class cs_SplashScreenController : MonoBehaviour
     public float FadeTime;
     public float ScaleInFactor;
     public float ScaleInTime;
+    public float DelayBetweenSplashScreens;
+
+    [Header("NEXT SCENE TO LOAD")]
+    public string StartScene;
 
     [Header("SKIP SPLASH SCREEN CONTROLS")]
-    KeyCode KBSkipKey = KeyCode.A;
+    public KeyCode KBSkipKey = KeyCode.A;
 
     //attributes
     private Vector3 SplashScreenOriginalScale;
@@ -38,18 +43,16 @@ public class cs_SplashScreenController : MonoBehaviour
     #region INITIALIZATION
 
     /*////////////////////////////////////////////////////////////////////
-    //FUNCTION: Awake()
+    //Awake()
     ////////////////////////////////////////////////////////////////////*/
     void Awake()
     {
         if(SplashScreenImage == null)
-        {
             Debug.LogWarning("SplashScreenImage is not set, please set GameObject in Inspector");
-        }
     }
 
     /*////////////////////////////////////////////////////////////////////
-    //FUNCTION: Start()
+    //Start()
     ////////////////////////////////////////////////////////////////////*/
     void Start()
     {
@@ -60,7 +63,9 @@ public class cs_SplashScreenController : MonoBehaviour
         //how many images in the array?
         TotalImages = Array_SplashImages.Length;
 
+        //set initial splash screen image
         SplashScreenImage.GetComponent<Image>().sprite = Array_SplashImages[0];
+        SplashScreenImage.GetComponent<CanvasGroup>().alpha = 0;
 
         //everything is set, start animating splashscreen
         AnimateFadeIn();
@@ -69,69 +74,89 @@ public class cs_SplashScreenController : MonoBehaviour
 
     #endregion
 
-    #region X_FUNCTIONS
+    #region ANIMATION
 
     /*////////////////////////////////////////////////////////////////////
-    //FUNCTION: AnimateFadeIn()
+    //AnimateFadeIn()
     ////////////////////////////////////////////////////////////////////*/
     void AnimateFadeIn()
     {
-        print("AnimateFadeIn");
+        //DEBUG
+        //print("AnimateFadeIn()");
         LeanTween.alphaCanvas(SplashScreenImage.GetComponent<CanvasGroup>(), 1f, FadeTime).setOnComplete(AnimateFadeOut);
     }
 
     /*////////////////////////////////////////////////////////////////////
-    //FUNCTION: AnimateScaleIn(GameObject)
+    //AnimateScaleIn(GameObject)
     ////////////////////////////////////////////////////////////////////*/
     void AnimateScaleIn()
     {
-        print("AnimateScaleIn");
+        //DEBUG
+        //print("AnimateScaleIn()");
+
         LeanTween.scale(SplashScreenImage.GetComponent<RectTransform>(), (SplashScreenImage.transform.localScale * ScaleInFactor), ScaleInTime).setOnComplete(EvaluateSplashScreensRemaining);
     }
 
     /*////////////////////////////////////////////////////////////////////
-    //FUNCTION: AnimateFadeOut()
+    //AnimateFadeOut()
     ////////////////////////////////////////////////////////////////////*/
     void AnimateFadeOut()
     {
-        print("AnimateFadeOut");
+        //DEBUG
+        //print("AnimateFadeOut()");
+
         LeanTween.alphaCanvas(SplashScreenImage.GetComponent<CanvasGroup>(), 0f, FadeTime).setDelay(FadeTime * 2);
     }
 
     #endregion
 
-    #region ANIMATION
+    #region EVALUATION
 
     /*////////////////////////////////////////////////////////////////////
-    //FUNCTION: EvaluateSplashScreensRemaining()
+    //EvaluateSplashScreensRemaining()
     ////////////////////////////////////////////////////////////////////*/
     void EvaluateSplashScreensRemaining()
     {
-        print("EvaluateSplashScreensRemaining");
+        //DEBUG
+        //print("EvaluateSplashScreensRemaining()");
+
+        //increment to next image
         ++CurrentImage;
+        //DEBUG
+        //print("CurrentImage number is now " + CurrentImage);
+
+        //are we still within the bounds of the array of splash screen images
         if (CurrentImage < TotalImages)
         {
-            ResetSplashScreenScale();
-            print("CurrentImage number is now " + CurrentImage);
+            //reset splash screen scale/alpha
+            StartCoroutine(ResetSplashScreen());
+            //update to new splash screen image
             SplashScreenImage.GetComponent<Image>().sprite = Array_SplashImages[CurrentImage];
-            AnimateFadeIn();
-            AnimateScaleIn();
         }
 
         else
         {
-            print("NEXT LEVEL");
+            //DEBUG
+            //print("NEXT LEVEL");
+
+            //load the main menu
+            SceneManager.LoadScene(StartScene);
         }
     }
 
     /*////////////////////////////////////////////////////////////////////
-    //FUNCTION: ResetSplashScreenScale()
+    //ResetSplashScreen()
     ////////////////////////////////////////////////////////////////////*/
-    void ResetSplashScreenScale()
+    IEnumerator ResetSplashScreen()
     {
-        print("ResetSplashScreenScale");
+        //DEBUG
+        //print("ResetSplashScreen()");
+
+        yield return new WaitForSeconds(DelayBetweenSplashScreens);
         SplashScreenImage.transform.localScale = SplashScreenOriginalScale;
         SplashScreenImage.GetComponent<CanvasGroup>().alpha = 0f;
+        AnimateFadeIn();
+        AnimateScaleIn();
     }
 
     #endregion
