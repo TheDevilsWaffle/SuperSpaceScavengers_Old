@@ -1,7 +1,6 @@
 ﻿/*/////////////////////////////////////////////////////////////////////////
 //SCRIPT - GamePadInput.cs
-//AUTHOR - Auston Lindsay
-//COPYRIGHT - © 2016 DigiPen Institute of Technology
+//AUTHOR - Travis Moore & Auston Lindsay
 /////////////////////////////////////////////////////////////////////////*/
 
 using UnityEngine;
@@ -18,6 +17,7 @@ public enum GamePadStick { LeftVertical, RightVertical, LeftHorizontal, RightHor
 
 public class GamePadInput : MonoBehaviour
 {
+    /*
     //REGULAR BUTTONS
     private static ButtonState[][] GamePadButtonStatesThisFrame = { new ButtonState[11], new ButtonState[11], new ButtonState[11], new ButtonState[11] };
     private static ButtonState[][] GamePadButtonStatesLastFrame = { new ButtonState[11], new ButtonState[11], new ButtonState[11], new ButtonState[11] };
@@ -246,10 +246,10 @@ public class GamePadInput : MonoBehaviour
         else
             return InputState.Inactive;
     }
-
+    /*
     /*************************************************************************************************************/
     /*       Below are functions which store values for various types of buttons and axes on the gamepad         */
-
+    /*
     private static void StoreButtonStates(int gamePadIndex)
     {
         GamePadInput.GamePadButtonStatesThisFrame[gamePadIndex][0] = GamePadInput.States[gamePadIndex].Buttons.A;
@@ -311,4 +311,5 @@ public class GamePadInput : MonoBehaviour
         GamePadInput.GamePadStickStatesLastFrame[gamePadIndex][2] = GamePadInput.StatesLastFrame[gamePadIndex].ThumbSticks.Left.X;
         GamePadInput.GamePadStickStatesLastFrame[gamePadIndex][3] = GamePadInput.StatesLastFrame[gamePadIndex].ThumbSticks.Right.X;
     }
+    */
 }
