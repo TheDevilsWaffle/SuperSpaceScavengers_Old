@@ -13,7 +13,7 @@ using XInputDotNetPure; // Required in C#
 
 #region STRUCTS
 
-public struct MyInput
+public struct CurrentInput
 {
     public Vector2 ThumbstickInput;
 }
@@ -33,7 +33,7 @@ public class cs_PlayerInput : MonoBehaviour
     private PlayerIndex Player;
     private GamePadState CurrentState;
     private GamePadState PreviousState;
-    public MyInput Current;
+    public CurrentInput CurrentInput;
     private Vector2 CurrentThumbstickInput;
 
     #endregion
@@ -113,7 +113,7 @@ public class cs_PlayerInput : MonoBehaviour
     ////////////////////////////////////////////////////////////////////*/
     void UpdatePlayerInput()
     {
-        this.Current = new MyInput()
+        this.CurrentInput = new CurrentInput()
         {
             ThumbstickInput = this.CurrentThumbstickInput
         };
