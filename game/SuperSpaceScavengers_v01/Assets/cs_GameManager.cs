@@ -15,7 +15,8 @@ public class cs_GameManager : MonoBehaviour
     #region PROPERTIES
 
     //references
-
+    public Maze mazePrefab;
+    private Maze mazeInstance;
 
     //attributes
 
@@ -50,7 +51,7 @@ public class cs_GameManager : MonoBehaviour
     ////////////////////////////////////////////////////////////////////*/
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if(Input.GetKeyDown(KeyCode.Space))
             RestartGame();
     }
 
@@ -63,7 +64,8 @@ public class cs_GameManager : MonoBehaviour
     ////////////////////////////////////////////////////////////////////*/
     void BeginGame()
     {
-        //CONTENT HERE
+        mazeInstance = Instantiate(mazePrefab) as Maze;
+        StartCoroutine(mazeInstance.Generate());
     }
 
     /*////////////////////////////////////////////////////////////////////
@@ -71,7 +73,10 @@ public class cs_GameManager : MonoBehaviour
     ////////////////////////////////////////////////////////////////////*/
     void RestartGame()
     {
-        //CONTENT HERE
+        StopAllCoroutines();
+        Destroy(mazeInstance.gameObject);
+        BeginGame();
+        print("restarting");
     }
 
     /*////////////////////////////////////////////////////////////////////
