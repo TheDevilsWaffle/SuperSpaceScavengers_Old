@@ -25,10 +25,8 @@ public class cs_CharacterMovement : MonoBehaviour
 
     //attributes
     public float WalkSpeed = 3f;
-    public float RunSpeed = 9f;
     public float JumpSpeed = 500f;
     public bool HasAirControl = false;
-    public Vector2 WallClingGravity = new Vector2(0f, 1f);
 
     //ground
     [SerializeField]
@@ -41,7 +39,6 @@ public class cs_CharacterMovement : MonoBehaviour
     Vector3 GroundNormal;
 
     //components
-    private Animator Animator;
     private Rigidbody Rigidbody;
 
     #endregion
@@ -82,13 +79,13 @@ public class cs_CharacterMovement : MonoBehaviour
         CInput = PInput.CurrentInput;
 
         //check to make sure the character is grounded
-        this.CheckIfGrounded();
+        //this.CheckIfGrounded();
 
         //update the movement of this character
-        this.UpdateMovement(CInput.ThumbstickInput);
+        this.UpdateMovement(CInput.LeftThumbstickInput);
 
         //update jumping
-        //this.UpdateJumping(this.CurrentInput.JumpInput);
+        this.UpdateJumping(CInput.JumpInput);
     }
 
     #endregion
@@ -98,22 +95,9 @@ public class cs_CharacterMovement : MonoBehaviour
     /*////////////////////////////////////////////////////////////////////
     //CheckIfGrounded()
     ////////////////////////////////////////////////////////////////////*/
-    void CheckIfGrounded()
+    bool CheckIfGrounded()
     {
-        RaycastHit HitInfo;
-        Debug.DrawLine((transform.position + (Vector3.up * 0.1f)),
-                       (transform.position + (Vector3.up * 0.1f)) + (Vector3.down * GroundCheckDistance));
-
-        if(Physics.Raycast(transform.position + (Vector3.up * 0.1f), Vector3.down, out HitInfo, GroundCheckDistance))
-        {
-            GroundNormal = HitInfo.normal;
-            IsGrounded = true;
-        }
-        else
-        {
-            GroundNormal = Vector3.up;
-            IsGrounded = false;
-        }
+        return Physics.Raycast(Model.transform.position, -Vector3.up, 1.1f);
     }
 
     /*////////////////////////////////////////////////////////////////////
@@ -122,20 +106,40 @@ public class cs_CharacterMovement : MonoBehaviour
     void UpdateMovement(Vector2 moveInput_)
     {
         //print(moveInput_);
+        Vector3 currentVelocity = new Vector3((moveInput_.x * WalkSpeed),
+                                              RBody.velocity.y,
+                                              (moveInput_.y * WalkSpeed));
 
-        Vector3 finalVelocity = new Vector3((moveInput_.x * WalkSpeed),
-                                            0f,
-                                            (moveInput_.y * WalkSpeed));
+        RBody.velocity = currentVelocity;
 
-        RBody.velocity = finalVelocity;
+        if(currentVelocity != Vector3.zero)
+        {
+            UpdateRotation(moveInput_);
+        }
     }
 
     /*////////////////////////////////////////////////////////////////////
+    //UpdateRotation()
+    ////////////////////////////////////////////////////////////////////*/
+    void UpdateRotation(Vector2 moveInput_)
+    {
+        Vector3 currentRotation = new Vector3(Model.transform.eulerAngles.x,
+                                              Mathf.Atan2(moveInput_.x, moveInput_.y) * Mathf.Rad2Deg,
+                                              Model.transform.eulerAngles.z);
+        Model.transform.eulerAngles = currentRotation;
+        //print(Model.transform.eulerAngles);
+    }
+    
+    /*////////////////////////////////////////////////////////////////////
     //UpdateJumping()
     ////////////////////////////////////////////////////////////////////*/
-    void UpdateJumping()
+    void UpdateJumping(bool jumpInput_)
     {
-
+        if (CheckIfGrounded() && jumpInput_)
+        {
+            RBody.AddForce(Vector3.up * this.JumpSpeed, ForceMode.Impulse);
+            //print(Vector3.up * this.JumpSpeed);
+        }
     }
 
     /*////////////////////////////////////////////////////////////////////

@@ -15,7 +15,8 @@ using XInputDotNetPure; // Required in C#
 
 public struct CurrentInput
 {
-    public Vector2 ThumbstickInput;
+    public Vector2 LeftThumbstickInput;
+    public bool JumpInput;
 }
 
 #endregion
@@ -35,6 +36,7 @@ public class cs_PlayerInput : MonoBehaviour
     private GamePadState PreviousState;
     public CurrentInput CurrentInput;
     private Vector2 CurrentThumbstickInput;
+    private bool CurrentJumpInput;
 
     #endregion
 
@@ -66,6 +68,8 @@ public class cs_PlayerInput : MonoBehaviour
 
 
         this.UpdatePlayerInput();
+
+        this.UpdateButtons(this.CurrentState, this.PreviousState);
     }
 
     #endregion
@@ -92,15 +96,35 @@ public class cs_PlayerInput : MonoBehaviour
     }
 
     /*////////////////////////////////////////////////////////////////////
-    //FUNCTION: UpdateDialogueButton()
+    //UpdateButtons()
     ////////////////////////////////////////////////////////////////////*/
-    void UpdateDialogueButton(GamePadState current_, GamePadState previous_)
+    void UpdateButtons(GamePadState current_, GamePadState previous_)
     {
+        CurrentJumpInput = false;
         //pressing A
         if (current_.Buttons.A == ButtonState.Pressed 
             && previous_.Buttons.A == ButtonState.Released)
         {
+            CurrentJumpInput = true;
             print("Gamepad A was pressed");
+        }
+
+        else if (current_.Buttons.B == ButtonState.Pressed
+            && previous_.Buttons.B == ButtonState.Released)
+        {
+            print("Gamepad B was pressed");
+        }
+
+        else if (current_.Buttons.X == ButtonState.Pressed
+            && previous_.Buttons.X == ButtonState.Released)
+        {
+            print("Gamepad X was pressed");
+        }
+
+        else if (current_.Buttons.Y == ButtonState.Pressed
+            && previous_.Buttons.Y == ButtonState.Released)
+        {
+            print("Gamepad Y was pressed");
         }
     }
 
@@ -115,7 +139,9 @@ public class cs_PlayerInput : MonoBehaviour
     {
         this.CurrentInput = new CurrentInput()
         {
-            ThumbstickInput = this.CurrentThumbstickInput
+            LeftThumbstickInput = this.CurrentThumbstickInput,
+            JumpInput = this.CurrentJumpInput
+            
         };
     }
 
