@@ -119,6 +119,7 @@ public class cs_PlayerInput : MonoBehaviour
             && previous_.Buttons.X == ButtonState.Released)
         {
             print("Gamepad X was pressed");
+
         }
 
         else if (current_.Buttons.Y == ButtonState.Pressed
