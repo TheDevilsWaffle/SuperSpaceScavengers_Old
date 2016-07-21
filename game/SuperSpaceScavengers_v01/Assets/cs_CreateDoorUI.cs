@@ -67,10 +67,13 @@ public class cs_CreateDoorUI : MonoBehaviour
         {
             this.isDoorUICreated = true;
             Vector3 canvasLocation = Camera.main.WorldToViewportPoint(doorLocation_);
+
             print("canvasLocation = " + canvasLocation);
             print("CreateDoorUI was called!");
+
             GameObject doorUISlider = (GameObject)Instantiate(Resources.Load("DoorUI"), canvasLocation, Quaternion.identity);
             doorUISlider.transform.SetParent(this.gameObject.transform, false);
+
             print("doorUISlider world location = " + doorUISlider.transform.position);
             print("doorUISlider RectTransform location = " + doorUISlider.GetComponent<RectTransform>().localPosition);
         }

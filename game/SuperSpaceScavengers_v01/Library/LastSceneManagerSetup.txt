@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/Scenes/Test/sce_test_pgc.unity
+- path: D:/Library/MyDownloads/Snake(Original)/Snake(Original)/Assets/Uni2DSnake.unity
   isLoaded: 1
   isActive: 1
