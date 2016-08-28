@@ -222,6 +222,9 @@ public class GamePadInput : MonoBehaviour
 
         //check the gamepad buttons
         CheckGamePadStates(prevState, state);
+
+        //DEBUG — CHECK BUTTON STATUS
+        //print(GamePadInputStatus.LeftAnalogStick + " and the angle is = " + GamePadInputStatus.LeftAnalogStickAngle);
     }
 
 
@@ -565,9 +568,9 @@ public class GamePadInput : MonoBehaviour
         //analog sticks !REMEMBER that angles are funky (UP is 90° RIGHT = 0°, DOWN = -90°, and LEFT = 180°)
         #region LEFT ANALOG STICK
         //respect deadzones
-        if (_current.ThumbSticks.Left.X < AnalogStickDeadZone ||
+        if (_current.ThumbSticks.Left.X < -AnalogStickDeadZone ||
             _current.ThumbSticks.Left.X > AnalogStickDeadZone ||
-            _current.ThumbSticks.Left.Y < AnalogStickDeadZone ||
+            _current.ThumbSticks.Left.Y < -AnalogStickDeadZone ||
             _current.ThumbSticks.Left.Y > AnalogStickDeadZone)
         {
             //store value of x and y, along with the angle (UP is 90° RIGHT = 0°, DOWN = -90°, and LEFT = 180°)
@@ -579,9 +582,9 @@ public class GamePadInput : MonoBehaviour
         //analog sticks !REMEMBER that angles are funky (UP is 90° RIGHT = 0°, DOWN = -90°, and LEFT = 180°)
         #region RIGHT ANALOG STICK
         //respect deadzones
-        if (_current.ThumbSticks.Right.X < AnalogStickDeadZone ||
+        if (_current.ThumbSticks.Right.X < -AnalogStickDeadZone ||
             _current.ThumbSticks.Right.X > AnalogStickDeadZone ||
-            _current.ThumbSticks.Right.Y < AnalogStickDeadZone ||
+            _current.ThumbSticks.Right.Y < -AnalogStickDeadZone ||
             _current.ThumbSticks.Right.Y > AnalogStickDeadZone)
         {
             //store value of x and y, along with the angle (UP is 90° RIGHT = 0°, DOWN = -90°, and LEFT = 180°)
