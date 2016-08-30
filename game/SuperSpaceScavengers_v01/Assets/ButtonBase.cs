@@ -55,24 +55,32 @@ public class ButtonBase : MonoBehaviour
         get { return transform.localRotation; }
     }
 
-    //functionality
+    MenuSystem menuSystem;
     public string levelToLoad;
-    public Canvas menuToLoad;
-    public float delayBeforeLoad = 2.0f;
+    public Menu menuToLoad;
 
-    [Header("BUTTON")]
+    [Header("INACTIVE")]
     public Color color_inactive = new Color(1f,1f,1f,1f);
+    public Color textColor_inactive = new Color(0f, 0f, 0f, 1f);
+    public ButtonActionBase inactive;
+
+    [Header("HOVER")]
     public Color color_hover = new Color(1f, 1f, 1f, 1f);
+    public Color textColor_hover = new Color(0f, 0f, 0f, 1f);
+    public ButtonActionBase hover;
+
+    [Header("ACTIVE")]
     public Color color_active = new Color(1f, 1f, 1f, 1f);
+    public Color textColor_active = new Color(0f, 0f, 0f, 1f);
+    public ButtonActionBase active;
+
+    [Header("DISABLED")]
     public Color color_disabled = new Color(1f, 1f, 1f, 1f);
+    public Color textColor_disabled = new Color(0f, 0f, 0f, 1f);
+    public ButtonActionBase disabled;
+
     [HideInInspector]
     public Image button;
-    
-    [Header("TEXT")]
-    public Color textColor_inactive = new Color(0f, 0f, 0f, 1f);
-    public Color textColor_hover = new Color(0f, 0f, 0f, 1f);
-    public Color textColor_active = new Color(0f, 0f, 0f, 1f);
-    public Color textColor_disabled = new Color(0f, 0f, 0f, 1f);
     [HideInInspector]
     public Text text;
 
@@ -94,6 +102,9 @@ public class ButtonBase : MonoBehaviour
     ///////////////////////////////////////////////////////////////////////////////////////////////
     protected virtual void Awake()
     {
+        //get MenuSystem
+        menuSystem = transform.root.gameObject.GetComponent<MenuSystem>();
+
         //get the button and text
         button = GetComponent<Image>();
         text = transform.Find("Text").gameObject.GetComponent<Text>();
@@ -115,7 +126,7 @@ public class ButtonBase : MonoBehaviour
     #region METHODS
     ///////////////////////////////////////////////////////////////////////////////////////////////
     /// <summary>
-    /// sets a button to ButtonState.INACTIVE
+    /// sets a menu button to MenuButtonState.INACTIVE
     /// </summary>
     ///////////////////////////////////////////////////////////////////////////////////////////////
     public virtual void Inactive()
@@ -126,11 +137,17 @@ public class ButtonBase : MonoBehaviour
         //simple change real quick
         button.color = color_inactive;
         text.color = textColor_inactive;
+
+        //perform action
+        if (inactive != null)
+        {
+            //action_inactive.Action();
+        }
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////
     /// <summary>
-    /// sets a button to ButtonState.HOVER
+    /// sets a menu button to MenuButtonState.HOVER
     /// </summary>
     ///////////////////////////////////////////////////////////////////////////////////////////////
     public virtual void Hover()
@@ -141,28 +158,57 @@ public class ButtonBase : MonoBehaviour
         //simple change real quick
         button.color = color_hover;
         text.color = textColor_hover;
+
+        //perform action
+        if (hover != null)
+        {
+            //action_hover.Action();
+        }
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////
     /// <summary>
-    /// sets a button to ButtonState.ACTIVE
+    /// sets a menu button to MenuButtonState.ACTIVE
     /// </summary>
     ///////////////////////////////////////////////////////////////////////////////////////////////
     public virtual void Active()
     {
         //update status
         currentState = MenuButtonState.ACTIVE;
+
+        //simple change real quick
+        button.color = color_active;
+        text.color = textColor_active;
+
+        //perform action
+        if (active != null)
+        {
+            //action_active.Action();
+        }
+
+        if(menuToLoad != null)
+        {
+            StartCoroutine(menuSystem.LoadNewMenu(menuToLoad));
+        }
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////
     /// <summary>
-    /// sets a button to ButtonState.DISABLED
+    /// sets a menu button to MenuButtonState.DISABLED
     /// </summary>
     ///////////////////////////////////////////////////////////////////////////////////////////////
     public virtual void Disabled()
     {
         //update status
         currentState = MenuButtonState.DISABLED;
+        button.color = color_disabled;
+        text.color = textColor_disabled;
+
+        //perform action
+        if (disabled != null)
+        {
+            //action_inactive.Action();
+        }
     }
     #endregion
 }

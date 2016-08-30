@@ -12,11 +12,34 @@ using XInputDotNetPure; // Required in C#
 
 #region ENUMS
 public enum GamePadButtonState
-{ INACTIVE,
+{
+    INACTIVE,
     PRESSED,
     HELD,
     RELEASED
 };
+#endregion
+
+#region EVENTS
+public class Event_GamePadInput_Player1 : GameEvent
+{
+    public GamePadInputData p1 = GamePadInput.players[0];
+}
+
+public class Event_GamePadInput_Player2 : GameEvent
+{
+    public GamePadInputData p2 = GamePadInput.players[1];
+}
+
+public class Event_GamePadInput_Player3 : GameEvent
+{
+    public GamePadInputData p3 = GamePadInput.players[2];
+}
+
+public class Event_GamePadInput_Player4 : GameEvent
+{
+    public GamePadInputData p4 = GamePadInput.players[3];
+}
 #endregion
 
 public class GamePadInput : MonoBehaviour
@@ -25,10 +48,10 @@ public class GamePadInput : MonoBehaviour
     [Header("ENABLE/DISABLE")]
     public bool isGamePadEnabled = true;
 
-    [Header("NUMBER OF PLAYERS")]
+    [Header("PLAYER")]
     [Range(1, 4)]
     [SerializeField]
-    uint numberOfplayers = 1;
+    public int player = 1;
 
     [Header("DEAD ZONES")]
     [Range(0, 1)]
@@ -48,26 +71,29 @@ public class GamePadInput : MonoBehaviour
     #endregion
 
     #region INITIALIZATION
+    ///////////////////////////////////////////////////////////////////////////////////////////////
     /// <summary>
     /// Awake()
     /// </summary>
+    ///////////////////////////////////////////////////////////////////////////////////////////////
     void Awake()
     {
     }
-
+    ///////////////////////////////////////////////////////////////////////////////////////////////
     /// <summary>
     /// Start()
     /// </summary>
+    ///////////////////////////////////////////////////////////////////////////////////////////////
     void Start()
     {
         //because programmers like to start with 0
-        numberOfplayers -= 1;
+        player -= 1;
 
         //create list of players
         players = new List<GamePadInputData>();
-        
+
         //popluate list of players based on numberOfPlayers
-        PopulatePlayers(numberOfplayers);
+        players.Add(new GamePadInputData());
 
         // Find a PlayerIndex, for a single player game
         // Will find the first controller that is connected and use it
@@ -88,69 +114,55 @@ public class GamePadInput : MonoBehaviour
     #endregion
 
     #region UPDATE
+    ///////////////////////////////////////////////////////////////////////////////////////////////
     /// <summary>
     /// Update()
     /// </summary>
+    ///////////////////////////////////////////////////////////////////////////////////////////////
     void Update()
     {
         //gamepad enabled? go through the update loop
         if (isGamePadEnabled)
         {
-            uint _playerIndex = 0;
-            //cycle through each player, check if they actually exist
-            for (; _playerIndex <= numberOfplayers; ++_playerIndex)
+            //first test to make sure there's a controller there to update
+            GamePadState _testState = GamePad.GetState((PlayerIndex)player);
+            if (_testState.IsConnected)
             {
-                //first test to make sure there's a controller there to update
-                GamePadState _testState = GamePad.GetState((PlayerIndex)_playerIndex);
-                if (_testState.IsConnected)
-                {
-                    //update the previous and currentstate
-                    previousState = currentState;
-                    currentState = GamePad.GetState((PlayerIndex)_playerIndex);
+                //update the previous and currentstate
+                previousState = currentState;
+                currentState = GamePad.GetState((PlayerIndex)player);
 
-                    //check the gamepad buttons
-                    CheckGamePadStates((int)_playerIndex, previousState, currentState);
-                }
-                else
-                {
-                    Debug.LogError("ERROR! Player Index for Player " + _playerIndex + " no longer exists? " + GamePad.GetState((PlayerIndex)_playerIndex));
-                }
-                //DEBUG — CHECK BUTTON STATUS
-                //print("L3 ANALOG STICK = " + players[(int)_playerIndex].L3);
-                /*
-                print("L3 BUTTON IS = " + players[(int)_playerIndex].L3 + 
-                        " , HELD TIMER = " + players[(int)_playerIndex].L3_HeldTimer  + 
-                        " , and RELEASED TIMER = " + players[(int)_playerIndex].L3_ReleasedTimer);
-                */
-                //print("PLAYER " + _playerIndex + ": " + players[(int)_playerIndex].LeftAnalogStick + " and the angle is = " + players[(int)_playerIndex].LeftAnalogStickAngle);
+                //check the gamepad buttons
+                CheckGamePadStates(player, previousState, currentState);
+
+                //create input event for this player
+                CreateGamePadInputEvent(player);
             }
-        }
+            else
+            {
+                Debug.LogError("ERROR! Player Index for Player " + player + " no longer exists? " + GamePad.GetState((PlayerIndex)player));
+            }
 
+            //DEBUG — CHECK BUTTON STATUS
+            //print("L3 ANALOG STICK = " + players[(int)_playerIndex].L3);
+            /*
+            print("L3 BUTTON IS = " + players[(int)_playerIndex].L3 + 
+                    " , HELD TIMER = " + players[(int)_playerIndex].L3_HeldTimer  + 
+                    " , and RELEASED TIMER = " + players[(int)_playerIndex].L3_ReleasedTimer);
+            */
+            //print("PLAYER " + _playerIndex + ": " + players[(int)_playerIndex].LeftAnalogStick + " and the angle is = " + players[(int)_playerIndex].LeftAnalogStickAngle);
+        }
     }
     #endregion
 
     #region METHODS
-    /// <summary>
-    /// Creates an array of GamePadInputData based on how many players are in the game
-    /// </summary>
-    /// <param name="_numberOfPlayers"># of players</param>
-    void PopulatePlayers(uint _numberOfPlayers)
-    {
-        //cycle through the amount of players, add GamePadInputData as needed
-        for (uint i = 0; i <= _numberOfPlayers; ++i)
-        {
-            players.Add(new GamePadInputData());
-        }
-
-        //DEBUG — HOW MANY PLAYERS ASSIGNED?
-        //print("Players size = " + players.Count);
-    }
-
+    ///////////////////////////////////////////////////////////////////////////////////////////////
     /// <summary>
     /// Checks the INACTIVE, PRESSED, HELD, and RELEASED status of buttons
     /// </summary>
     /// <param name="_previous">last frame GamePad Input</param>
     /// <param name="_current">current frame GamePad Input</param>
+    ////////////////////////////////////////////////////////////////////////////////////////////////
     void CheckGamePadStates(int _playerIndex, GamePadState _previous, GamePadState _current)
     {
         #region Y BUTTON
@@ -209,8 +221,9 @@ public class GamePadInput : MonoBehaviour
         //RELEASED
         if (_previous.Buttons.A == ButtonState.Pressed && _current.Buttons.A == ButtonState.Released)
         {
-            players[_playerIndex].B = GamePadButtonState.RELEASED;
-            players[_playerIndex].B_HeldTimer = 0f;
+            players[_playerIndex].A = GamePadButtonState.RELEASED;
+            players[_playerIndex].A_HeldTimer = 0f;
+
         }
         //HELD
         else if (_previous.Buttons.A == ButtonState.Pressed && _current.Buttons.A == ButtonState.Pressed)
@@ -600,18 +613,47 @@ public class GamePadInput : MonoBehaviour
         }
         #endregion
     }
-
+    ///////////////////////////////////////////////////////////////////////////////////////////////
     /// <summary>
     /// increments passed button timer by delta time
     /// </summary>
     /// <param name="_buttonTimer"> the button timer to increment</param>
     /// <returns></returns>
+    /// ///////////////////////////////////////////////////////////////////////////////////////////////
     float IncrementButtonHeldTimer(float _buttonTimer)
     {
         if (_buttonTimer < maxButtonHeldOrReleasedTime)
             return _buttonTimer += Time.deltaTime;
         else
             return _buttonTimer;
+    }
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    /// <summary>
+    /// Create's a GamePadInput Event based on which player this is
+    /// </summary>
+    /// <param name="_player">which player is this? (1, 2, 3, or 4)</param>
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    void CreateGamePadInputEvent(int _player)
+    {
+        switch (_player)
+        {
+            case 0:
+                Events.instance.Raise(new Event_GamePadInput_Player1());
+                break;
+            case 1:
+                Events.instance.Raise(new Event_GamePadInput_Player2());
+                break;
+            case 2:
+                Events.instance.Raise(new Event_GamePadInput_Player3());
+                break;
+            case 3:
+                Events.instance.Raise(new Event_GamePadInput_Player4());
+                break;
+            default:
+                Debug.Log("default case should never be reached, problem with GamePadInput.cs!");
+                break;
+        }
     }
     #endregion
 }
