@@ -139,7 +139,7 @@ public class GamePadInput : MonoBehaviour
         //cycle through the amount of players, add GamePadInputData as needed
         for (uint i = 0; i <= _numberOfPlayers; ++i)
         {
-            players.Add(new GamePadInputData{ });
+            players.Add(new GamePadInputData());
         }
 
         //DEBUG — HOW MANY PLAYERS ASSIGNED?

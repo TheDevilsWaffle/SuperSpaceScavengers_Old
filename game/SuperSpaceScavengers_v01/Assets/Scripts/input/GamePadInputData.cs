@@ -7,7 +7,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class GamePadInputData : MonoBehaviour
+public class GamePadInputData
 {
     #region Y
     GamePadButtonState y;

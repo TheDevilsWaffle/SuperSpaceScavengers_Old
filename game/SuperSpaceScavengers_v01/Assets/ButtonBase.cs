@@ -1,15 +1,32 @@
-﻿using UnityEngine;
+﻿///////////////////////////////////////////////////////////////////////////////////////////////////
+//AUTHOR — Travis Moore
+//SCRIPT — ButtonBase.cs
+//COPYRIGHT — © 2016 DigiPen Institute of Technology
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+using UnityEngine;
+using System.Collections;
+//using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-using System.Collections;
 
-public enum ButtonStatus { Active, Inactive, OnHover, Disabled };
+#region ENUMS
+public enum MenuButtonState
+{
+    INACTIVE,
+    HOVER,
+    ACTIVE,
+    DISABLED
+};
+#endregion
 
 public class ButtonBase : MonoBehaviour
 {
+    #region FIELDS
     [HideInInspector]
-    public ButtonStatus currentStatus = ButtonStatus.Inactive;
+    public MenuButtonState currentState = MenuButtonState.INACTIVE;
 
+    //trs
     protected Vector3 pos
     {
         get { return transform.localPosition ; }
@@ -25,40 +42,39 @@ public class ButtonBase : MonoBehaviour
         get { return transform.localRotation; }
         set { transform.localRotation = value; }
     }
-    protected Vector3 posOriginal
+    protected Vector3 pos_original
     {
         get { return transform.position; }
     }
-    protected Vector3 scaOriginal
+    protected Vector3 sca_original
     {
         get { return transform.localScale; }
     }
-    protected Quaternion rotOriginal
+    protected Quaternion rot_original
     {
         get { return transform.localRotation; }
     }
+
+    //functionality
     public string levelToLoad;
-    public Canvas canvasToLoad;
+    public Canvas menuToLoad;
     public float delayBeforeLoad = 2.0f;
 
     [Header("BUTTON")]
-    public Color buttonColor_Active;
-    public Color buttonColor_Inactive;
-    public Color buttonColor_OnHover;
-    public Color buttonColor_Disabled;
+    public Color color_inactive = new Color(1f,1f,1f,1f);
+    public Color color_hover = new Color(1f, 1f, 1f, 1f);
+    public Color color_active = new Color(1f, 1f, 1f, 1f);
+    public Color color_disabled = new Color(1f, 1f, 1f, 1f);
     [HideInInspector]
-    public Image buttonImage;
+    public Image button;
     
     [Header("TEXT")]
-    public Color textColor_Active;
-    public Color textColor_Inactive;
-    public Color textColor_OnHover;
-    public Color textColor_Disabled;
+    public Color textColor_inactive = new Color(0f, 0f, 0f, 1f);
+    public Color textColor_hover = new Color(0f, 0f, 0f, 1f);
+    public Color textColor_active = new Color(0f, 0f, 0f, 1f);
+    public Color textColor_disabled = new Color(0f, 0f, 0f, 1f);
     [HideInInspector]
-    public Text buttonText;
-
-    [Header("ANIMATION")]
-    public AnimationBase buttonAnimations;
+    public Text text;
 
     [Header("NODE MAP")]
     public ButtonBase up;
@@ -68,32 +84,85 @@ public class ButtonBase : MonoBehaviour
 
     [HideInInspector]
     public bool isActive;
+    #endregion
 
+    #region INITIALIZATION
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    /// <summary>
+    /// Awake()
+    /// </summary>
+    ///////////////////////////////////////////////////////////////////////////////////////////////
     protected virtual void Awake()
     {
+        //get the button and text
+        button = GetComponent<Image>();
+        text = transform.Find("Text").gameObject.GetComponent<Text>();
+
+        //set trs
         sca = gameObject.transform.localScale;
         rot = gameObject.transform.localRotation;
     }
-    protected virtual void Start(){}
-    public virtual void Active()
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    /// <summary>
+    /// Start()
+    /// </summary>
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    protected virtual void Start()
     {
-        currentStatus = ButtonStatus.Active;
-        buttonAnimations.ButtonActive(buttonImage, buttonText, textColor_Active, buttonColor_Active, posOriginal, scaOriginal, rotOriginal);
     }
+    #endregion
+
+    #region METHODS
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    /// <summary>
+    /// sets a button to ButtonState.INACTIVE
+    /// </summary>
+    ///////////////////////////////////////////////////////////////////////////////////////////////
     public virtual void Inactive()
     {
-        currentStatus = ButtonStatus.Inactive;
-        buttonAnimations.ButtonInactive(buttonImage, buttonText, textColor_Inactive, buttonColor_Inactive, posOriginal, scaOriginal, rotOriginal);       
-    }
-    public virtual void OnHover()
-    {
-        currentStatus = ButtonStatus.OnHover;
-        buttonAnimations.ButtonOnHover(buttonImage, buttonText, textColor_OnHover, buttonColor_OnHover, posOriginal, scaOriginal, rotOriginal);
-    }
-    public virtual void Disabled()
-    {
-        currentStatus = ButtonStatus.Disabled;
-        buttonAnimations.ButtonDisabled(buttonImage, buttonText, textColor_Disabled, buttonColor_Disabled, posOriginal, scaOriginal, rotOriginal);
+        //update status
+        currentState = MenuButtonState.INACTIVE;
+
+        //simple change real quick
+        button.color = color_inactive;
+        text.color = textColor_inactive;
     }
 
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    /// <summary>
+    /// sets a button to ButtonState.HOVER
+    /// </summary>
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    public virtual void Hover()
+    {
+        //update status
+        currentState = MenuButtonState.HOVER;
+
+        //simple change real quick
+        button.color = color_hover;
+        text.color = textColor_hover;
+    }
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    /// <summary>
+    /// sets a button to ButtonState.ACTIVE
+    /// </summary>
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    public virtual void Active()
+    {
+        //update status
+        currentState = MenuButtonState.ACTIVE;
+    }
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    /// <summary>
+    /// sets a button to ButtonState.DISABLED
+    /// </summary>
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    public virtual void Disabled()
+    {
+        //update status
+        currentState = MenuButtonState.DISABLED;
+    }
+    #endregion
 }
