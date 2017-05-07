@@ -25,6 +25,7 @@ public class XBoxGamepadData
     public InputData b;
     public InputData a;
     public InputData x;
+
     public InputData select;
     public InputData start;
     #endregion
@@ -40,11 +41,34 @@ public class XBoxGamepadData
     #region INITIALIZE
     ///////////////////////////////////////////////////////////////////////////////////////////////
     /// <summary>
-    /// OnValidate
+    /// Constructor
     /// </summary>
     ///////////////////////////////////////////////////////////////////////////////////////////////
-    void OnValidate()
+    public XBoxGamepadData()
     {
+        ls = new InputData();
+        l3 = new InputData();
+        rs = new InputData();
+        r3 = new InputData();
+        dp_up = new InputData();
+        dp_right = new InputData();
+        dp_down = new InputData();
+        dp_left = new InputData();
+
+        y = new InputData();
+        b = new InputData();
+        a = new InputData();
+        x = new InputData();
+
+        select = new InputData();
+        start = new InputData();
+
+        lb = new InputData();
+        rb = new InputData();
+
+        lt = new InputData();
+        rt = new InputData();
+
         ls.SetName("Left Stick");
         rs.SetName("Right Stick");
         l3.SetName("L3");

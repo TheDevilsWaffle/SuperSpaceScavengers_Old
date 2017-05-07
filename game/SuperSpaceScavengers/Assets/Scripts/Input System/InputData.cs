@@ -30,11 +30,11 @@ public enum InputStatus
 //}
 #endregion
 
-public class InputData : MonoBehaviour
+public class InputData
 {
     #region FIELDS
     //name
-    new string name;
+    string name;
     public string Name
     {
         get { return name; }
@@ -95,6 +95,7 @@ public class InputData : MonoBehaviour
         //refs
 
         //set/check initial values
+
 
     }
     ///////////////////////////////////////////////////////////////////////////////////////////////
