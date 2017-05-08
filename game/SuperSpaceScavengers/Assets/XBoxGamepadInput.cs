@@ -90,8 +90,6 @@ public class XBoxGamepadInput : MonoBehaviour
     GamePadState previousState;
     [HideInInspector]
     public static List<XBoxGamepadData> gamepads;
-    [HideInInspector]
-    public static Queue<XBoxButtons> combo;
     #endregion
 
     #region INITIALIZATION
@@ -173,8 +171,8 @@ public class XBoxGamepadInput : MonoBehaviour
 
                     //check the gamepad buttons
                     
-                    //UpdateDPad(i, previousState, currentState);
-                    //UpdateSticks(i, previousState, currentState);
+                    UpdateDPad(i, previousState, currentState);
+                    UpdateSticks(i, previousState, currentState);
                     UpdateButtons(i, previousState, currentState);
                     UpdateBumpers(i, previousState, currentState);
                     UpdateTriggers(i, previousState, currentState);
@@ -202,6 +200,280 @@ public class XBoxGamepadInput : MonoBehaviour
     #endregion
 
     #region PRIVATE METHODS
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    /// <summary>
+    /// updates the INACTIVE, PRESSED, HELD, and RELEASED status of the DPad
+    /// </summary>
+    /// <param name="_previous">last frame GamePad Input</param>
+    /// <param name="_current">current frame GamePad Input</param>
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    void UpdateDPad(int _index, GamePadState _previous, GamePadState _current)
+    {
+        #region DPAD UP
+        //RELEASED
+        if (_previous.DPad.Up == ButtonState.Pressed && _current.DPad.Up == ButtonState.Released)
+        {
+            gamepads[_index].dp_up.SetStatus(InputStatus.RELEASED);
+            gamepads[_index].dp_up.SetXYValue(0f, 0f);
+            gamepads[_index].dp_up.SetInactiveDuration(Time.deltaTime);
+        }
+        //HELD
+        else if (_previous.DPad.Up == ButtonState.Pressed && _current.DPad.Up == ButtonState.Pressed)
+        {
+            gamepads[_index].dp_up.SetStatus(InputStatus.HELD);
+            gamepads[_index].dp_up.SetXYValue(1f, 1f);
+            gamepads[_index].dp_up.SetHeldDuration(Time.deltaTime);
+            gamepads[_index].dp_up.SetInactiveDuration(0f);
+        }
+        //PRESSED
+        else if (_previous.DPad.Up == ButtonState.Released && _current.DPad.Up == ButtonState.Pressed)
+        {
+            gamepads[_index].dp_up.SetStatus(InputStatus.PRESSED);
+            gamepads[_index].dp_up.SetXYValue(1f, 1f);
+            gamepads[_index].dp_up.SetHeldDuration(Time.deltaTime);
+
+            UpdateCombo(_index, gamepads[_index].dp_up);
+        }
+        //INACTIVE
+        else
+        {
+            gamepads[_index].dp_up.SetStatus(InputStatus.INACTIVE);
+            gamepads[_index].dp_up.SetXYValue(0f, 0f);
+            gamepads[_index].dp_up.SetHeldDuration(0f);
+            gamepads[_index].dp_up.SetInactiveDuration(Time.deltaTime);
+        }
+        #endregion
+        #region DPAD RIGHT
+        //RELEASED
+        if (_previous.DPad.Right == ButtonState.Pressed && _current.DPad.Right == ButtonState.Released)
+        {
+            gamepads[_index].dp_right.SetStatus(InputStatus.RELEASED);
+            gamepads[_index].dp_right.SetXYValue(0f, 0f);
+            gamepads[_index].dp_right.SetInactiveDuration(Time.deltaTime);
+        }
+        //HELD
+        else if (_previous.DPad.Right == ButtonState.Pressed && _current.DPad.Right == ButtonState.Pressed)
+        {
+            gamepads[_index].dp_right.SetStatus(InputStatus.HELD);
+            gamepads[_index].dp_right.SetXYValue(1f, 1f);
+            gamepads[_index].dp_right.SetHeldDuration(Time.deltaTime);
+            gamepads[_index].dp_right.SetInactiveDuration(0f);
+        }
+        //PRESSED
+        else if (_previous.DPad.Right == ButtonState.Released && _current.DPad.Right == ButtonState.Pressed)
+        {
+            gamepads[_index].dp_right.SetStatus(InputStatus.PRESSED);
+            gamepads[_index].dp_right.SetXYValue(1f, 1f);
+            gamepads[_index].dp_right.SetHeldDuration(Time.deltaTime);
+
+            UpdateCombo(_index, gamepads[_index].dp_right);
+        }
+        //INACTIVE
+        else
+        {
+            gamepads[_index].dp_right.SetStatus(InputStatus.INACTIVE);
+            gamepads[_index].dp_right.SetXYValue(0f, 0f);
+            gamepads[_index].dp_right.SetHeldDuration(0f);
+            gamepads[_index].dp_right.SetInactiveDuration(Time.deltaTime);
+        }
+        #endregion
+        #region DPAD DOWN
+        //RELEASED
+        if (_previous.DPad.Down == ButtonState.Pressed && _current.DPad.Down == ButtonState.Released)
+        {
+            gamepads[_index].dp_down.SetStatus(InputStatus.RELEASED);
+            gamepads[_index].dp_down.SetXYValue(0f, 0f);
+            gamepads[_index].dp_down.SetInactiveDuration(Time.deltaTime);
+        }
+        //HELD
+        else if (_previous.DPad.Down == ButtonState.Pressed && _current.DPad.Down == ButtonState.Pressed)
+        {
+            gamepads[_index].dp_down.SetStatus(InputStatus.HELD);
+            gamepads[_index].dp_down.SetXYValue(1f, 1f);
+            gamepads[_index].dp_down.SetHeldDuration(Time.deltaTime);
+            gamepads[_index].dp_down.SetInactiveDuration(0f);
+        }
+        //PRESSED
+        else if (_previous.DPad.Down == ButtonState.Released && _current.DPad.Down == ButtonState.Pressed)
+        {
+            gamepads[_index].dp_down.SetStatus(InputStatus.PRESSED);
+            gamepads[_index].dp_down.SetXYValue(1f, 1f);
+            gamepads[_index].dp_down.SetHeldDuration(Time.deltaTime);
+
+            UpdateCombo(_index, gamepads[_index].dp_down);
+        }
+        //INACTIVE
+        else
+        {
+            gamepads[_index].dp_down.SetStatus(InputStatus.INACTIVE);
+            gamepads[_index].dp_down.SetXYValue(0f, 0f);
+            gamepads[_index].dp_down.SetHeldDuration(0f);
+            gamepads[_index].dp_down.SetInactiveDuration(Time.deltaTime);
+        }
+        #endregion
+        #region DPAD LEFT
+        //RELEASED
+        if (_previous.DPad.Left == ButtonState.Pressed && _current.DPad.Left == ButtonState.Released)
+        {
+            gamepads[_index].dp_left.SetStatus(InputStatus.RELEASED);
+            gamepads[_index].dp_left.SetXYValue(0f, 0f);
+            gamepads[_index].dp_left.SetInactiveDuration(Time.deltaTime);
+        }
+        //HELD
+        else if (_previous.DPad.Left == ButtonState.Pressed && _current.DPad.Left == ButtonState.Pressed)
+        {
+            gamepads[_index].dp_left.SetStatus(InputStatus.HELD);
+            gamepads[_index].dp_left.SetXYValue(1f, 1f);
+            gamepads[_index].dp_left.SetHeldDuration(Time.deltaTime);
+            gamepads[_index].dp_left.SetInactiveDuration(0f);
+        }
+        //PRESSED
+        else if (_previous.DPad.Left == ButtonState.Released && _current.DPad.Left == ButtonState.Pressed)
+        {
+            gamepads[_index].dp_left.SetStatus(InputStatus.PRESSED);
+            gamepads[_index].dp_left.SetXYValue(1f, 1f);
+            gamepads[_index].dp_left.SetHeldDuration(Time.deltaTime);
+
+            UpdateCombo(_index, gamepads[_index].dp_left);
+        }
+        //INACTIVE
+        else
+        {
+            gamepads[_index].dp_left.SetStatus(InputStatus.INACTIVE);
+            gamepads[_index].dp_left.SetXYValue(0f, 0f);
+            gamepads[_index].dp_left.SetHeldDuration(0f);
+            gamepads[_index].dp_left.SetInactiveDuration(Time.deltaTime);
+        }
+        #endregion
+    }
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    /// <summary>
+    /// Checks the left/right analog sticks
+    /// </summary>
+    /// <param name="_previous">last frame GamePad Input</param>
+    /// <param name="_current">current frame GamePad Input</param>
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    void UpdateSticks(int _index, GamePadState _previous, GamePadState _current)
+    {
+        //analog sticks !REMEMBER that angles are funky:
+        //(UP is 90° RIGHT = 0°, DOWN = -90°, and LEFT = 180°)
+        #region LEFT ANALOG STICK
+
+        //store value of sticks and angle no matter what
+        gamepads[_index].ls.SetXYValue(new Vector3(_current.ThumbSticks.Left.X, _current.ThumbSticks.Left.Y));
+        gamepads[_index].ls.SetXYRawValue(new Vector3(Mathf.Ceil(_current.ThumbSticks.Left.X), Mathf.Ceil(_current.ThumbSticks.Left.Y)));
+        gamepads[_index].ls.SetAngle(Mathf.Atan2(-_current.ThumbSticks.Left.Y, _current.ThumbSticks.Left.X) * Mathf.Rad2Deg);
+
+        //check to see if the value of x and y is inside tolerance deadzone
+        if (_current.ThumbSticks.Left.X < -analogStickDeadZone ||
+            _current.ThumbSticks.Left.X > analogStickDeadZone ||
+            _current.ThumbSticks.Left.Y < -analogStickDeadZone ||
+            _current.ThumbSticks.Left.Y > analogStickDeadZone)
+        {
+            gamepads[_index].ls.SetStatus(InputStatus.HELD);
+        }
+
+        //else, we're outside the deadzone, update status
+        else if (_current.ThumbSticks.Left.X > -analogStickDeadZone ||
+                _current.ThumbSticks.Left.X < analogStickDeadZone ||
+                _current.ThumbSticks.Left.Y > -analogStickDeadZone ||
+                _current.ThumbSticks.Left.Y < analogStickDeadZone)
+        {
+            gamepads[_index].ls.SetStatus(InputStatus.HELD);
+        }
+
+        //RELEASED
+        if (_previous.Buttons.LeftStick == ButtonState.Pressed && _current.Buttons.LeftStick == ButtonState.Released)
+        {
+            gamepads[_index].l3.SetStatus(InputStatus.RELEASED);
+            gamepads[_index].l3.SetXYValue(0f, 0f);
+            gamepads[_index].l3.SetInactiveDuration(Time.deltaTime);
+        }
+        //HELD
+        else if (_previous.Buttons.LeftStick == ButtonState.Pressed && _current.Buttons.LeftStick == ButtonState.Pressed)
+        {
+            gamepads[_index].l3.SetStatus(InputStatus.HELD);
+            gamepads[_index].l3.SetXYValue(1f, 1f);
+            gamepads[_index].l3.SetHeldDuration(Time.deltaTime);
+            gamepads[_index].l3.SetInactiveDuration(0f);
+        }
+        //PRESSED
+        else if (_previous.Buttons.LeftStick == ButtonState.Released && _current.Buttons.LeftStick == ButtonState.Pressed)
+        {
+            gamepads[_index].l3.SetStatus(InputStatus.PRESSED);
+            gamepads[_index].l3.SetXYValue(1f, 1f);
+            gamepads[_index].l3.SetHeldDuration(Time.deltaTime);
+
+            UpdateCombo(_index, gamepads[_index].l3);
+        }
+        //INACTIVE
+        else
+        {
+            gamepads[_index].l3.SetStatus(InputStatus.INACTIVE);
+            gamepads[_index].l3.SetXYValue(0f, 0f);
+            gamepads[_index].l3.SetHeldDuration(0f);
+            gamepads[_index].l3.SetInactiveDuration(Time.deltaTime);
+        }
+        #endregion
+        #region RIGHT ANALOG STICK
+
+        //store value of sticks and angle no matter what
+        gamepads[_index].rs.SetXYValue(new Vector3(_current.ThumbSticks.Right.X, _current.ThumbSticks.Right.Y));
+        gamepads[_index].rs.SetXYRawValue(new Vector3(Mathf.Ceil(_current.ThumbSticks.Right.X), Mathf.Ceil(_current.ThumbSticks.Right.Y)));
+        gamepads[_index].rs.SetAngle(Mathf.Atan2(-_current.ThumbSticks.Right.Y, _current.ThumbSticks.Right.X) * Mathf.Rad2Deg);
+
+        //check to see if the value of x and y is inside tolerance deadzone
+        if (_current.ThumbSticks.Right.X < -analogStickDeadZone ||
+            _current.ThumbSticks.Right.X > analogStickDeadZone ||
+            _current.ThumbSticks.Right.Y < -analogStickDeadZone ||
+            _current.ThumbSticks.Right.Y > analogStickDeadZone)
+        {
+            gamepads[_index].rs.SetStatus(InputStatus.HELD);
+        }
+
+        //else, we're outside the deadzone, update status
+        else if (_current.ThumbSticks.Right.X > -analogStickDeadZone ||
+                _current.ThumbSticks.Right.X < analogStickDeadZone ||
+                _current.ThumbSticks.Right.Y > -analogStickDeadZone ||
+                _current.ThumbSticks.Right.Y < analogStickDeadZone)
+        {
+            gamepads[_index].rs.SetStatus(InputStatus.HELD);
+        }
+
+        //RELEASED
+        if (_previous.Buttons.RightStick == ButtonState.Pressed && _current.Buttons.RightStick == ButtonState.Released)
+        {
+            gamepads[_index].r3.SetStatus(InputStatus.RELEASED);
+            gamepads[_index].r3.SetXYValue(0f, 0f);
+            gamepads[_index].r3.SetInactiveDuration(Time.deltaTime);
+        }
+        //HELD
+        else if (_previous.Buttons.RightStick == ButtonState.Pressed && _current.Buttons.RightStick == ButtonState.Pressed)
+        {
+            gamepads[_index].r3.SetStatus(InputStatus.HELD);
+            gamepads[_index].r3.SetXYValue(1f, 1f);
+            gamepads[_index].r3.SetHeldDuration(Time.deltaTime);
+            gamepads[_index].r3.SetInactiveDuration(0f);
+        }
+        //PRESSED
+        else if (_previous.Buttons.RightStick == ButtonState.Released && _current.Buttons.RightStick == ButtonState.Pressed)
+        {
+            gamepads[_index].r3.SetStatus(InputStatus.PRESSED);
+            gamepads[_index].r3.SetXYValue(1f, 1f);
+            gamepads[_index].r3.SetHeldDuration(Time.deltaTime);
+
+            UpdateCombo(_index, gamepads[_index].r3);
+        }
+        //INACTIVE
+        else
+        {
+            gamepads[_index].r3.SetStatus(InputStatus.INACTIVE);
+            gamepads[_index].r3.SetXYValue(0f, 0f);
+            gamepads[_index].r3.SetHeldDuration(0f);
+            gamepads[_index].r3.SetInactiveDuration(Time.deltaTime);
+        }
+        #endregion
+    }
     ///////////////////////////////////////////////////////////////////////////////////////////////
     /// <summary>
     /// updates the INACTIVE, PRESSED, HELD, and RELEASED status of buttons
@@ -232,6 +504,8 @@ public class XBoxGamepadInput : MonoBehaviour
             gamepads[_index].y.SetStatus(InputStatus.PRESSED);
             gamepads[_index].y.SetXYValue(1f, 1f);
             gamepads[_index].y.SetHeldDuration(Time.deltaTime);
+
+            UpdateCombo(_index, gamepads[_index].y);
         }
         //INACTIVE
         else
@@ -263,6 +537,8 @@ public class XBoxGamepadInput : MonoBehaviour
             gamepads[_index].b.SetStatus(InputStatus.PRESSED);
             gamepads[_index].b.SetXYValue(1f, 1f);
             gamepads[_index].b.SetHeldDuration(Time.deltaTime);
+
+            UpdateCombo(_index, gamepads[_index].b);
         }
         //INACTIVE
         else
@@ -294,6 +570,8 @@ public class XBoxGamepadInput : MonoBehaviour
             gamepads[_index].a.SetStatus(InputStatus.PRESSED);
             gamepads[_index].a.SetXYValue(1f, 1f);
             gamepads[_index].a.SetHeldDuration(Time.deltaTime);
+
+            UpdateCombo(_index, gamepads[_index].a);
         }
         //INACTIVE
         else
@@ -325,6 +603,8 @@ public class XBoxGamepadInput : MonoBehaviour
             gamepads[_index].x.SetStatus(InputStatus.PRESSED);
             gamepads[_index].x.SetXYValue(1f, 1f);
             gamepads[_index].x.SetHeldDuration(Time.deltaTime);
+
+            UpdateCombo(_index, gamepads[_index].x);
         }
         //INACTIVE
         else
@@ -357,6 +637,8 @@ public class XBoxGamepadInput : MonoBehaviour
             gamepads[_index].select.SetStatus(InputStatus.PRESSED);
             gamepads[_index].select.SetXYValue(1f, 1f);
             gamepads[_index].select.SetHeldDuration(Time.deltaTime);
+
+            UpdateCombo(_index, gamepads[_index].select);
         }
         //INACTIVE
         else
@@ -388,6 +670,8 @@ public class XBoxGamepadInput : MonoBehaviour
             gamepads[_index].start.SetStatus(InputStatus.PRESSED);
             gamepads[_index].start.SetXYValue(1f, 1f);
             gamepads[_index].start.SetHeldDuration(Time.deltaTime);
+
+            UpdateCombo(_index, gamepads[_index].start);
         }
         //INACTIVE
         else
@@ -429,6 +713,8 @@ public class XBoxGamepadInput : MonoBehaviour
             gamepads[_index].lb.SetStatus(InputStatus.PRESSED);
             gamepads[_index].lb.SetXYValue(1f, 1f);
             gamepads[_index].lb.SetHeldDuration(Time.deltaTime);
+
+            UpdateCombo(_index, gamepads[_index].lb);
         }
         //INACTIVE
         else
@@ -460,6 +746,8 @@ public class XBoxGamepadInput : MonoBehaviour
             gamepads[_index].rb.SetStatus(InputStatus.PRESSED);
             gamepads[_index].rb.SetXYValue(1f, 1f);
             gamepads[_index].rb.SetHeldDuration(Time.deltaTime);
+
+            UpdateCombo(_index, gamepads[_index].rb);
         }
         //INACTIVE
         else
@@ -507,6 +795,7 @@ public class XBoxGamepadInput : MonoBehaviour
             gamepads[_index].lt.SetXYRawValue(Mathf.Ceil(_current.Triggers.Left), Mathf.Ceil(_current.Triggers.Left));
             gamepads[_index].lt.SetHeldDuration(Time.deltaTime);
 
+            UpdateCombo(_index, gamepads[_index].lt);
         }
         //INACTIVE
         else
@@ -545,6 +834,7 @@ public class XBoxGamepadInput : MonoBehaviour
             gamepads[_index].rt.SetXYRawValue(Mathf.Ceil(_current.Triggers.Right), Mathf.Ceil(_current.Triggers.Right));
             gamepads[_index].rt.SetHeldDuration(Time.deltaTime);
 
+            UpdateCombo(_index, gamepads[_index].rt);
         }
         //INACTIVE
         else
@@ -576,6 +866,14 @@ public class XBoxGamepadInput : MonoBehaviour
             default:
                 Debug.LogWarning("INCORRECT PLAYER INDEX(" + _index+")");
                 break;
+        }
+    }
+    void UpdateCombo(int _index, InputData _button)
+    {
+        gamepads[_index].comboTracker.Enqueue(_button);
+        if(gamepads[_index].comboTracker.Count > maxButtonsRemembered)
+        {
+            gamepads[_index].comboTracker.Dequeue();
         }
     }
     #endregion

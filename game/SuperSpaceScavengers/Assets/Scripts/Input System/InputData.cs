@@ -11,7 +11,7 @@
 using UnityEngine;
 using System.Collections;
 //using System.Collections.Generic;
-//using UnityEngine.UI;
+using UnityEngine.UI;
 
 #region ENUMS
 public enum InputStatus
@@ -39,6 +39,12 @@ public class InputData
     {
         get { return name; }
         private set { name = value; }
+    }
+    Sprite icon_xbox;
+    public Sprite IconXBox
+    {
+        get { return icon_xbox;}
+        private set { icon_xbox = value; }
     }
     //current InputStatus
     InputStatus status;
@@ -123,6 +129,11 @@ public class InputData
     public void SetName(string _name)
     {
         Name = _name;
+    }
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    public void SetIcon_XBox(Sprite _sprite)
+    {
+        IconXBox = _sprite;
     }
     ///////////////////////////////////////////////////////////////////////////////////////////////
     public void SetStatus(InputStatus _status)

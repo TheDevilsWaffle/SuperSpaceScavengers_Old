@@ -114,6 +114,78 @@ public class InputTester : MonoBehaviour
     Text rt_raw;
     Text rt_held;
     Text rt_inactive;
+
+    [Header("DPAD")]
+    [SerializeField]
+    RectTransform up;
+    RectTransform up_icon;
+    Text up_status;
+    Text up_value;
+    Text up_held;
+    Text up_inactive;
+
+    [SerializeField]
+    RectTransform right;
+    RectTransform right_icon;
+    Text right_status;
+    Text right_value;
+    Text right_held;
+    Text right_inactive;
+
+    [SerializeField]
+    RectTransform down;
+    RectTransform down_icon;
+    Text down_status;
+    Text down_value;
+    Text down_held;
+    Text down_inactive;
+
+    [SerializeField]
+    RectTransform left;
+    RectTransform left_icon;
+    Text left_status;
+    Text left_value;
+    Text left_held;
+    Text left_inactive;
+
+    [Header("ANALOG STICKS")]
+    [SerializeField]
+    RectTransform l3;
+    RectTransform l3_icon;
+    Text l3_status;
+    Text l3_value;
+    Text l3_held;
+    Text l3_inactive;
+
+    [SerializeField]
+    RectTransform ls;
+    RectTransform ls_icon;
+    Text ls_status;
+    Text ls_value;
+    Text ls_held;
+    Text ls_inactive;
+    Text ls_angle;
+
+    [SerializeField]
+    RectTransform r3;
+    RectTransform r3_icon;
+    Text r3_status;
+    Text r3_value;
+    Text r3_held;
+    Text r3_inactive;
+
+    [SerializeField]
+    RectTransform rs;
+    RectTransform rs_icon;
+    Text rs_status;
+    Text rs_value;
+    Text rs_held;
+    Text rs_inactive;
+    Text rs_angle;
+
+    [Header("COMBO")]
+    [SerializeField]
+    Image[] comboButtons;
     #endregion
 
     #region INITIALIZATION
@@ -206,6 +278,72 @@ public class InputTester : MonoBehaviour
             rt_raw = rt.transform.FindChild("Data").GetChild(2).GetChild(1).GetComponent<Text>();
             rt_held = rt.transform.FindChild("Data").GetChild(3).GetChild(1).GetComponent<Text>();
             rt_inactive = rt.transform.FindChild("Data").GetChild(4).GetChild(1).GetComponent<Text>();
+        }
+        if (up != null)
+        {
+            up_icon = up.transform.FindChild("Icon").GetComponent<RectTransform>();
+            up_status = up.transform.FindChild("Data").GetChild(0).GetComponent<Text>();
+            up_value = up.transform.FindChild("Data").GetChild(1).GetChild(1).GetComponent<Text>();
+            up_held = up.transform.FindChild("Data").GetChild(2).GetChild(1).GetComponent<Text>();
+            up_inactive = up.transform.FindChild("Data").GetChild(3).GetChild(1).GetComponent<Text>();
+        }
+        if (right != null)
+        {
+            right_icon = right.transform.FindChild("Icon").GetComponent<RectTransform>();
+            right_status = right.transform.FindChild("Data").GetChild(0).GetComponent<Text>();
+            right_value = right.transform.FindChild("Data").GetChild(1).GetChild(1).GetComponent<Text>();
+            right_held = right.transform.FindChild("Data").GetChild(2).GetChild(1).GetComponent<Text>();
+            right_inactive = right.transform.FindChild("Data").GetChild(3).GetChild(1).GetComponent<Text>();
+        }
+        if (down != null)
+        {
+            down_icon = down.transform.FindChild("Icon").GetComponent<RectTransform>();
+            down_status = down.transform.FindChild("Data").GetChild(0).GetComponent<Text>();
+            down_value = down.transform.FindChild("Data").GetChild(1).GetChild(1).GetComponent<Text>();
+            down_held = down.transform.FindChild("Data").GetChild(2).GetChild(1).GetComponent<Text>();
+            down_inactive = down.transform.FindChild("Data").GetChild(3).GetChild(1).GetComponent<Text>();
+        }
+        if (left != null)
+        {
+            left_icon = left.transform.FindChild("Icon").GetComponent<RectTransform>();
+            left_status = left.transform.FindChild("Data").GetChild(0).GetComponent<Text>();
+            left_value = left.transform.FindChild("Data").GetChild(1).GetChild(1).GetComponent<Text>();
+            left_held = left.transform.FindChild("Data").GetChild(2).GetChild(1).GetComponent<Text>();
+            left_inactive = left.transform.FindChild("Data").GetChild(3).GetChild(1).GetComponent<Text>();
+        }
+        if (l3 != null)
+        {
+            l3_icon = l3.transform.FindChild("Icon").GetComponent<RectTransform>();
+            l3_status = l3.transform.FindChild("Data").GetChild(0).GetComponent<Text>();
+            l3_value = l3.transform.FindChild("Data").GetChild(1).GetChild(1).GetComponent<Text>();
+            l3_held = l3.transform.FindChild("Data").GetChild(2).GetChild(1).GetComponent<Text>();
+            l3_inactive = l3.transform.FindChild("Data").GetChild(3).GetChild(1).GetComponent<Text>();
+        }
+        if (ls != null)
+        {
+            ls_icon = ls.transform.FindChild("Icon").GetComponent<RectTransform>();
+            ls_status = ls.transform.FindChild("Data").GetChild(0).GetComponent<Text>();
+            ls_value = ls.transform.FindChild("Data").GetChild(1).GetChild(1).GetComponent<Text>();
+            ls_held = ls.transform.FindChild("Data").GetChild(2).GetChild(1).GetComponent<Text>();
+            ls_inactive = ls.transform.FindChild("Data").GetChild(3).GetChild(1).GetComponent<Text>();
+            ls_angle = ls.transform.FindChild("Data").GetChild(4).GetChild(1).GetComponent<Text>();
+        }
+        if (r3 != null)
+        {
+            r3_icon = r3.transform.FindChild("Icon").GetComponent<RectTransform>();
+            r3_status = r3.transform.FindChild("Data").GetChild(0).GetComponent<Text>();
+            r3_value = r3.transform.FindChild("Data").GetChild(1).GetChild(1).GetComponent<Text>();
+            r3_held = r3.transform.FindChild("Data").GetChild(2).GetChild(1).GetComponent<Text>();
+            r3_inactive = r3.transform.FindChild("Data").GetChild(3).GetChild(1).GetComponent<Text>();
+        }
+        if (rs != null)
+        {
+            rs_icon = rs.transform.FindChild("Icon").GetComponent<RectTransform>();
+            rs_status = rs.transform.FindChild("Data").GetChild(0).GetComponent<Text>();
+            rs_value = rs.transform.FindChild("Data").GetChild(1).GetChild(1).GetComponent<Text>();
+            rs_held = rs.transform.FindChild("Data").GetChild(2).GetChild(1).GetComponent<Text>();
+            rs_inactive = rs.transform.FindChild("Data").GetChild(3).GetChild(1).GetComponent<Text>();
+            rs_angle = rs.transform.FindChild("Data").GetChild(4).GetChild(1).GetComponent<Text>();
         }
         //set/check initial values
 
@@ -317,6 +455,62 @@ public class InputTester : MonoBehaviour
         rt_raw.text = _event.gamepad.rt.XYRawValues.x.ToString("F2");
         rt_held.text = _event.gamepad.rt.HeldDuration.ToString("F2");
         rt_inactive.text = _event.gamepad.rt.InactiveDuration.ToString("F2");
+        //dpad up
+        up_status.text = _event.gamepad.dp_up.Status.ToString();
+        up_value.text = _event.gamepad.dp_up.XYValues.x.ToString("F2");
+        up_held.text = _event.gamepad.dp_up.HeldDuration.ToString("F2");
+        up_inactive.text = _event.gamepad.dp_up.InactiveDuration.ToString("F2");
+        //dpad right
+        right_status.text = _event.gamepad.dp_right.Status.ToString();
+        right_value.text = _event.gamepad.dp_right.XYValues.x.ToString("F2");
+        right_held.text = _event.gamepad.dp_right.HeldDuration.ToString("F2");
+        right_inactive.text = _event.gamepad.dp_right.InactiveDuration.ToString("F2");
+        //dpad down
+        down_status.text = _event.gamepad.dp_down.Status.ToString();
+        down_value.text = _event.gamepad.dp_down.XYValues.x.ToString("F2");
+        down_held.text = _event.gamepad.dp_down.HeldDuration.ToString("F2");
+        down_inactive.text = _event.gamepad.dp_down.InactiveDuration.ToString("F2");
+        //dpad left
+        left_status.text = _event.gamepad.dp_left.Status.ToString();
+        left_value.text = _event.gamepad.dp_left.XYValues.x.ToString("F2");
+        left_held.text = _event.gamepad.dp_left.HeldDuration.ToString("F2");
+        left_inactive.text = _event.gamepad.dp_left.InactiveDuration.ToString("F2");
+        //l3
+        l3_status.text = _event.gamepad.l3.Status.ToString();
+        l3_value.text = _event.gamepad.l3.XYValues.x.ToString("F2");
+        l3_held.text = _event.gamepad.l3.HeldDuration.ToString("F2");
+        l3_inactive.text = _event.gamepad.l3.InactiveDuration.ToString("F2");
+        //ls
+        ls_status.text = _event.gamepad.ls.Status.ToString();
+        ls_value.text = _event.gamepad.ls.XYValues.x.ToString("F2");
+        ls_held.text = _event.gamepad.ls.HeldDuration.ToString("F2");
+        ls_inactive.text = _event.gamepad.ls.InactiveDuration.ToString("F2");
+        ls_angle.text = _event.gamepad.ls.Angle.ToString("F2");
+        //r3
+        r3_status.text = _event.gamepad.r3.Status.ToString();
+        r3_value.text = _event.gamepad.r3.XYValues.x.ToString("F2");
+        r3_held.text = _event.gamepad.r3.HeldDuration.ToString("F2");
+        r3_inactive.text = _event.gamepad.r3.InactiveDuration.ToString("F2");
+        //ls
+        rs_status.text = _event.gamepad.rs.Status.ToString();
+        rs_value.text = _event.gamepad.rs.XYValues.x.ToString("F2");
+        rs_held.text = _event.gamepad.rs.HeldDuration.ToString("F2");
+        rs_inactive.text = _event.gamepad.rs.InactiveDuration.ToString("F2");
+        rs_angle.text = _event.gamepad.rs.Angle.ToString("F2");
+
+        if (_event.gamepad.comboTracker != null)
+        {
+            InputData[] temp = new InputData[10];
+            _event.gamepad.comboTracker.CopyTo(temp, 0);
+            for (int i = 0; i < 10; ++i)
+            {
+                if (temp[i] != null)
+                {
+                    print(temp[i].IconXBox.name);
+                    comboButtons[i].sprite = temp[i].IconXBox;
+                }
+            }
+        }
     }
     #endregion
 
@@ -329,7 +523,7 @@ public class InputTester : MonoBehaviour
     void OnDestroy()
     {
         //remove event listeners
-        //Events.instance.RemoveListener<>();
+        Events.instance.RemoveListener<EVENT_GAMEPAD_P1>(TestButtons);
     }
     #endregion
 
