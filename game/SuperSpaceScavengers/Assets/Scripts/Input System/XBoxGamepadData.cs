@@ -10,6 +10,7 @@ using UnityEngine.UI;
 
 public class XBoxGamepadData
 {
+    #region FIELDS
     public Queue<InputData> comboTracker;
 
     #region ANALOG STICKS
@@ -42,6 +43,8 @@ public class XBoxGamepadData
     public InputData rt;
     #endregion
 
+    #endregion
+
     #region INITIALIZE
     ///////////////////////////////////////////////////////////////////////////////////////////////
     /// <summary>
@@ -50,6 +53,7 @@ public class XBoxGamepadData
     ///////////////////////////////////////////////////////////////////////////////////////////////
     public XBoxGamepadData()
     {
+        //create new InputDatas
         comboTracker = new Queue<InputData>();
 
         ls = new InputData();
@@ -75,16 +79,16 @@ public class XBoxGamepadData
         lt = new InputData();
         rt = new InputData();
 
+        //set name and sprites
         ls.SetName("Left Stick");
         ls.SetIcon_XBox(Resources.Load<Sprite>("UI/XBoxIcons/spr_xbox_analog_left") as Sprite);
-        Debug.Log(ls.IconXBox);
         rs.SetName("Right Stick");
         rs.SetIcon_XBox(Resources.Load<Sprite>("UI/XBoxIcons/spr_xbox_analog_right") as Sprite);
 
         l3.SetName("L3");
-        l3.SetIcon_XBox(Resources.Load<Sprite>("UI/XBoxIcons/spr_xbox_analog_left") as Sprite);
+        l3.SetIcon_XBox(Resources.Load<Sprite>("UI/XBoxIcons/spr_xbox_analog_left_3") as Sprite);
         r3.SetName("R3");
-        r3.SetIcon_XBox(Resources.Load<Sprite>("UI/XBoxIcons/spr_xbox_analog_right") as Sprite);
+        r3.SetIcon_XBox(Resources.Load<Sprite>("UI/XBoxIcons/spr_xbox_analog_right_3") as Sprite);
 
         dp_up.SetName("DPAD Up");
         dp_up.SetIcon_XBox(Resources.Load<Sprite>("UI/XBoxIcons/spr_xbox_dpad_up") as Sprite);

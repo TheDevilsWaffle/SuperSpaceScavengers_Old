@@ -86,8 +86,22 @@ public class XBoxGamepadInput : MonoBehaviour
     [SerializeField]
     int maxButtonsRemembered = 10;
 
+    //arcade axis values
+    float up = -90f;
+    float up_right = -45f;
+    float right = 0f;
+    float down_right = 45f;
+    float down = 90f;
+    float down_left = 135f;
+    float left = -180f;
+    float up_left = -135f;
+    float axisLimit = 22.5f;
+
+    //gamepad states
     GamePadState currentState;
     GamePadState previousState;
+
+    //gamepads/players
     [HideInInspector]
     public static List<XBoxGamepadData> gamepads;
     #endregion
@@ -103,6 +117,16 @@ public class XBoxGamepadInput : MonoBehaviour
         //refs
 
         //set/check initial values
+        up = -90f;
+        up_right = -45f;
+        right = 0f;
+        down_right = 45f;
+        down = 90f;
+        down_left = 135f;
+        left = -180f;
+        up_left = -135f;
+        axisLimit = 22.5f;
+
         gamepads = new List<XBoxGamepadData>();
     }
     ///////////////////////////////////////////////////////////////////////////////////////////////
@@ -115,17 +139,14 @@ public class XBoxGamepadInput : MonoBehaviour
         if (isEnabled)
         {
             //popluate list of players based on numberOfPlayers
-            for (int i = 0; i < playerCount; ++i)
+            for (int _index = 0; _index < playerCount; ++_index)
             {
-                GamePadState _testState = GamePad.GetState((PlayerIndex)i);
+                GamePadState _testState = GamePad.GetState((PlayerIndex)_index);
                 if (_testState.IsConnected)
-                {
                     gamepads.Add(new XBoxGamepadData());
-                }
             }
         }
 
-        //listen to events
         //SetSubscriptions();
     }
     ///////////////////////////////////////////////////////////////////////////////////////////////
@@ -159,50 +180,37 @@ public class XBoxGamepadInput : MonoBehaviour
         //gamepad enabled? go through the update loop
         if (isEnabled)
         {
-            for (int i = 0; i < playerCount; ++i)
+            for (int _index = 0; _index < playerCount; ++_index)
             {
                 //first test to make sure there's a controller there to update
-                GamePadState _testState = GamePad.GetState((PlayerIndex)i);
+                GamePadState _testState = GamePad.GetState((PlayerIndex)_index);
                 if (_testState.IsConnected)
                 {
                     //update the previous and currentstate
                     previousState = currentState;
-                    currentState = GamePad.GetState((PlayerIndex)i);
+                    currentState = GamePad.GetState((PlayerIndex)_index);
 
-                    //check the gamepad buttons
-                    
-                    UpdateDPad(i, previousState, currentState);
-                    UpdateSticks(i, previousState, currentState);
-                    UpdateButtons(i, previousState, currentState);
-                    UpdateBumpers(i, previousState, currentState);
-                    UpdateTriggers(i, previousState, currentState);
+                    //check the gamepad for input
+                    UpdateDPad(_index, previousState, currentState);
+                    UpdateSticks(_index, previousState, currentState);
+                    UpdateButtons(_index, previousState, currentState);
+                    UpdateBumpers(_index, previousState, currentState);
+                    UpdateTriggers(_index, previousState, currentState);
 
-                    //send message
-                    Broadcast(i);
+                    //raise new game event
+                    Broadcast(_index);
                 }
                 else
-                {
-                    Debug.LogWarning("WARNING! Player(" + i + ") no longer exists? ");
-                }
+                    Debug.LogWarning("WARNING! Player(" + _index + ") no longer exists? ");
             }
         }
-
-#if false
-        UpdateTesting();
-#endif
-
-        }
-    #endregion
-
-    #region PUBLIC METHODS
-    ///////////////////////////////////////////////////////////////////////////////////////////////
-
+    }
     #endregion
 
     #region PRIVATE METHODS
     ///////////////////////////////////////////////////////////////////////////////////////////////
     /// <summary>
-    /// updates the INACTIVE, PRESSED, HELD, and RELEASED status of the DPad
+    /// updates the statuses of the DPad
     /// </summary>
     /// <param name="_previous">last frame GamePad Input</param>
     /// <param name="_current">current frame GamePad Input</param>
@@ -348,7 +356,7 @@ public class XBoxGamepadInput : MonoBehaviour
     }
     ///////////////////////////////////////////////////////////////////////////////////////////////
     /// <summary>
-    /// Checks the left/right analog sticks
+    /// updates the statuses of the left/right analog sticks (including l3/r3)
     /// </summary>
     /// <param name="_previous">last frame GamePad Input</param>
     /// <param name="_current">current frame GamePad Input</param>
@@ -359,12 +367,13 @@ public class XBoxGamepadInput : MonoBehaviour
         //(UP is 90° RIGHT = 0°, DOWN = -90°, and LEFT = 180°)
         #region LEFT ANALOG STICK
 
-        //store value of sticks and angle no matter what
+        //store these values from the stick no matter what
         gamepads[_index].ls.SetXYValue(new Vector3(_current.ThumbSticks.Left.X, _current.ThumbSticks.Left.Y));
         gamepads[_index].ls.SetXYRawValue(new Vector3(Mathf.Ceil(_current.ThumbSticks.Left.X), Mathf.Ceil(_current.ThumbSticks.Left.Y)));
-        gamepads[_index].ls.SetAngle(Mathf.Atan2(-_current.ThumbSticks.Left.Y, _current.ThumbSticks.Left.X) * Mathf.Rad2Deg);
+        gamepads[_index].ls.SetAngle(Mathf.Ceil(Mathf.Atan2(-_current.ThumbSticks.Left.Y, _current.ThumbSticks.Left.X) * Mathf.Rad2Deg));
+        gamepads[_index].ls.SetArcadeAxis(DetermineArcadeAxis(gamepads[_index].ls.Status, gamepads[_index].ls.Angle));
 
-        //check to see if the value of x and y is inside tolerance deadzone
+        //check to see if the value of x and y is outside tolerance deadzone
         if (_current.ThumbSticks.Left.X < -analogStickDeadZone ||
             _current.ThumbSticks.Left.X > analogStickDeadZone ||
             _current.ThumbSticks.Left.Y < -analogStickDeadZone ||
@@ -373,13 +382,13 @@ public class XBoxGamepadInput : MonoBehaviour
             gamepads[_index].ls.SetStatus(InputStatus.HELD);
         }
 
-        //else, we're outside the deadzone, update status
+        //else, we're inside the deadzone, update status
         else if (_current.ThumbSticks.Left.X > -analogStickDeadZone ||
                 _current.ThumbSticks.Left.X < analogStickDeadZone ||
                 _current.ThumbSticks.Left.Y > -analogStickDeadZone ||
                 _current.ThumbSticks.Left.Y < analogStickDeadZone)
         {
-            gamepads[_index].ls.SetStatus(InputStatus.HELD);
+            gamepads[_index].ls.SetStatus(InputStatus.INACTIVE);
         }
 
         //RELEASED
@@ -417,10 +426,11 @@ public class XBoxGamepadInput : MonoBehaviour
         #endregion
         #region RIGHT ANALOG STICK
 
-        //store value of sticks and angle no matter what
+        //store these values from the stick no matter what
         gamepads[_index].rs.SetXYValue(new Vector3(_current.ThumbSticks.Right.X, _current.ThumbSticks.Right.Y));
         gamepads[_index].rs.SetXYRawValue(new Vector3(Mathf.Ceil(_current.ThumbSticks.Right.X), Mathf.Ceil(_current.ThumbSticks.Right.Y)));
-        gamepads[_index].rs.SetAngle(Mathf.Atan2(-_current.ThumbSticks.Right.Y, _current.ThumbSticks.Right.X) * Mathf.Rad2Deg);
+        gamepads[_index].rs.SetAngle(Mathf.Ceil(Mathf.Atan2(-_current.ThumbSticks.Right.Y, _current.ThumbSticks.Right.X) * Mathf.Rad2Deg));
+        gamepads[_index].rs.SetArcadeAxis(DetermineArcadeAxis(gamepads[_index].rs.Status, gamepads[_index].rs.Angle));
 
         //check to see if the value of x and y is inside tolerance deadzone
         if (_current.ThumbSticks.Right.X < -analogStickDeadZone ||
@@ -437,7 +447,7 @@ public class XBoxGamepadInput : MonoBehaviour
                 _current.ThumbSticks.Right.Y > -analogStickDeadZone ||
                 _current.ThumbSticks.Right.Y < analogStickDeadZone)
         {
-            gamepads[_index].rs.SetStatus(InputStatus.HELD);
+            gamepads[_index].rs.SetStatus(InputStatus.INACTIVE);
         }
 
         //RELEASED
@@ -476,7 +486,7 @@ public class XBoxGamepadInput : MonoBehaviour
     }
     ///////////////////////////////////////////////////////////////////////////////////////////////
     /// <summary>
-    /// updates the INACTIVE, PRESSED, HELD, and RELEASED status of buttons
+    /// updates the statuses of the buttons
     /// </summary>
     /// <param name="_previous">last frame GamePad Input</param>
     /// <param name="_current">current frame GamePad Input</param>
@@ -685,7 +695,7 @@ public class XBoxGamepadInput : MonoBehaviour
     }
     ///////////////////////////////////////////////////////////////////////////////////////////////
     /// <summary>
-    /// updates the INACTIVE, PRESSED, HELD, and RELEASED status of bumpers
+    /// updates the statuses of the bumpers
     /// </summary>
     /// <param name="_previous">last frame GamePad Input</param>
     /// <param name="_current">current frame GamePad Input</param>
@@ -761,7 +771,7 @@ public class XBoxGamepadInput : MonoBehaviour
     }
     ///////////////////////////////////////////////////////////////////////////////////////////////
     /// <summary>
-    /// updates the INACTIVE, PRESSED, HELD, and RELEASED status of Triggers
+    /// updates the statuses of the triggers
     /// </summary>
     /// <param name="_previous">last frame GamePad Input</param>
     /// <param name="_current">current frame GamePad Input</param>
@@ -847,6 +857,73 @@ public class XBoxGamepadInput : MonoBehaviour
         }
         #endregion
     }
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    /// <summary>
+    /// tracks the last 'x' buttons pressed from the current player's gamepad
+    /// </summary>
+    /// <param name="_index">current player index</param>
+    /// <param name="_button">last button pressed</param>
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    void UpdateCombo(int _index, InputData _button)
+    {
+        //add in the new button
+        gamepads[_index].comboTracker.Enqueue(_button);
+
+        //dequeue the oldest button if we're at max rememberence
+        if (gamepads[_index].comboTracker.Count > maxButtonsRemembered)
+        {
+            gamepads[_index].comboTracker.Dequeue();
+        }
+    }
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    /// <summary>
+    /// ArcadeAxis and the angle of the stick are used to create a retro joystick feel
+    /// </summary>
+    /// <param name="_status">is the stick currently being used</param>
+    /// <param name="_angle">angle of the stick</param>
+    /// <returns></returns>
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    ArcadeAxis DetermineArcadeAxis(InputStatus _status, float _angle)
+    {
+        //is the stick active?
+        if (_status == InputStatus.INACTIVE)
+            return ArcadeAxis.INACTIVE;
+
+        //if so, continue below
+        //up
+        else if (_angle == up || (_angle > (up + -axisLimit) && _angle < (up + axisLimit)))
+            return ArcadeAxis.UP;
+        //right
+        else if (_angle == right || (_angle > (right + -axisLimit) && _angle < (right + axisLimit)))
+            return ArcadeAxis.RIGHT;
+        //up_right
+        else if (_angle == up_right || (_angle > (up_right + -axisLimit) && _angle < (up_right + axisLimit)))
+            return ArcadeAxis.UP_RIGHT;
+        //down
+        else if (_angle == down || (_angle > (down + -axisLimit) && _angle < (down + axisLimit)))
+            return ArcadeAxis.DOWN;
+        //down_right
+        else if (_angle == down_right || (_angle > (down_right + -axisLimit) && _angle < (down_right + axisLimit)))
+            return ArcadeAxis.DOWN_RIGHT;
+        //left
+        else if (_angle == left || (_angle > (left + -axisLimit) && _angle < (left + axisLimit)))
+            return ArcadeAxis.LEFT;
+        //up_left
+        else if (_angle == up_left || (_angle > (up_left + -axisLimit) && _angle < (up_left + axisLimit)))
+            return ArcadeAxis.UP_LEFT;
+        //down_left
+        else if (_angle == down_left || (_angle > (down_left + -axisLimit) && _angle < (down_left + axisLimit)))
+            return ArcadeAxis.DOWN_LEFT;
+        //default case
+        else
+            return ArcadeAxis.INACTIVE;
+    }
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    /// <summary>
+    /// creates the game event for each gamepad connected (1 – 4 gamepads connected)
+    /// </summary>
+    /// <param name="_index">gamepad/player index (0 = p1, 1 = p2, etc.)</param>
+    ///////////////////////////////////////////////////////////////////////////////////////////////
     void Broadcast(int _index)
     {
         switch (_index)
@@ -864,16 +941,8 @@ public class XBoxGamepadInput : MonoBehaviour
                 Events.instance.Raise(new EVENT_GAMEPAD_P4(gamepads[_index]));
                 break;
             default:
-                Debug.LogWarning("INCORRECT PLAYER INDEX(" + _index+")");
+                Debug.LogWarning("INCORRECT PLAYER INDEX DETECTED(PLAYER " + _index+" ?)!");
                 break;
-        }
-    }
-    void UpdateCombo(int _index, InputData _button)
-    {
-        gamepads[_index].comboTracker.Enqueue(_button);
-        if(gamepads[_index].comboTracker.Count > maxButtonsRemembered)
-        {
-            gamepads[_index].comboTracker.Dequeue();
         }
     }
     #endregion
@@ -887,53 +956,7 @@ public class XBoxGamepadInput : MonoBehaviour
     void OnDestroy()
     {
         //remove event listeners
-        //Events.instance.RemoveListener<>();
     }
     #endregion
 
-    #region TESTING
-    ///////////////////////////////////////////////////////////////////////////////////////////////
-    /// <summary>
-    /// UpdateTesting
-    /// </summary>
-    ///////////////////////////////////////////////////////////////////////////////////////////////
-    void UpdateTesting()
-    {
-        //Keypad 0
-        if(Input.GetKeyDown(KeyCode.Keypad0))
-        {
-
-        }
-        //Keypad 1
-        if(Input.GetKeyDown(KeyCode.Keypad1))
-        {
-            
-        }
-        //Keypad 2
-        if(Input.GetKeyDown(KeyCode.Keypad2))
-        {
-            
-        }
-        //Keypad 3
-        if(Input.GetKeyDown(KeyCode.Keypad3))
-        {
-            
-        }
-        //Keypad 4
-        if(Input.GetKeyDown(KeyCode.Keypad4))
-        {
-            
-        }
-        //Keypad 5
-        if(Input.GetKeyDown(KeyCode.Keypad5))
-        {
-            
-        }
-        //Keypad 6
-        if(Input.GetKeyDown(KeyCode.Keypad6))
-        {
-            
-        }
-    }
-    #endregion
 }

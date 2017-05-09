@@ -165,6 +165,7 @@ public class InputTester : MonoBehaviour
     Text ls_held;
     Text ls_inactive;
     Text ls_angle;
+    Text ls_aa;
 
     [SerializeField]
     RectTransform r3;
@@ -182,10 +183,12 @@ public class InputTester : MonoBehaviour
     Text rs_held;
     Text rs_inactive;
     Text rs_angle;
+    Text rs_aa;
 
     [Header("COMBO")]
     [SerializeField]
     Image[] comboButtons;
+    
     #endregion
 
     #region INITIALIZATION
@@ -327,6 +330,7 @@ public class InputTester : MonoBehaviour
             ls_held = ls.transform.FindChild("Data").GetChild(2).GetChild(1).GetComponent<Text>();
             ls_inactive = ls.transform.FindChild("Data").GetChild(3).GetChild(1).GetComponent<Text>();
             ls_angle = ls.transform.FindChild("Data").GetChild(4).GetChild(1).GetComponent<Text>();
+            ls_aa = ls.transform.FindChild("Data").GetChild(5).GetChild(1).GetComponent<Text>();
         }
         if (r3 != null)
         {
@@ -344,6 +348,7 @@ public class InputTester : MonoBehaviour
             rs_held = rs.transform.FindChild("Data").GetChild(2).GetChild(1).GetComponent<Text>();
             rs_inactive = rs.transform.FindChild("Data").GetChild(3).GetChild(1).GetComponent<Text>();
             rs_angle = rs.transform.FindChild("Data").GetChild(4).GetChild(1).GetComponent<Text>();
+            rs_aa = rs.transform.FindChild("Data").GetChild(5).GetChild(1).GetComponent<Text>();
         }
         //set/check initial values
 
@@ -485,7 +490,9 @@ public class InputTester : MonoBehaviour
         ls_value.text = _event.gamepad.ls.XYValues.x.ToString("F2");
         ls_held.text = _event.gamepad.ls.HeldDuration.ToString("F2");
         ls_inactive.text = _event.gamepad.ls.InactiveDuration.ToString("F2");
-        ls_angle.text = _event.gamepad.ls.Angle.ToString("F2");
+        ls_angle.text = _event.gamepad.ls.Angle.ToString();
+        ls_aa.text = _event.gamepad.ls.ArcadeAxis.ToString();
+
         //r3
         r3_status.text = _event.gamepad.r3.Status.ToString();
         r3_value.text = _event.gamepad.r3.XYValues.x.ToString("F2");
@@ -496,7 +503,8 @@ public class InputTester : MonoBehaviour
         rs_value.text = _event.gamepad.rs.XYValues.x.ToString("F2");
         rs_held.text = _event.gamepad.rs.HeldDuration.ToString("F2");
         rs_inactive.text = _event.gamepad.rs.InactiveDuration.ToString("F2");
-        rs_angle.text = _event.gamepad.rs.Angle.ToString("F2");
+        rs_angle.text = _event.gamepad.rs.Angle.ToString();
+        rs_aa.text = _event.gamepad.rs.ArcadeAxis.ToString();
 
         if (_event.gamepad.comboTracker != null)
         {
@@ -506,7 +514,6 @@ public class InputTester : MonoBehaviour
             {
                 if (temp[i] != null)
                 {
-                    print(temp[i].IconXBox.name);
                     comboButtons[i].sprite = temp[i].IconXBox;
                 }
             }

@@ -21,6 +21,18 @@ public enum InputStatus
     PRESSED,
     INACTIVE
 };
+public enum ArcadeAxis
+{
+    INACTIVE,
+    UP,
+    UP_RIGHT,
+    RIGHT,
+    DOWN_RIGHT,
+    DOWN,
+    DOWN_LEFT,
+    LEFT,
+    UP_LEFT
+};
 #endregion
 
 #region EVENTS
@@ -87,6 +99,13 @@ public class InputData
     {
         get { return inactive; }
         private set { inactive = value; }
+    }
+    //arcade axis
+    ArcadeAxis arcadeAxis;
+    public ArcadeAxis ArcadeAxis
+    {
+        get { return arcadeAxis; }
+        private set { arcadeAxis = value; }
     }
     #endregion
 
@@ -180,6 +199,10 @@ public class InputData
             InactiveDuration = _duration;
         else
             InactiveDuration += _duration;
+    }
+    public void SetArcadeAxis(ArcadeAxis _axis)
+    {
+        ArcadeAxis = _axis;
     }
     #endregion
 }
