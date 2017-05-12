@@ -41,8 +41,12 @@ public class Movement : MonoBehaviour
     [Header("MODEL")]
     [SerializeField]
     GameObject character;
+    [SerializeField]
+    bool isSprite;
+    SpriteRenderer sr;
     Transform tr;
     Rigidbody rb;
+    
 
     [Header("VELOCITY")]
     [SerializeField]
@@ -51,6 +55,8 @@ public class Movement : MonoBehaviour
     AnimationCurve acceleration;
 
     [Header("ROTATION")]
+    [SerializeField]
+    bool rotateToDirection;
     public float rotationSpeed;
     [SerializeField]
     AnimationCurve rotationCurve;
@@ -92,6 +98,10 @@ public class Movement : MonoBehaviour
             tr = character.GetComponent<Transform>();
             rb = character.GetComponent<Rigidbody>();
         }
+        if(isSprite)
+        {
+            sr = character.GetComponentInChildren<SpriteRenderer>();
+        }
         //set/check initial values
         groundContacts = 0;
 
@@ -104,7 +114,7 @@ public class Movement : MonoBehaviour
     void Awake()
     {
         //listen to events
-        SetSubscriptions();
+        //SetSubscriptions();
     }
     ///////////////////////////////////////////////////////////////////////////////////////////////
     /// <summary>
@@ -113,7 +123,7 @@ public class Movement : MonoBehaviour
     ///////////////////////////////////////////////////////////////////////////////////////////////
     void Start()
     {
-    
+        leftStick = XBoxGamepadInput.gamepads[0].ls;
     }
     ///////////////////////////////////////////////////////////////////////////////////////////////
     /// <summary>
@@ -122,7 +132,7 @@ public class Movement : MonoBehaviour
     ///////////////////////////////////////////////////////////////////////////////////////////////
     void SetSubscriptions()
     {
-        Events.instance.AddListener<EVENT_GAMEPAD_P1>(UpdateInput);
+
     }
     #endregion
 
@@ -138,7 +148,10 @@ public class Movement : MonoBehaviour
         {
             //check the ground
             UpdateGroundContacts();
-            ApplyRotation();
+            if (rotateToDirection)
+            {
+                ApplyRotation();
+            }
             ApplyMovement();
 
             if(additionalGravity)
@@ -246,11 +259,6 @@ public class Movement : MonoBehaviour
         tr.rotation = Quaternion.RotateTowards(tr.rotation,
                                                inputRotation,
                                                (rotationSpeed * 180 * _rotationCurveAngle * Time.deltaTime));
-        //apply gravity
-        if (groundContacts > 0)
-            rb.AddForce(new Vector3(0, -gravity * 10 * groundGravityRatio, 0) * Time.deltaTime * 60);
-        else
-            rb.AddForce(new Vector3(0, -gravity * 10, 0) * Time.deltaTime * 60);
     }
     ///////////////////////////////////////////////////////////////////////////////////////////////
     /// <summary>
@@ -270,6 +278,11 @@ public class Movement : MonoBehaviour
             rb.AddForce(new Vector3(0, -gravity * 10, 0) * Time.deltaTime * 60);
         }
     }
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    /// <summary>
+    /// applies additional gravity upon the player
+    /// </summary>
+    ///////////////////////////////////////////////////////////////////////////////////////////////
     void ApplyMovement()
     {
         Vector3 rawInput = new Vector3(leftStick.XYValues.x, leftStick.XYValues.y, 0f);
@@ -281,7 +294,13 @@ public class Movement : MonoBehaviour
 
         //new variable to store this input, don't want to change raw input
         Vector3 _movement = rawInput;
-        print("START! movement is set to initial input = " + leftStick);
+        //print("START! movement is set to initial input = " + leftStick);
+        
+        if(isSprite)
+        {
+            DetermineSpriteFacing(rawInput.x);
+        }
+
 
         //starting magnitude
         float _inputMagnitude = 1f;
@@ -292,11 +311,11 @@ public class Movement : MonoBehaviour
             _inputMagnitude = Mathf.Clamp01(_movement.magnitude);
             _movement = targetCameraTransform.TransformDirection(_movement);
 
-            print("movement is set relative to camera = " + _movement);
+            //print("movement is set relative to camera = " + _movement);
         }
 
         _movement = Vector3.ProjectOnPlane(rawInput, Vector3.up);
-        print("movement is projected on a plane = " + _movement);
+        //print("movement is projected on a plane = " + _movement);
 
         //update inputRotation
         if (_movement != Vector3.zero)
@@ -304,9 +323,9 @@ public class Movement : MonoBehaviour
 
 
         _movement.Normalize();
-        print("movement is now normalized = " + _movement);
+        //print("movement is now normalized = " + _movement);
         _movement *= speed * _inputMagnitude;
-        print("movement is * moveSpeed(" + speed + ") and * inputMagnitude(" + _inputMagnitude + ") = " + _movement);
+        //print("movement is * moveSpeed(" + speed + ") and * inputMagnitude(" + _inputMagnitude + ") = " + _movement);
 
         //Inherit velocity from the thing under us
         if (ground != null)
@@ -322,13 +341,35 @@ public class Movement : MonoBehaviour
         }
 
         Vector3 newVelocity = new Vector3(_movement.x, rb.velocity.y, _movement.z) * Time.deltaTime * 60;
-        print("newVelocity = " + newVelocity);
+        //print("newVelocity = " + newVelocity);
         rb.velocity = Vector3.Lerp(rb.velocity, newVelocity, acceleration.Evaluate(Time.deltaTime));
     }
     ///////////////////////////////////////////////////////////////////////////////////////////////
-    private void UpdateInput(EVENT_GAMEPAD_P1 _event)
+    /// <summary>
+    /// assigns the latest gamepad input to leftStick
+    /// </summary>
+    /// <param name="_event"></param>
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    void UpdateInput(EVENT_GAMEPAD_P1 _event)
     {
         leftStick = _event.gamepad.ls;
+    }
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    /// <summary>
+    /// flips the sprite according to input's x value
+    /// </summary>
+    /// <param name="_x">negative == left, positive == right</param>
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    void DetermineSpriteFacing(float _x)
+    {
+        if(_x > 0f && sr.flipX)
+        {
+            sr.flipX = false;
+        }
+        else if(_x < 0f && !sr.flipX)
+        {
+            sr.flipX = true;
+        }
     }
     #endregion
 
@@ -341,8 +382,7 @@ public class Movement : MonoBehaviour
     void OnDestroy()
     {
         //remove event listeners
-        Events.instance.RemoveListener<EVENT_GAMEPAD_P1>(UpdateInput);
-}
+    }
     #endregion
 
     #region TESTING
