@@ -52,7 +52,15 @@ public class Movement : MonoBehaviour
     [SerializeField]
     float speed = 10f;
     [SerializeField]
-    AnimationCurve acceleration;
+    float speedModifier = 1f;
+    [SerializeField]
+    AnimationCurve accelerationCurve;
+    [SerializeField]
+    float acceleration = 1f;
+    [SerializeField]
+    float decceleration = 1f;
+    float airDecceleration = 1f;
+    float airAcceleration = 1f;
 
     [Header("ROTATION")]
     [SerializeField]
@@ -152,7 +160,8 @@ public class Movement : MonoBehaviour
             {
                 ApplyRotation();
             }
-            ApplyMovement();
+            //ApplyMovement();
+            NewMovement();
 
             if(additionalGravity)
             {
@@ -169,7 +178,42 @@ public class Movement : MonoBehaviour
 
     #region PUBLIC METHODS
     ///////////////////////////////////////////////////////////////////////////////////////////////
+    void NewMovement()
+    {
+        float forwardEvaluation = accelerationCurve.Evaluate(rb.velocity.magnitude / this.speed);
+        Vector3 _movement = new Vector3(leftStick.XYValues.x, leftStick.XYValues.y, 0f);
+        //if we're 2D movement, adjust _input to match 2D gameplay (switch out z for y, zero out y)
+        if (isMovement2D)
+        {
+            _movement = new Vector3(leftStick.XYValues.x, 0f, leftStick.XYValues.y);
+        }
+        float _inputMagnitude = _movement.magnitude;
 
+        _movement = transform.TransformDirection(_movement);
+        _movement = Vector3.ProjectOnPlane(_movement, averageGroundNormal);
+        _movement.Normalize();
+        _movement *= speed * speedModifier * _inputMagnitude;
+
+        Vector2 _oldNonVertical = new Vector2(rb.velocity.x, rb.velocity.z);
+        Vector2 _desiredNonVertical = new Vector2(_movement.x, _movement.z);
+        Vector2 _newNonVertical = Vector2.zero;
+
+        float _acceleration = groundContacts > 0 ? acceleration : airAcceleration;
+        float _decceleration = groundContacts > 0 ? decceleration : airDecceleration;
+
+        if (_desiredNonVertical.sqrMagnitude > _oldNonVertical.sqrMagnitude)
+            _newNonVertical = Vector2.Lerp(_oldNonVertical, _desiredNonVertical, _acceleration * Time.fixedDeltaTime);
+        else
+            _newNonVertical = Vector2.Lerp(_oldNonVertical, _desiredNonVertical, _decceleration * Time.fixedDeltaTime);
+
+        //if (_desiredNonVertical.sqrMagnitude > _oldNonVertical.sqrMagnitude)
+        //    _newNonVertical = FixedLerp(_oldNonVertical, _desiredNonVertical, _acceleration * 4 * Time.fixedDeltaTime);
+        //else
+        //    _newNonVertical = FixedLerp(_oldNonVertical, _desiredNonVertical, _decceleration * 4 * Time.fixedDeltaTime);
+
+        rb.velocity = new Vector3(_newNonVertical.x, rb.velocity.y, _newNonVertical.y);
+        rb.AddForce(-averageGroundNormal * gravity * Time.fixedDeltaTime * 60);
+    }
     #endregion
 
     #region PRIVATE METHODS
@@ -222,7 +266,7 @@ public class Movement : MonoBehaviour
         _cornerOffset.z *= _z;
 
         //setup the pos to draw a line, then draw it
-        Vector3 _lineStart = this.transform.TransformPoint(_cornerOffset);
+        Vector3 _lineStart = tr.TransformPoint(_cornerOffset);
         Debug.DrawLine(_lineStart, _lineStart - (Vector3.up * groundCheckDistance), Color.green, 0, false);
 
         foreach (RaycastHit hitInfo in Physics.RaycastAll(_lineStart, -Vector3.up, groundCheckDistance))
@@ -238,7 +282,7 @@ public class Movement : MonoBehaviour
             {
                 ++groundContacts;
                 averageGroundNormal += hitInfo.normal;
-                //print("Ground Normal from hitInfo normal: " + hitInfo.normal);
+                //Debug.Log("Ground Normal from object named'"+hitInfo.collider.gameObject.name+"' = " + hitInfo.normal);
                 break;
             }
         }
@@ -325,7 +369,8 @@ public class Movement : MonoBehaviour
         _movement.Normalize();
         //print("movement is now normalized = " + _movement);
         _movement *= speed * _inputMagnitude;
-        //print("movement is * moveSpeed(" + speed + ") and * inputMagnitude(" + _inputMagnitude + ") = " + _movement);
+        //Debug.Log("_movement("+_movement+") *= speed("+speed+") * _inputMagnitude("+_inputMagnitude+")");
+        //Debug.Log("movement is * moveSpeed(" + speed + ") and * inputMagnitude(" + _inputMagnitude + ") = " + _movement);
 
         //Inherit velocity from the thing under us
         if (ground != null)
@@ -336,13 +381,17 @@ public class Movement : MonoBehaviour
             if (_groundRigidbody != null)
             {
                 _movement += _groundRigidbody.velocity;
-                //print("movement is inheriting from ground = " + _movement);
+                //Debug.Log("movement is inheriting from ground("+_groundRigidbody.velocity+"), and is now = " + _movement);
             }
         }
 
         Vector3 newVelocity = new Vector3(_movement.x, rb.velocity.y, _movement.z) * Time.deltaTime * 60;
-        //print("newVelocity = " + newVelocity);
-        rb.velocity = Vector3.Lerp(rb.velocity, newVelocity, acceleration.Evaluate(Time.deltaTime));
+        //Debug.Log("newVelocity = " + newVelocity);
+        rb.velocity = Vector3.Lerp(rb.velocity, newVelocity, accelerationCurve.Evaluate(Time.time));
+        //Debug.Log("Acceleration.Evaluate(" + acceleration.Evaluate(Time.deltaTime));
+        //Debug.Log("Rigidbody Velocity is currently = " + rb.velocity);
+        //float _force = acceleration.Evaluate(rb.velocity.magnitude / speed);
+        //rb.velocity = rb.velocity * _force;
     }
     ///////////////////////////////////////////////////////////////////////////////////////////////
     /// <summary>
