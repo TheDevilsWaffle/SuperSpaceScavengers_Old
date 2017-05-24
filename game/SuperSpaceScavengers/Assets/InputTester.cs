@@ -202,153 +202,153 @@ public class InputTester : MonoBehaviour
         //refs
         if(y != null)
         {
-            y_icon = y.transform.FindChild("Icon").GetComponent<RectTransform>();
-            y_status = y.transform.FindChild("Data").GetChild(0).GetComponent<Text>();
-            y_value = y.transform.FindChild("Data").GetChild(1).GetChild(1).GetComponent<Text>();
-            y_held = y.transform.FindChild("Data").GetChild(2).GetChild(1).GetComponent<Text>();
-            y_inactive = y.transform.FindChild("Data").GetChild(3).GetChild(1).GetComponent<Text>();
+            y_icon = y.transform.Find("Icon").GetComponent<RectTransform>();
+            y_status = y.transform.Find("Data").GetChild(0).GetComponent<Text>();
+            y_value = y.transform.Find("Data").GetChild(1).GetChild(1).GetComponent<Text>();
+            y_held = y.transform.Find("Data").GetChild(2).GetChild(1).GetComponent<Text>();
+            y_inactive = y.transform.Find("Data").GetChild(3).GetChild(1).GetComponent<Text>();
         }
         if (b != null)
         {
-            b_icon = b.transform.FindChild("Icon").GetComponent<RectTransform>();
-            b_status = b.transform.FindChild("Data").GetChild(0).GetComponent<Text>();
-            b_value = b.transform.FindChild("Data").GetChild(1).GetChild(1).GetComponent<Text>();
-            b_held = b.transform.FindChild("Data").GetChild(2).GetChild(1).GetComponent<Text>();
-            b_inactive = b.transform.FindChild("Data").GetChild(3).GetChild(1).GetComponent<Text>();
+            b_icon = b.transform.Find("Icon").GetComponent<RectTransform>();
+            b_status = b.transform.Find("Data").GetChild(0).GetComponent<Text>();
+            b_value = b.transform.Find("Data").GetChild(1).GetChild(1).GetComponent<Text>();
+            b_held = b.transform.Find("Data").GetChild(2).GetChild(1).GetComponent<Text>();
+            b_inactive = b.transform.Find("Data").GetChild(3).GetChild(1).GetComponent<Text>();
         }
         if (a != null)
         {
-            a_icon = a.transform.FindChild("Icon").GetComponent<RectTransform>();
-            a_status = a.transform.FindChild("Data").GetChild(0).GetComponent<Text>();
-            a_value = a.transform.FindChild("Data").GetChild(1).GetChild(1).GetComponent<Text>();
-            a_held = a.transform.FindChild("Data").GetChild(2).GetChild(1).GetComponent<Text>();
-            a_inactive = a.transform.FindChild("Data").GetChild(3).GetChild(1).GetComponent<Text>();
+            a_icon = a.transform.Find("Icon").GetComponent<RectTransform>();
+            a_status = a.transform.Find("Data").GetChild(0).GetComponent<Text>();
+            a_value = a.transform.Find("Data").GetChild(1).GetChild(1).GetComponent<Text>();
+            a_held = a.transform.Find("Data").GetChild(2).GetChild(1).GetComponent<Text>();
+            a_inactive = a.transform.Find("Data").GetChild(3).GetChild(1).GetComponent<Text>();
         }
         if (x != null)
         {
-            x_icon = x.transform.FindChild("Icon").GetComponent<RectTransform>();
-            x_status = x.transform.FindChild("Data").GetChild(0).GetComponent<Text>();
-            x_value = x.transform.FindChild("Data").GetChild(1).GetChild(1).GetComponent<Text>();
-            x_held = x.transform.FindChild("Data").GetChild(2).GetChild(1).GetComponent<Text>();
-            x_inactive = x.transform.FindChild("Data").GetChild(3).GetChild(1).GetComponent<Text>();
+            x_icon = x.transform.Find("Icon").GetComponent<RectTransform>();
+            x_status = x.transform.Find("Data").GetChild(0).GetComponent<Text>();
+            x_value = x.transform.Find("Data").GetChild(1).GetChild(1).GetComponent<Text>();
+            x_held = x.transform.Find("Data").GetChild(2).GetChild(1).GetComponent<Text>();
+            x_inactive = x.transform.Find("Data").GetChild(3).GetChild(1).GetComponent<Text>();
         }
         if (select != null)
         {
-            select_icon = select.transform.FindChild("Icon").GetComponent<RectTransform>();
-            select_status = select.transform.FindChild("Data").GetChild(0).GetComponent<Text>();
-            select_value = select.transform.FindChild("Data").GetChild(1).GetChild(1).GetComponent<Text>();
-            select_held = select.transform.FindChild("Data").GetChild(2).GetChild(1).GetComponent<Text>();
-            select_inactive = select.transform.FindChild("Data").GetChild(3).GetChild(1).GetComponent<Text>();
+            select_icon = select.transform.Find("Icon").GetComponent<RectTransform>();
+            select_status = select.transform.Find("Data").GetChild(0).GetComponent<Text>();
+            select_value = select.transform.Find("Data").GetChild(1).GetChild(1).GetComponent<Text>();
+            select_held = select.transform.Find("Data").GetChild(2).GetChild(1).GetComponent<Text>();
+            select_inactive = select.transform.Find("Data").GetChild(3).GetChild(1).GetComponent<Text>();
         }
         if (start != null)
         {
-            start_icon = start.transform.FindChild("Icon").GetComponent<RectTransform>();
-            start_status = start.transform.FindChild("Data").GetChild(0).GetComponent<Text>();
-            start_value = start.transform.FindChild("Data").GetChild(1).GetChild(1).GetComponent<Text>();
-            start_held = start.transform.FindChild("Data").GetChild(2).GetChild(1).GetComponent<Text>();
-            start_inactive = start.transform.FindChild("Data").GetChild(3).GetChild(1).GetComponent<Text>();
+            start_icon = start.transform.Find("Icon").GetComponent<RectTransform>();
+            start_status = start.transform.Find("Data").GetChild(0).GetComponent<Text>();
+            start_value = start.transform.Find("Data").GetChild(1).GetChild(1).GetComponent<Text>();
+            start_held = start.transform.Find("Data").GetChild(2).GetChild(1).GetComponent<Text>();
+            start_inactive = start.transform.Find("Data").GetChild(3).GetChild(1).GetComponent<Text>();
         }
         if (lb != null)
         {
-            lb_icon = lb.transform.FindChild("Icon").GetComponent<RectTransform>();
-            lb_status = lb.transform.FindChild("Data").GetChild(0).GetComponent<Text>();
-            lb_value = lb.transform.FindChild("Data").GetChild(1).GetChild(1).GetComponent<Text>();
-            lb_held = lb.transform.FindChild("Data").GetChild(2).GetChild(1).GetComponent<Text>();
-            lb_inactive = lb.transform.FindChild("Data").GetChild(3).GetChild(1).GetComponent<Text>();
+            lb_icon = lb.transform.Find("Icon").GetComponent<RectTransform>();
+            lb_status = lb.transform.Find("Data").GetChild(0).GetComponent<Text>();
+            lb_value = lb.transform.Find("Data").GetChild(1).GetChild(1).GetComponent<Text>();
+            lb_held = lb.transform.Find("Data").GetChild(2).GetChild(1).GetComponent<Text>();
+            lb_inactive = lb.transform.Find("Data").GetChild(3).GetChild(1).GetComponent<Text>();
         }
         if (rb != null)
         {
-            rb_icon = rb.transform.FindChild("Icon").GetComponent<RectTransform>();
-            rb_status = rb.transform.FindChild("Data").GetChild(0).GetComponent<Text>();
-            rb_value = rb.transform.FindChild("Data").GetChild(1).GetChild(1).GetComponent<Text>();
-            rb_held = rb.transform.FindChild("Data").GetChild(2).GetChild(1).GetComponent<Text>();
-            rb_inactive = rb.transform.FindChild("Data").GetChild(3).GetChild(1).GetComponent<Text>();
+            rb_icon = rb.transform.Find("Icon").GetComponent<RectTransform>();
+            rb_status = rb.transform.Find("Data").GetChild(0).GetComponent<Text>();
+            rb_value = rb.transform.Find("Data").GetChild(1).GetChild(1).GetComponent<Text>();
+            rb_held = rb.transform.Find("Data").GetChild(2).GetChild(1).GetComponent<Text>();
+            rb_inactive = rb.transform.Find("Data").GetChild(3).GetChild(1).GetComponent<Text>();
         }
         if (lt != null)
         {
-            lt_icon = lt.transform.FindChild("Icon").GetComponent<RectTransform>();
-            lt_status = lt.transform.FindChild("Data").GetChild(0).GetComponent<Text>();
-            lt_value = lt.transform.FindChild("Data").GetChild(1).GetChild(1).GetComponent<Text>();
-            lt_raw = lt.transform.FindChild("Data").GetChild(2).GetChild(1).GetComponent<Text>();
-            lt_held = lt.transform.FindChild("Data").GetChild(3).GetChild(1).GetComponent<Text>();
-            lt_inactive = lt.transform.FindChild("Data").GetChild(4).GetChild(1).GetComponent<Text>();
+            lt_icon = lt.transform.Find("Icon").GetComponent<RectTransform>();
+            lt_status = lt.transform.Find("Data").GetChild(0).GetComponent<Text>();
+            lt_value = lt.transform.Find("Data").GetChild(1).GetChild(1).GetComponent<Text>();
+            lt_raw = lt.transform.Find("Data").GetChild(2).GetChild(1).GetComponent<Text>();
+            lt_held = lt.transform.Find("Data").GetChild(3).GetChild(1).GetComponent<Text>();
+            lt_inactive = lt.transform.Find("Data").GetChild(4).GetChild(1).GetComponent<Text>();
         }
         if (rt != null)
         {
-            rt_icon = rt.transform.FindChild("Icon").GetComponent<RectTransform>();
-            rt_status = rt.transform.FindChild("Data").GetChild(0).GetComponent<Text>();
-            rt_value = rt.transform.FindChild("Data").GetChild(1).GetChild(1).GetComponent<Text>();
-            rt_raw = rt.transform.FindChild("Data").GetChild(2).GetChild(1).GetComponent<Text>();
-            rt_held = rt.transform.FindChild("Data").GetChild(3).GetChild(1).GetComponent<Text>();
-            rt_inactive = rt.transform.FindChild("Data").GetChild(4).GetChild(1).GetComponent<Text>();
+            rt_icon = rt.transform.Find("Icon").GetComponent<RectTransform>();
+            rt_status = rt.transform.Find("Data").GetChild(0).GetComponent<Text>();
+            rt_value = rt.transform.Find("Data").GetChild(1).GetChild(1).GetComponent<Text>();
+            rt_raw = rt.transform.Find("Data").GetChild(2).GetChild(1).GetComponent<Text>();
+            rt_held = rt.transform.Find("Data").GetChild(3).GetChild(1).GetComponent<Text>();
+            rt_inactive = rt.transform.Find("Data").GetChild(4).GetChild(1).GetComponent<Text>();
         }
         if (up != null)
         {
-            up_icon = up.transform.FindChild("Icon").GetComponent<RectTransform>();
-            up_status = up.transform.FindChild("Data").GetChild(0).GetComponent<Text>();
-            up_value = up.transform.FindChild("Data").GetChild(1).GetChild(1).GetComponent<Text>();
-            up_held = up.transform.FindChild("Data").GetChild(2).GetChild(1).GetComponent<Text>();
-            up_inactive = up.transform.FindChild("Data").GetChild(3).GetChild(1).GetComponent<Text>();
+            up_icon = up.transform.Find("Icon").GetComponent<RectTransform>();
+            up_status = up.transform.Find("Data").GetChild(0).GetComponent<Text>();
+            up_value = up.transform.Find("Data").GetChild(1).GetChild(1).GetComponent<Text>();
+            up_held = up.transform.Find("Data").GetChild(2).GetChild(1).GetComponent<Text>();
+            up_inactive = up.transform.Find("Data").GetChild(3).GetChild(1).GetComponent<Text>();
         }
         if (right != null)
         {
-            right_icon = right.transform.FindChild("Icon").GetComponent<RectTransform>();
-            right_status = right.transform.FindChild("Data").GetChild(0).GetComponent<Text>();
-            right_value = right.transform.FindChild("Data").GetChild(1).GetChild(1).GetComponent<Text>();
-            right_held = right.transform.FindChild("Data").GetChild(2).GetChild(1).GetComponent<Text>();
-            right_inactive = right.transform.FindChild("Data").GetChild(3).GetChild(1).GetComponent<Text>();
+            right_icon = right.transform.Find("Icon").GetComponent<RectTransform>();
+            right_status = right.transform.Find("Data").GetChild(0).GetComponent<Text>();
+            right_value = right.transform.Find("Data").GetChild(1).GetChild(1).GetComponent<Text>();
+            right_held = right.transform.Find("Data").GetChild(2).GetChild(1).GetComponent<Text>();
+            right_inactive = right.transform.Find("Data").GetChild(3).GetChild(1).GetComponent<Text>();
         }
         if (down != null)
         {
-            down_icon = down.transform.FindChild("Icon").GetComponent<RectTransform>();
-            down_status = down.transform.FindChild("Data").GetChild(0).GetComponent<Text>();
-            down_value = down.transform.FindChild("Data").GetChild(1).GetChild(1).GetComponent<Text>();
-            down_held = down.transform.FindChild("Data").GetChild(2).GetChild(1).GetComponent<Text>();
-            down_inactive = down.transform.FindChild("Data").GetChild(3).GetChild(1).GetComponent<Text>();
+            down_icon = down.transform.Find("Icon").GetComponent<RectTransform>();
+            down_status = down.transform.Find("Data").GetChild(0).GetComponent<Text>();
+            down_value = down.transform.Find("Data").GetChild(1).GetChild(1).GetComponent<Text>();
+            down_held = down.transform.Find("Data").GetChild(2).GetChild(1).GetComponent<Text>();
+            down_inactive = down.transform.Find("Data").GetChild(3).GetChild(1).GetComponent<Text>();
         }
         if (left != null)
         {
-            left_icon = left.transform.FindChild("Icon").GetComponent<RectTransform>();
-            left_status = left.transform.FindChild("Data").GetChild(0).GetComponent<Text>();
-            left_value = left.transform.FindChild("Data").GetChild(1).GetChild(1).GetComponent<Text>();
-            left_held = left.transform.FindChild("Data").GetChild(2).GetChild(1).GetComponent<Text>();
-            left_inactive = left.transform.FindChild("Data").GetChild(3).GetChild(1).GetComponent<Text>();
+            left_icon = left.transform.Find("Icon").GetComponent<RectTransform>();
+            left_status = left.transform.Find("Data").GetChild(0).GetComponent<Text>();
+            left_value = left.transform.Find("Data").GetChild(1).GetChild(1).GetComponent<Text>();
+            left_held = left.transform.Find("Data").GetChild(2).GetChild(1).GetComponent<Text>();
+            left_inactive = left.transform.Find("Data").GetChild(3).GetChild(1).GetComponent<Text>();
         }
         if (l3 != null)
         {
-            l3_icon = l3.transform.FindChild("Icon").GetComponent<RectTransform>();
-            l3_status = l3.transform.FindChild("Data").GetChild(0).GetComponent<Text>();
-            l3_value = l3.transform.FindChild("Data").GetChild(1).GetChild(1).GetComponent<Text>();
-            l3_held = l3.transform.FindChild("Data").GetChild(2).GetChild(1).GetComponent<Text>();
-            l3_inactive = l3.transform.FindChild("Data").GetChild(3).GetChild(1).GetComponent<Text>();
+            l3_icon = l3.transform.Find("Icon").GetComponent<RectTransform>();
+            l3_status = l3.transform.Find("Data").GetChild(0).GetComponent<Text>();
+            l3_value = l3.transform.Find("Data").GetChild(1).GetChild(1).GetComponent<Text>();
+            l3_held = l3.transform.Find("Data").GetChild(2).GetChild(1).GetComponent<Text>();
+            l3_inactive = l3.transform.Find("Data").GetChild(3).GetChild(1).GetComponent<Text>();
         }
         if (ls != null)
         {
-            ls_icon = ls.transform.FindChild("Icon").GetComponent<RectTransform>();
-            ls_status = ls.transform.FindChild("Data").GetChild(0).GetComponent<Text>();
-            ls_value = ls.transform.FindChild("Data").GetChild(1).GetChild(1).GetComponent<Text>();
-            ls_held = ls.transform.FindChild("Data").GetChild(2).GetChild(1).GetComponent<Text>();
-            ls_inactive = ls.transform.FindChild("Data").GetChild(3).GetChild(1).GetComponent<Text>();
-            ls_angle = ls.transform.FindChild("Data").GetChild(4).GetChild(1).GetComponent<Text>();
-            ls_aa = ls.transform.FindChild("Data").GetChild(5).GetChild(1).GetComponent<Text>();
+            ls_icon = ls.transform.Find("Icon").GetComponent<RectTransform>();
+            ls_status = ls.transform.Find("Data").GetChild(0).GetComponent<Text>();
+            ls_value = ls.transform.Find("Data").GetChild(1).GetChild(1).GetComponent<Text>();
+            ls_held = ls.transform.Find("Data").GetChild(2).GetChild(1).GetComponent<Text>();
+            ls_inactive = ls.transform.Find("Data").GetChild(3).GetChild(1).GetComponent<Text>();
+            ls_angle = ls.transform.Find("Data").GetChild(4).GetChild(1).GetComponent<Text>();
+            ls_aa = ls.transform.Find("Data").GetChild(5).GetChild(1).GetComponent<Text>();
         }
         if (r3 != null)
         {
-            r3_icon = r3.transform.FindChild("Icon").GetComponent<RectTransform>();
-            r3_status = r3.transform.FindChild("Data").GetChild(0).GetComponent<Text>();
-            r3_value = r3.transform.FindChild("Data").GetChild(1).GetChild(1).GetComponent<Text>();
-            r3_held = r3.transform.FindChild("Data").GetChild(2).GetChild(1).GetComponent<Text>();
-            r3_inactive = r3.transform.FindChild("Data").GetChild(3).GetChild(1).GetComponent<Text>();
+            r3_icon = r3.transform.Find("Icon").GetComponent<RectTransform>();
+            r3_status = r3.transform.Find("Data").GetChild(0).GetComponent<Text>();
+            r3_value = r3.transform.Find("Data").GetChild(1).GetChild(1).GetComponent<Text>();
+            r3_held = r3.transform.Find("Data").GetChild(2).GetChild(1).GetComponent<Text>();
+            r3_inactive = r3.transform.Find("Data").GetChild(3).GetChild(1).GetComponent<Text>();
         }
         if (rs != null)
         {
-            rs_icon = rs.transform.FindChild("Icon").GetComponent<RectTransform>();
-            rs_status = rs.transform.FindChild("Data").GetChild(0).GetComponent<Text>();
-            rs_value = rs.transform.FindChild("Data").GetChild(1).GetChild(1).GetComponent<Text>();
-            rs_held = rs.transform.FindChild("Data").GetChild(2).GetChild(1).GetComponent<Text>();
-            rs_inactive = rs.transform.FindChild("Data").GetChild(3).GetChild(1).GetComponent<Text>();
-            rs_angle = rs.transform.FindChild("Data").GetChild(4).GetChild(1).GetComponent<Text>();
-            rs_aa = rs.transform.FindChild("Data").GetChild(5).GetChild(1).GetComponent<Text>();
+            rs_icon = rs.transform.Find("Icon").GetComponent<RectTransform>();
+            rs_status = rs.transform.Find("Data").GetChild(0).GetComponent<Text>();
+            rs_value = rs.transform.Find("Data").GetChild(1).GetChild(1).GetComponent<Text>();
+            rs_held = rs.transform.Find("Data").GetChild(2).GetChild(1).GetComponent<Text>();
+            rs_inactive = rs.transform.Find("Data").GetChild(3).GetChild(1).GetComponent<Text>();
+            rs_angle = rs.transform.Find("Data").GetChild(4).GetChild(1).GetComponent<Text>();
+            rs_aa = rs.transform.Find("Data").GetChild(5).GetChild(1).GetComponent<Text>();
         }
         //set/check initial values
 
