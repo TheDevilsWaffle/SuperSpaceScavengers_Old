@@ -30,7 +30,9 @@ using System.Collections;
 public class InteractWithDoor : InputActionBase
 {
     #region FIELDS
+
     Door door;
+
     #endregion
 
     #region INITIALIZATION
@@ -78,51 +80,75 @@ public class InteractWithDoor : InputActionBase
     }
     #endregion
 
-    #region UPDATE
-    ///////////////////////////////////////////////////////////////////////////////////////////////
-    /// <summary>
-    /// Update()
-    /// </summary>
-    ///////////////////////////////////////////////////////////////////////////////////////////////
-    void Update()
-    {
-
-#if false
-        UpdateTesting();
-#endif
-
-    }
-    #endregion
-
     #region PUBLIC METHODS
     ///////////////////////////////////////////////////////////////////////////////////////////////
 
     #endregion
 
     #region PRIVATE METHODS
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    /// <summary>
+    /// set's door to the current door we're interacting with
+    /// </summary>
+    /// <param name="_event">door script</param>
+    ///////////////////////////////////////////////////////////////////////////////////////////////
     void ReadyDoor(EVENT_PLAYER_INTERACTION_DOOR _event)
     {
         door = _event.door;
     }
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    /// <summary>
+    /// OnRelease
+    /// </summary>
+    /// <param name="_input"></param>
     ///////////////////////////////////////////////////////////////////////////////////////////////
     protected override void OnReleased(InputData _input)
     {
         
     }
     ///////////////////////////////////////////////////////////////////////////////////////////////
+    /// <summary>
+    /// OnPressed
+    /// </summary>
+    /// <param name="_input"></param>
+    ///////////////////////////////////////////////////////////////////////////////////////////////
     protected override void OnPressed(InputData _input)
     {
-        //print(_input.Name + " was pressed!");
+        //check if door exists
         if(door != null)
         {
-            door.OpenDoor();
+            //check if door is set to manual
+            if (door.Type == DoorType.MANUAL)
+            {
+                //check if door is either closed/openned
+                if (door.Status == DoorStatus.CLOSED)
+                {
+                    //Debug.Log("Attempting to open("+door.gameObject.name+")");
+                    door.OpenDoor();
+                }
+                else if (door.Status == DoorStatus.OPEN)
+                {
+                    //Debug.Log("Attempting to close(" + door.gameObject.name + ")");
+                    door.CloseDoor();
+                }
+            }
         }
     }
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    /// <summary>
+    /// OnHeld
+    /// </summary>
+    /// <param name="_input"></param>
     ///////////////////////////////////////////////////////////////////////////////////////////////
     protected override void OnHeld(InputData _input)
     {
         //print(_input.Name + " is held!");
     }
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    /// <summary>
+    /// NEVER USE THIS!!!
+    /// </summary>
+    /// <param name="_input"></param>
     ///////////////////////////////////////////////////////////////////////////////////////////////
     protected override void OnInactive(InputData _input)
     {
@@ -145,49 +171,4 @@ public class InteractWithDoor : InputActionBase
     }
     #endregion
 
-    #region TESTING
-    ///////////////////////////////////////////////////////////////////////////////////////////////
-    /// <summary>
-    /// UpdateTesting
-    /// </summary>
-    ///////////////////////////////////////////////////////////////////////////////////////////////
-    void UpdateTesting()
-    {
-        //Keypad 0
-        if (Input.GetKeyDown(KeyCode.Keypad0))
-        {
-
-        }
-        //Keypad 1
-        if (Input.GetKeyDown(KeyCode.Keypad1))
-        {
-
-        }
-        //Keypad 2
-        if (Input.GetKeyDown(KeyCode.Keypad2))
-        {
-
-        }
-        //Keypad 3
-        if (Input.GetKeyDown(KeyCode.Keypad3))
-        {
-
-        }
-        //Keypad 4
-        if (Input.GetKeyDown(KeyCode.Keypad4))
-        {
-
-        }
-        //Keypad 5
-        if (Input.GetKeyDown(KeyCode.Keypad5))
-        {
-
-        }
-        //Keypad 6
-        if (Input.GetKeyDown(KeyCode.Keypad6))
-        {
-
-        }
-    }
-    #endregion
 }
