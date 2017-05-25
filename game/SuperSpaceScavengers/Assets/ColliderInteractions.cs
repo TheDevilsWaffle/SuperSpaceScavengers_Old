@@ -23,8 +23,8 @@ using System.Collections;
 #region EVENTS
 public class EVENT_PLAYER_INTERACTION_DOOR : GameEvent
 {
-    public Transform door;
-    public EVENT_PLAYER_INTERACTION_DOOR(Transform _door)
+    public Door door;
+    public EVENT_PLAYER_INTERACTION_DOOR(Door _door)
     {
         door = _door;
     }
@@ -102,7 +102,7 @@ public class ColliderInteractions : MonoBehaviour
         print(_collision.gameObject.transform.root.gameObject.name);
         if (_collision.gameObject.transform.root.gameObject.tag == "Door")
         {
-            Events.instance.Raise(new EVENT_PLAYER_INTERACTION_DOOR(_collision.gameObject.transform.root.gameObject.transform));
+            Events.instance.Raise(new EVENT_PLAYER_INTERACTION_DOOR(_collision.gameObject.transform.root.gameObject.GetComponent<Door>()));
         }
     }
     void OnCollisionExit(Collision _collision)

@@ -30,7 +30,7 @@ using System.Collections;
 public class InteractWithDoor : InputActionBase
 {
     #region FIELDS
-    Transform door;
+    Door door;
     #endregion
 
     #region INITIALIZATION
@@ -115,7 +115,7 @@ public class InteractWithDoor : InputActionBase
         //print(_input.Name + " was pressed!");
         if(door != null)
         {
-            door.Translate(door.position - new Vector3(2f, 0, 0));
+            door.OpenDoor();
         }
     }
     ///////////////////////////////////////////////////////////////////////////////////////////////
