@@ -1,0 +1,239 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+		]
+	},
+	"buffers":
+	[
+		{
+			"contents": "﻿///////////////////////////////////////////////////////////////////////////////////////////////////\n//AUTHOR — Travis Moore\n//SCRIPT — Tile.cs\n///////////////////////////////////////////////////////////////////////////////////////////////////\n\n#pragma warning disable 0169\n#pragma warning disable 0649\n#pragma warning disable 0108\n#pragma warning disable 0414\n\nusing UnityEngine;\n//using UnityEngine.UI;\nusing System.Collections;\n//using System.Collections.Generic;\n\n#region ENUMS\n//public enum EnumStatus\n//{\n//\t\n//};\n#endregion\n\n#region EVENTS\n//public class EVENT_EXAMPLE : GameEvent\n//{\n//    public EVENT_EXAMPLE() { }\n//}\n#endregion\n\npublic class Tile : MonoBehaviour\n{\n    #region FIELDS\n    [Header(\"\")]\n    [SerializeField]\n    int poop;\n\n    [Header(\"\")]\n    [SerializeField]\n    int y;\n\n    [Header(\"\")]\n    [SerializeField]\n    int z;\n    #endregion\n\n    #region INITIALIZATION\n    ///////////////////////////////////////////////////////////////////////////////////////////////\n    /// <summary>\n    /// Awake\n    /// </summary>\n    ///////////////////////////////////////////////////////////////////////////////////////////////\n    void Awake()\n    {\n        //refs\n\n        //initial values\n\n        //SetSubscriptions();\n    }\n    ///////////////////////////////////////////////////////////////////////////////////////////////\n    /// <summary>\n    /// Start\n    /// </summary>\n    ///////////////////////////////////////////////////////////////////////////////////////////////\n    void Start()\n    {\n        GetC\n    }\n    ///////////////////////////////////////////////////////////////////////////////////////////////\n    /// <summary>\n    /// SetSubscriptions\n    /// </summary>\n    ///////////////////////////////////////////////////////////////////////////////////////////////\n    void SetSubscriptions()\n    {\n        //Events.instance.AddListener<>();\n    }\n    #endregion\n\n    #region UPDATE\n    ///////////////////////////////////////////////////////////////////////////////////////////////\n    /// <summary>\n    /// Update()\n    /// </summary>\n    ///////////////////////////////////////////////////////////////////////////////////////////////\n    void Update()\n    {\n\n\n    #if false\n        UpdateTesting();\n    #endif\n    }\n    #endregion\n\n    #region PUBLIC METHODS\n    ///////////////////////////////////////////////////////////////////////////////////////////////\n\n    #endregion\n\n    #region PRIVATE METHODS\n    ///////////////////////////////////////////////////////////////////////////////////////////////\n\n    #endregion\n\n    #region ONDESTORY\n    ///////////////////////////////////////////////////////////////////////////////////////////////\n    /// <summary>\n    /// OnDestroy\n    /// </summary>\n    ///////////////////////////////////////////////////////////////////////////////////////////////\n    void OnDestroy()\n    {\n        //remove listeners\n        //Events.instance.RemoveListener<>();\n    }\n    #endregion\n\n    #region TESTING\n    ///////////////////////////////////////////////////////////////////////////////////////////////\n    /// <summary>\n    /// UpdateTesting\n    /// </summary>\n    ///////////////////////////////////////////////////////////////////////////////////////////////\n    void UpdateTesting()\n    {\n        //Keypad 0\n        if(Input.GetKeyDown(KeyCode.Keypad0))\n        {\n\n        }\n        //Keypad 1\n        if(Input.GetKeyDown(KeyCode.Keypad1))\n        {\n            \n        }\n        //Keypad 2\n        if(Input.GetKeyDown(KeyCode.Keypad2))\n        {\n            \n        }\n        //Keypad 3\n        if(Input.GetKeyDown(KeyCode.Keypad3))\n        {\n            \n        }\n        //Keypad 4\n        if(Input.GetKeyDown(KeyCode.Keypad4))\n        {\n            \n        }\n        //Keypad 5\n        if(Input.GetKeyDown(KeyCode.Keypad5))\n        {\n            \n        }\n        //Keypad 6\n        if(Input.GetKeyDown(KeyCode.Keypad6))\n        {\n            \n        }\n    }\n    #endregion\n}",
+			"file": "Assets/Tile.cs",
+			"file_size": 3963,
+			"file_write_time": 131403324618071327,
+			"settings":
+			{
+				"buffer_size": 3962,
+				"encoding": "UTF-8 with BOM",
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 490.0,
+		"last_filter": "inst",
+		"selected_items":
+		[
+			[
+				"inst",
+				"Package Control: Install Package"
+			],
+			[
+				"ins",
+				"Package Control: Install Package"
+			],
+			[
+				"install",
+				"Package Control: Install Package"
+			],
+			[
+				"insta",
+				"Package Control: Install Package"
+			],
+			[
+				"instal",
+				"Package Control: Install Package"
+			]
+		],
+		"width": 549.0
+	},
+	"console":
+	{
+		"height": 0.0,
+		"history":
+		[
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/D/Downloads/81-C# Script-NewBehaviourScript.cs.txt",
+		"/P/github/TacticalShooter_Summer2016/Assets/Scripts/Core/Movement.cs",
+		"/D/setup/Unity Engine/81-C# Script-NewBehaviourScript.cs.txt",
+		"/P/github/TacticalShooter_Summer2016/Assets/Scripts/CameraSettings.cs"
+	],
+	"find":
+	{
+		"height": 0.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 0,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "Assets/Tile.cs",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3962,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								890,
+								890
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C#/C#.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 720.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 0.0
+	},
+	"input":
+	{
+		"height": 0.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.exec":
+	{
+		"height": 130.0
+	},
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"output.variable_get":
+	{
+		"height": 0.0
+	},
+	"pinned_build_system": "",
+	"project": "superspacescavengers.sublime-project",
+	"replace":
+	{
+		"height": 0.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": true,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 188.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}
