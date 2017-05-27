@@ -1,6 +1,6 @@
 ﻿﻿///////////////////////////////////////////////////////////////////////////////////////////////////
 //AUTHOR — Travis Moore
-//SCRIPT — Tile.cs
+//SCRIPT — TileGeneration.cs
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 #pragma warning disable 0169
@@ -14,13 +14,10 @@ using System.Collections;
 using System.Collections.Generic;
 
 #region ENUMS
-public enum Direction
-{
-	NORTH,
-    EAST,
-    SOUTH,
-    WEST
-};
+//public enum EnumStatus
+//{
+//	
+//};
 #endregion
 
 #region EVENTS
@@ -30,29 +27,24 @@ public enum Direction
 //}
 #endregion
 
-public class Tile : MonoBehaviour
+public class TileGeneration : MonoBehaviour
 {
     #region FIELDS
-    [Header("NEIGHBORS")]
-    Dictionary<Direction, Tile> neighbors;
-
-    [Header("POWER")]
+    [Header("TILES")]
     [SerializeField]
-    PowerStatus power;
-    public PowerStatus Power
-    {
-        get { return power; }
-    }
+    GameObject tile;
+    [SerializeField]
+    int amount;
+    [SerializeField]
+    Vector3 startPosition = new Vector3(10f, 10f, 10f);
+    [SerializeField]
+    Vector3 startRotation = new Vector3(90f, 0f, 0f);
+    [SerializeField]
+    float generationDelay = 0.2f;
+    Vector3 nextPosition;
+    Direction previousDirection;
 
-    [HideInInspector]
-    Vector3 pos;
-    public Vector3 Position
-    {
-        get { return pos; }
-    }
-
-    Transform tr;
-
+    List<GameObject> tiles;
     #endregion
 
     #region INITIALIZATION
@@ -64,12 +56,11 @@ public class Tile : MonoBehaviour
     void OnValidate()
     {
         //refs
-        tr = GetComponent<Transform>();
+
 
         //initial values
-        SetPosition(tr.position);
-
-        
+        nextPosition = startPosition;
+        tiles = new List<GameObject> { };
     }
     ///////////////////////////////////////////////////////////////////////////////////////////////
     /// <summary>
@@ -78,8 +69,6 @@ public class Tile : MonoBehaviour
     ///////////////////////////////////////////////////////////////////////////////////////////////
     void Awake()
     {
-        tr = GetComponent<Transform>();
-        neighbors = new Dictionary<Direction, Tile> { };
         //SetSubscriptions();
     }
     ///////////////////////////////////////////////////////////////////////////////////////////////
@@ -89,7 +78,7 @@ public class Tile : MonoBehaviour
     ///////////////////////////////////////////////////////////////////////////////////////////////
     void Start()
     {
-        
+        StartCoroutine(GenerateTiles());
     }
     ///////////////////////////////////////////////////////////////////////////////////////////////
     /// <summary>
@@ -98,7 +87,7 @@ public class Tile : MonoBehaviour
     ///////////////////////////////////////////////////////////////////////////////////////////////
     void SetSubscriptions()
     {
-        //Events.instance.AddListener<>();
+        //Events.instance.AddListener<event>(function);
     }
     #endregion
 
@@ -121,64 +110,115 @@ public class Tile : MonoBehaviour
     #region PUBLIC METHODS
     ///////////////////////////////////////////////////////////////////////////////////////////////
     /// <summary>
-    /// 
+    /// function
     /// </summary>
-    /// <param name="_pos"></param>
-    /// <param name="_status"></param>
     ///////////////////////////////////////////////////////////////////////////////////////////////
-    public void Initialize(Vector3 _pos, PowerStatus _status)
-    {
-        SetPosition(_pos);
-        SetPower(_status);
-    }
-    ///////////////////////////////////////////////////////////////////////////////////////////////
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="_pos"></param>
-    ///////////////////////////////////////////////////////////////////////////////////////////////
-    public void SetPosition(Vector3 _pos)
-    {
-        pos = _pos;
-        name = "Tile(" + pos.x + ", " + pos.y + ", " + pos.z + ")";
-    }
-    ///////////////////////////////////////////////////////////////////////////////////////////////
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="_direction"></param>
-    /// <param name="_tile"></param>
-    ///////////////////////////////////////////////////////////////////////////////////////////////
-    public void SetNeighbor(Direction _direction, Tile _tile)
-    {
-        neighbors.Add(_direction, _tile);
-    }
-    ///////////////////////////////////////////////////////////////////////////////////////////////
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="_direction"></param>
-    /// <returns></returns>
-    ///////////////////////////////////////////////////////////////////////////////////////////////
-    public Tile GetNeighbor(Direction _direction)
-    {
-        return neighbors[_direction];
-    }
-    ///////////////////////////////////////////////////////////////////////////////////////////////
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="_status"></param>
-    ///////////////////////////////////////////////////////////////////////////////////////////////
-    public void SetPower(PowerStatus _status)
-    {
-        power = _status;
-    }
+
     #endregion
 
     #region PRIVATE METHODS
     ///////////////////////////////////////////////////////////////////////////////////////////////
+    /// <summary>
+    /// function
+    /// </summary>
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    IEnumerator GenerateTiles()
+    {
+        if(tile != null)
+        {
+            Tile _previousTile = null;
 
+            for (int i = 0; i < amount; ++i)
+            {
+                GameObject _tile = Instantiate(tile, nextPosition, Quaternion.identity);
+                _tile.GetComponent<Transform>().rotation = Quaternion.Euler(startRotation);
+
+                _tile.GetComponent<Tile>().Initialize(nextPosition, PowerStatus.POWERED);
+
+                tiles.Add(_tile);
+
+                if(_previousTile != null)
+                {
+                    print(previousDirection + ", " + _previousTile);
+                    _tile.GetComponent<Tile>().SetNeighbor(previousDirection, _previousTile);
+                    Debug.Log(_tile + "'s neighbor is: " + _tile.GetComponent<Tile>().GetNeighbor(previousDirection).gameObject.name);
+                }
+                _previousTile = _tile.GetComponent<Tile>();
+                nextPosition = UpdateNextPosition();
+
+                yield return new WaitForSeconds(generationDelay);
+            }
+        }
+    }
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    /// <summary>
+    /// function
+    /// </summary>
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    Vector3 UpdateNextPosition()
+    {
+        Vector3 _shift = ChooseRandomDirection(Random.Range(0, 3));
+        return nextPosition + _shift;
+    }
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    /// <summary>
+    /// function
+    /// </summary>
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    Vector3 ChooseRandomDirection(int _direction)
+    {
+        switch (_direction)
+        {
+            case 0:
+                previousDirection = Direction.SOUTH;
+                if (DuplicateCheck(nextPosition + new Vector3(0, 0, 1)))
+                {
+                    return ChooseRandomDirection(Random.Range(0, 3));
+                }
+                else
+                    return new Vector3(0, 0, 1);
+
+            case 1:
+                previousDirection = Direction.WEST;
+                if (DuplicateCheck(nextPosition + new Vector3(1, 0, 0)))
+                {
+                    return ChooseRandomDirection(Random.Range(0, 3));
+                }
+                else
+                    return new Vector3(1, 0, 0);
+
+            case 2:
+                previousDirection = Direction.NORTH;
+                if (DuplicateCheck(nextPosition + new Vector3(0, 0, -1)))
+                {
+                    return ChooseRandomDirection(Random.Range(0, 3));
+                }
+                else
+                    return new Vector3(0, 0, -1);
+
+            case 3:
+                previousDirection = Direction.EAST;
+                if (DuplicateCheck(nextPosition + new Vector3(-1, 0, 0)))
+                {
+                    return ChooseRandomDirection(Random.Range(0, 3));
+                }
+                else
+                    return new Vector3(-1, 0, 0);
+
+            default:
+                Debug.LogError("Random.Range(0,3) somehow returned a number out of range: " + _direction);
+                return Vector3.zero;
+        }
+    }
+    bool DuplicateCheck(Vector3 _pos)
+    {
+        foreach(GameObject _tile in tiles)
+        {
+            if (_tile.transform.position == _pos)
+                return true;
+        }
+        return false;
+    }
     #endregion
 
     #region ONDESTORY
