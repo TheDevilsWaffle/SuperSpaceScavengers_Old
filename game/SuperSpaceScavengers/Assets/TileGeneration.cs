@@ -36,6 +36,10 @@ public class TileGeneration : MonoBehaviour
     [SerializeField]
     int amount;
     [SerializeField]
+    int max = 200;
+    [SerializeField]
+    int triesPerTile = 3;
+    [SerializeField]
     Vector3 startPosition = new Vector3(10f, 10f, 10f);
     [SerializeField]
     Vector3 startRotation = new Vector3(90f, 0f, 0f);
@@ -44,7 +48,7 @@ public class TileGeneration : MonoBehaviour
     Vector3 nextPosition;
     Direction previousDirection;
 
-    List<GameObject> tiles;
+    List<Tile> tiles;
     #endregion
 
     #region INITIALIZATION
@@ -60,7 +64,7 @@ public class TileGeneration : MonoBehaviour
 
         //initial values
         nextPosition = startPosition;
-        tiles = new List<GameObject> { };
+        tiles = new List<Tile> { };
     }
     ///////////////////////////////////////////////////////////////////////////////////////////////
     /// <summary>
@@ -78,7 +82,7 @@ public class TileGeneration : MonoBehaviour
     ///////////////////////////////////////////////////////////////////////////////////////////////
     void Start()
     {
-        StartCoroutine(GenerateTiles());
+        StartCoroutine(GenerateTiles(startPosition, amount));
     }
     ///////////////////////////////////////////////////////////////////////////////////////////////
     /// <summary>
@@ -122,32 +126,41 @@ public class TileGeneration : MonoBehaviour
     /// function
     /// </summary>
     ///////////////////////////////////////////////////////////////////////////////////////////////
-    IEnumerator GenerateTiles()
+    IEnumerator GenerateTiles(Vector3 _position, int _tries)
     {
-        if(tile != null)
+        if (max > 0)
         {
-            Tile _previousTile = null;
-
-            for (int i = 0; i < amount; ++i)
+            if (tile != null)
             {
-                GameObject _tile = Instantiate(tile, nextPosition, Quaternion.identity);
-                _tile.GetComponent<Transform>().rotation = Quaternion.Euler(startRotation);
-
-                _tile.GetComponent<Tile>().Initialize(nextPosition, PowerStatus.POWERED);
-
-                tiles.Add(_tile);
-
-                if(_previousTile != null)
+                for (int i = 0; i < _tries; ++i)
                 {
-                    print(previousDirection + ", " + _previousTile);
-                    _tile.GetComponent<Tile>().SetNeighbor(previousDirection, _previousTile);
-                    Debug.Log(_tile + "'s neighbor is: " + _tile.GetComponent<Tile>().GetNeighbor(previousDirection).gameObject.name);
-                }
-                _previousTile = _tile.GetComponent<Tile>();
-                nextPosition = UpdateNextPosition();
+                    //create the tile
+                    GameObject _tile = CreateTile(_position);
 
-                yield return new WaitForSeconds(generationDelay);
+                    //check if it is a duplicate
+                    if (DuplicateCheck(_tile.transform.position))
+                    {
+                        //duplicate, destroy it
+                        Destroy(_tile);
+                    }
+                    else
+                    {
+                        --max;
+                        tiles.Add(_tile.GetComponent<Tile>());
+                        StartCoroutine(GenerateTiles(_tile.transform.position, triesPerTile));
+                    }
+
+                    _position = UpdateNextPosition(_position);
+
+                    yield return new WaitForSeconds(generationDelay);
+                }
             }
+        }
+        else
+        {
+            Debug.Log("max reached!\ntiles.Count = " + tiles.Count);
+            StopAllCoroutines();
+            UpdateTileNeighbors();
         }
     }
     ///////////////////////////////////////////////////////////////////////////////////////////////
@@ -155,10 +168,10 @@ public class TileGeneration : MonoBehaviour
     /// function
     /// </summary>
     ///////////////////////////////////////////////////////////////////////////////////////////////
-    Vector3 UpdateNextPosition()
+    Vector3 UpdateNextPosition(Vector3 _position)
     {
         Vector3 _shift = ChooseRandomDirection(Random.Range(0, 3));
-        return nextPosition + _shift;
+        return _position + _shift;
     }
     ///////////////////////////////////////////////////////////////////////////////////////////////
     /// <summary>
@@ -170,55 +183,92 @@ public class TileGeneration : MonoBehaviour
         switch (_direction)
         {
             case 0:
-                previousDirection = Direction.SOUTH;
-                if (DuplicateCheck(nextPosition + new Vector3(0, 0, 1)))
-                {
-                    return ChooseRandomDirection(Random.Range(0, 3));
-                }
-                else
-                    return new Vector3(0, 0, 1);
+                return new Vector3(0, 0, 1);
 
             case 1:
-                previousDirection = Direction.WEST;
-                if (DuplicateCheck(nextPosition + new Vector3(1, 0, 0)))
-                {
-                    return ChooseRandomDirection(Random.Range(0, 3));
-                }
-                else
-                    return new Vector3(1, 0, 0);
+                return new Vector3(1, 0, 0);
 
             case 2:
-                previousDirection = Direction.NORTH;
-                if (DuplicateCheck(nextPosition + new Vector3(0, 0, -1)))
-                {
-                    return ChooseRandomDirection(Random.Range(0, 3));
-                }
-                else
-                    return new Vector3(0, 0, -1);
+                return new Vector3(0, 0, -1);
 
             case 3:
-                previousDirection = Direction.EAST;
-                if (DuplicateCheck(nextPosition + new Vector3(-1, 0, 0)))
-                {
-                    return ChooseRandomDirection(Random.Range(0, 3));
-                }
-                else
-                    return new Vector3(-1, 0, 0);
+                return new Vector3(-1, 0, 0);
 
             default:
                 Debug.LogError("Random.Range(0,3) somehow returned a number out of range: " + _direction);
                 return Vector3.zero;
         }
     }
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    /// <summary>
+    /// function
+    /// </summary>
+    ///////////////////////////////////////////////////////////////////////////////////////////////
     bool DuplicateCheck(Vector3 _pos)
     {
-        foreach(GameObject _tile in tiles)
+        if (tiles.Count > 0)
         {
-            if (_tile.transform.position == _pos)
-                return true;
+            foreach (Tile _tile in tiles)
+            {
+                if (_tile.transform.position == _pos)
+                    return true;
+            }
+            return false;
         }
-        return false;
+        else
+        {
+            return false;
+        }
     }
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    /// <summary>
+    /// function
+    /// </summary>
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    GameObject CreateTile(Vector3 _position)
+    {
+        //create the tile at _position, rotate, initialize, then return it
+        GameObject _tile = Instantiate(tile, _position, Quaternion.identity);
+        _tile.GetComponent<Transform>().rotation = Quaternion.Euler(startRotation);
+        _tile.GetComponent<Tile>().Initialize(_position, PowerStatus.POWERED);
+        return _tile;
+    }
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    /// <summary>
+    /// function
+    /// </summary>
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    void UpdateTileNeighbors()
+    {
+        foreach(Tile _tile in tiles)
+        {
+            _tile.DiscoverNeighbors();
+        }
+        foreach(Tile _tile in tiles)
+        {
+            _tile.PrintNeighbors();
+        }
+    }
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    /// <summary>
+    /// function
+    /// </summary>
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    /// <summary>
+    /// function
+    /// </summary>
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    /// <summary>
+    /// function
+    /// </summary>
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    /// <summary>
+    /// function
+    /// </summary>
+    ///////////////////////////////////////////////////////////////////////////////////////////////
     #endregion
 
     #region ONDESTORY

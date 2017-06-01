@@ -35,6 +35,10 @@ public class Tile : MonoBehaviour
     #region FIELDS
     [Header("NEIGHBORS")]
     Dictionary<Direction, Tile> neighbors;
+    Tile north;
+    Tile east;
+    Tile south;
+    Tile west;
 
     [Header("POWER")]
     [SerializeField]
@@ -89,7 +93,7 @@ public class Tile : MonoBehaviour
     ///////////////////////////////////////////////////////////////////////////////////////////////
     void Start()
     {
-        
+        //DiscoverNeighbors();
     }
     ///////////////////////////////////////////////////////////////////////////////////////////////
     /// <summary>
@@ -152,6 +156,36 @@ public class Tile : MonoBehaviour
     public void SetNeighbor(Direction _direction, Tile _tile)
     {
         neighbors.Add(_direction, _tile);
+        switch (_direction)
+        {
+            case Direction.NORTH:
+                north = _tile;
+                break;
+            case Direction.EAST:
+                east = _tile;
+                break;
+            case Direction.SOUTH:
+                south = _tile;
+                break;
+            case Direction.WEST:
+                west = _tile;
+                break;
+            default:
+                break;
+        }
+    }
+    /// <summary>
+    /// 
+    /// </summary>
+    public void PrintNeighbors()
+    {
+        foreach(KeyValuePair<Direction, Tile> _neighbor in neighbors)
+        {
+            if(_neighbor.Value != null)
+                print(_neighbor.Key + " is " + _neighbor.Value.gameObject.name);
+            else
+                print(_neighbor.Key + " is NULL");
+        }
     }
     ///////////////////////////////////////////////////////////////////////////////////////////////
     /// <summary>
@@ -173,6 +207,67 @@ public class Tile : MonoBehaviour
     public void SetPower(PowerStatus _status)
     {
         power = _status;
+    }
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    /// <summary>
+    /// 
+    /// </summary>
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    public void DiscoverNeighbors()
+    {
+        RaycastHit _northHit;
+        RaycastHit _eastHit;
+        RaycastHit _southHit;
+        RaycastHit _westHit;
+        Physics.Raycast(tr.position, Vector3.forward, out _northHit, 2f);
+        Debug.DrawRay(tr.position, Vector3.forward, Color.blue, 2f);
+
+        Physics.Raycast(tr.position, Vector3.left, out _westHit, 2f);
+        Debug.DrawRay(tr.position, Vector3.left, Color.red, 2f);
+
+        Physics.Raycast(tr.position, -Vector3.forward, out _southHit, 2f);
+        Debug.DrawRay(tr.position, -Vector3.forward, Color.green, 2f);
+
+        Physics.Raycast(tr.position, -Vector3.left, out _eastHit, 2f);
+        Debug.DrawRay(tr.position, -Vector3.left, Color.yellow, 2f);
+
+
+        if (_northHit.collider != null)
+        {
+            SetNeighbor(Direction.NORTH, _northHit.collider.gameObject.transform.root.GetComponent<Tile>());
+        }
+        else
+        {
+            SetNeighbor(Direction.NORTH, null);
+        }
+
+        if (_eastHit.collider != null)
+        {
+            SetNeighbor(Direction.EAST, _eastHit.collider.gameObject.transform.root.GetComponent<Tile>());
+        }
+        else
+        {
+            SetNeighbor(Direction.EAST, null);
+        }
+
+        if (_southHit.collider != null)
+        {
+            SetNeighbor(Direction.SOUTH, _southHit.collider.gameObject.transform.root.GetComponent<Tile>());
+        }
+        else
+        {
+            SetNeighbor(Direction.SOUTH, null);
+        }
+
+        if (_westHit.collider != null)
+        {
+            SetNeighbor(Direction.WEST, _westHit.collider.gameObject.transform.root.GetComponent<Tile>());
+        }
+        else
+        {
+            SetNeighbor(Direction.WEST, null);
+        }
+        PrintNeighbors();
     }
     #endregion
 
