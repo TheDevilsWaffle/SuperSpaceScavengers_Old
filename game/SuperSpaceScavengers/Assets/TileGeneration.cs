@@ -1,4 +1,4 @@
-﻿﻿///////////////////////////////////////////////////////////////////////////////////////////////////
+﻿///////////////////////////////////////////////////////////////////////////////////////////////////
 //AUTHOR — Travis Moore
 //SCRIPT — TileGeneration.cs
 ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -33,6 +33,8 @@ public class TileGeneration : MonoBehaviour
     [Header("TILES")]
     [SerializeField]
     GameObject tile;
+    [SerializeField]
+    GameObject wall;
     [SerializeField]
     int amount;
     [SerializeField]
@@ -105,9 +107,9 @@ public class TileGeneration : MonoBehaviour
     {
 
 
-    #if false
+#if false
         UpdateTesting();
-    #endif
+#endif
     }
     #endregion
 
@@ -158,9 +160,10 @@ public class TileGeneration : MonoBehaviour
         }
         else
         {
-            Debug.Log("max reached!\ntiles.Count = " + tiles.Count);
+            //Debug.Log("max reached!\ntiles.Count = " + tiles.Count);
             StopAllCoroutines();
             UpdateTileNeighbors();
+            CreatePerimeterWalls();
         }
     }
     ///////////////////////////////////////////////////////////////////////////////////////////////
@@ -240,13 +243,20 @@ public class TileGeneration : MonoBehaviour
     ///////////////////////////////////////////////////////////////////////////////////////////////
     void UpdateTileNeighbors()
     {
-        foreach(Tile _tile in tiles)
+        foreach (Tile _tile in tiles)
         {
             _tile.DiscoverNeighbors();
         }
-        foreach(Tile _tile in tiles)
+        //foreach (Tile _tile in tiles)
+        //{
+        //    _tile.PrintNeighbors();
+        //}
+    }
+    void CreatePerimeterWalls()
+    {
+        foreach (Tile _tile in tiles)
         {
-            _tile.PrintNeighbors();
+            _tile.PlaceWalls(wall);
         }
     }
     ///////////////////////////////////////////////////////////////////////////////////////////////
@@ -293,39 +303,39 @@ public class TileGeneration : MonoBehaviour
     void UpdateTesting()
     {
         //Keypad 0
-        if(Input.GetKeyDown(KeyCode.Keypad0))
+        if (Input.GetKeyDown(KeyCode.Keypad0))
         {
 
         }
         //Keypad 1
-        if(Input.GetKeyDown(KeyCode.Keypad1))
+        if (Input.GetKeyDown(KeyCode.Keypad1))
         {
-            
+
         }
         //Keypad 2
-        if(Input.GetKeyDown(KeyCode.Keypad2))
+        if (Input.GetKeyDown(KeyCode.Keypad2))
         {
-            
+
         }
         //Keypad 3
-        if(Input.GetKeyDown(KeyCode.Keypad3))
+        if (Input.GetKeyDown(KeyCode.Keypad3))
         {
-            
+
         }
         //Keypad 4
-        if(Input.GetKeyDown(KeyCode.Keypad4))
+        if (Input.GetKeyDown(KeyCode.Keypad4))
         {
-            
+
         }
         //Keypad 5
-        if(Input.GetKeyDown(KeyCode.Keypad5))
+        if (Input.GetKeyDown(KeyCode.Keypad5))
         {
-            
+
         }
         //Keypad 6
-        if(Input.GetKeyDown(KeyCode.Keypad6))
+        if (Input.GetKeyDown(KeyCode.Keypad6))
         {
-            
+
         }
     }
     #endregion

@@ -174,17 +174,67 @@ public class Tile : MonoBehaviour
                 break;
         }
     }
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    public void PlaceWalls(GameObject _wallPrefab)
+    {
+        foreach (KeyValuePair<Direction, Tile> _neighbor in neighbors)
+        {
+            if(_neighbor.Value == null)
+            {
+                GameObject _wall = Instantiate(_wallPrefab, tr.position, Quaternion.identity);
+                Transform _wall_tr = _wall.GetComponent<Transform>();
+                _wall_tr.parent = tr;
+
+                //rotate walls based on direction
+                switch (_neighbor.Key)
+                {
+                    case Direction.NORTH:
+                        _wall_tr.localPosition += new Vector3(0, 0.5f, -0.5f);
+                        _wall.gameObject.name = "Wall(" + _neighbor.Key.ToString() + ")";
+                        break;
+
+                    case Direction.EAST:
+                        _wall_tr.localPosition += new Vector3(0.5f, 0, -0.5f);
+                        _wall_tr.Rotate(new Vector3(0f, -90f, 0));
+                        _wall.gameObject.name = "Wall(" + _neighbor.Key.ToString() + ")";
+                        break;
+
+                    case Direction.SOUTH:
+                        _wall_tr.localPosition += new Vector3(0, -0.5f, -0.5f);
+                        _wall.gameObject.name = "Wall(" + _neighbor.Key.ToString() + ")";
+                        break;
+
+                    case Direction.WEST:
+                        _wall_tr.localPosition += new Vector3(-0.5f, 0, -0.5f);
+                        _wall_tr.Rotate(new Vector3(0, -90, 0));
+                        _wall.gameObject.name = "Wall(" + _neighbor.Key.ToString() + ")";
+
+                        break;
+
+                    default:
+                        break;
+                }
+                
+            }
+        }
+    }
+    ///////////////////////////////////////////////////////////////////////////////////////////////
     /// <summary>
     /// 
     /// </summary>
+    ///////////////////////////////////////////////////////////////////////////////////////////////
     public void PrintNeighbors()
     {
         foreach(KeyValuePair<Direction, Tile> _neighbor in neighbors)
         {
-            if(_neighbor.Value != null)
+            if (_neighbor.Value != null)
+            {
                 print(_neighbor.Key + " is " + _neighbor.Value.gameObject.name);
+            }
             else
+            {
                 print(_neighbor.Key + " is NULL");
+            }
         }
     }
     ///////////////////////////////////////////////////////////////////////////////////////////////
@@ -219,17 +269,17 @@ public class Tile : MonoBehaviour
         RaycastHit _eastHit;
         RaycastHit _southHit;
         RaycastHit _westHit;
-        Physics.Raycast(tr.position, Vector3.forward, out _northHit, 2f);
-        Debug.DrawRay(tr.position, Vector3.forward, Color.blue, 2f);
+        Physics.Raycast(tr.position, Vector3.forward, out _northHit, 1f);
+        //Debug.DrawRay(tr.position, Vector3.forward, Color.blue, 1f);
 
-        Physics.Raycast(tr.position, Vector3.left, out _westHit, 2f);
-        Debug.DrawRay(tr.position, Vector3.left, Color.red, 2f);
+        Physics.Raycast(tr.position, Vector3.left, out _westHit, 1f);
+        //Debug.DrawRay(tr.position, Vector3.left, Color.red, 1f);
 
-        Physics.Raycast(tr.position, -Vector3.forward, out _southHit, 2f);
-        Debug.DrawRay(tr.position, -Vector3.forward, Color.green, 2f);
+        Physics.Raycast(tr.position, -Vector3.forward, out _southHit, 1f);
+        //Debug.DrawRay(tr.position, -Vector3.forward, Color.green, 1f);
 
-        Physics.Raycast(tr.position, -Vector3.left, out _eastHit, 2f);
-        Debug.DrawRay(tr.position, -Vector3.left, Color.yellow, 2f);
+        Physics.Raycast(tr.position, -Vector3.left, out _eastHit, 1f);
+        //Debug.DrawRay(tr.position, -Vector3.left, Color.yellow, 1f);
 
 
         if (_northHit.collider != null)
@@ -267,7 +317,6 @@ public class Tile : MonoBehaviour
         {
             SetNeighbor(Direction.WEST, null);
         }
-        PrintNeighbors();
     }
     #endregion
 
