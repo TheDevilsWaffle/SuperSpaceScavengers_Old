@@ -99,6 +99,7 @@ public class #SCRIPTNAME# : MonoBehaviour
     #if false
         UpdateTesting();
     #endif
+    
     }
     #endregion
 
